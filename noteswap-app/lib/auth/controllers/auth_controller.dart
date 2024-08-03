@@ -11,7 +11,7 @@ class AuthController extends _$AuthController {
     // no use
   }
 
-  Future<void> signInWithPassword(String email, String password) async {
+  Future<void> signInWithEmailAndPassword(String email, String password) async {
     final authRepository = ref.read(firebaseAuthRepositoryProvider);
     state = const AsyncLoading();
     state = await AsyncValue.guard(
@@ -22,7 +22,7 @@ class AuthController extends _$AuthController {
     );
   }
 
-   Future<void> signUpWithPassword(
+   Future<void> signUpWithEmailAndPassword(
       String name, String email, String password) async {
     final authRepository = ref.read(firebaseAuthRepositoryProvider);
     state = const AsyncLoading();

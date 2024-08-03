@@ -29,6 +29,10 @@ class _AuthPageState extends ConsumerState<AuthPage> {
   bool isSignUp = false;
   void isSignUpToggle() {
     setState(() {
+      // isSignUp = !isSignUp;
+      isChecked = false;
+      formKey.currentState?.reset();
+      FocusScope.of(context).unfocus();
       isSignUp = !isSignUp;
     });
   }
@@ -38,6 +42,40 @@ class _AuthPageState extends ConsumerState<AuthPage> {
     setState(() {
       isPasswordVisible = !isPasswordVisible;
     });
+  }
+
+  void handleSubmit() {
+    if (isSignUp && !isChecked) {
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('Error'),
+          content: const Text('You must agree to the terms and conditions.'),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text('OK'),
+            ),
+          ],
+        ),
+      );
+      return;
+    }
+
+    if (formKey.currentState!.validate()) {
+      if (isSignUp) {
+        ref.read(authControllerProvider.notifier).signUpWithEmailAndPassword(
+              nameController.text,
+              emailController.text,
+              passwordController.text,
+            );
+      } else {
+        ref.read(authControllerProvider.notifier).signInWithEmailAndPassword(
+              emailController.text,
+              passwordController.text,
+            );
+      }
+    }
   }
 
   @override
@@ -76,6 +114,7 @@ class _AuthPageState extends ConsumerState<AuthPage> {
                 child: Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Form(
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
                     key: formKey,
                     child: Column(
                       children: [
@@ -97,14 +136,17 @@ class _AuthPageState extends ConsumerState<AuthPage> {
                             ),
                             CustomButton(
                               path: 'assets/icons/google-icon.svg',
-                              ltext: 'Apple',
+                              ltext: 'Facebook',
                               onPressed: () {
                                 // Handle Apple sign-in
                               },
                             ),
                           ],
                         ),
-                        const SizedBox(height: 20),
+                        SizedBox(
+                            height: isSignUp
+                                ? MediaQuery.of(context).size.height * 0.01
+                                : MediaQuery.of(context).size.height * 0.025),
                         Row(
                           children: [
                             const Expanded(child: Divider()),
@@ -112,9 +154,9 @@ class _AuthPageState extends ConsumerState<AuthPage> {
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 8.0),
                               child: Text(
-                                'or',
+                                'Or',
                                 style: TextStyle(
-                                  fontFamily: 'Poppins',
+                                  fontFamily: 'ClashDisplay',
                                   fontSize: 14,
                                   fontWeight: FontWeight.w400,
                                   color: Theme.of(context).colorScheme.surface,
@@ -124,7 +166,10 @@ class _AuthPageState extends ConsumerState<AuthPage> {
                             const Expanded(child: Divider()),
                           ],
                         ),
-                        const SizedBox(height: 20),
+                        SizedBox(
+                            height: isSignUp
+                                ? MediaQuery.of(context).size.height * 0.01
+                                : MediaQuery.of(context).size.height * 0.025),
                         AuthFields(
                           isSignUp: isSignUp,
                           nameController: nameController,
@@ -133,7 +178,10 @@ class _AuthPageState extends ConsumerState<AuthPage> {
                           isPasswordVisible: isPasswordVisible,
                           togglePasswordVisibility: togglePasswordVisibility,
                         ),
-                        const SizedBox(height: 20),
+                        SizedBox(
+                            height: isSignUp
+                                ? MediaQuery.of(context).size.height * 0.01
+                                : MediaQuery.of(context).size.height * 0.04),
                         if (isSignUp)
                           Row(
                             children: [
@@ -160,7 +208,7 @@ class _AuthPageState extends ConsumerState<AuthPage> {
                             ],
                           ),
                         ElevatedButton(
-                          onPressed: () {},
+                          onPressed: handleSubmit,
                           style: ElevatedButton.styleFrom(
                             minimumSize: const Size(263, 60),
                             padding: const EdgeInsets.symmetric(
@@ -181,7 +229,9 @@ class _AuthPageState extends ConsumerState<AuthPage> {
                           ),
                         ),
                         SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.01),
+                            height: isSignUp
+                                ? MediaQuery.of(context).size.height * 0.01
+                                : MediaQuery.of(context).size.height * 0.025),
                         TextButton(
                           onPressed: () {
                             isSignUpToggle();
@@ -253,7 +303,10 @@ class AuthFields extends StatelessWidget {
               return null;
             },
           ),
-        const SizedBox(height: 10),
+        SizedBox(
+            height: isSignUp
+                ? MediaQuery.of(context).size.height * 0.01
+                : MediaQuery.of(context).size.height * 0.02),
         TextFormField(
           controller: emailController,
           decoration: _buildInputDecoration('Email', context),
@@ -266,7 +319,10 @@ class AuthFields extends StatelessWidget {
             return null;
           },
         ),
-        const SizedBox(height: 10),
+        SizedBox(
+            height: isSignUp
+                ? MediaQuery.of(context).size.height * 0.01
+                : MediaQuery.of(context).size.height * 0.02),
         TextFormField(
           controller: passwordController,
           decoration: _buildInputDecoration(
