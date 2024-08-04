@@ -21,7 +21,7 @@ class CustomButton extends StatelessWidget {
         width: MediaQuery.of(context).size.width * 0.4,
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: const Color(0xFF121212),
+          color: Theme.of(context).colorScheme.onSurface,
           borderRadius: BorderRadius.circular(14),
         ),
         child: Row(
@@ -35,18 +35,18 @@ class CustomButton extends StatelessWidget {
             ),
             SizedBox(width: MediaQuery.of(context).size.width * 0.03),
             ltext is String
-              ? Text(
-                  ltext as String,
-                  style: TextStyle(
-                    fontFamily: 'ClashDisplay ',
-                    fontSize: 16,
-                    fontStyle: FontStyle.normal,
-                    fontWeight: FontWeight.w500,
-                    height: 1.5,
-                    color: Theme.of(context).colorScheme.secondary,
-                  ),
-                )
-              : ltext as Widget,
+                ? Text(
+                    ltext as String,
+                    style: TextStyle(
+                      fontFamily: 'ClashDisplay ',
+                      fontSize: 16,
+                      fontStyle: FontStyle.normal,
+                      fontWeight: FontWeight.w500,
+                      height: 1.5,
+                      color: Theme.of(context).colorScheme.secondary,
+                    ),
+                  )
+                : ltext as Widget,
           ],
         ),
       ),

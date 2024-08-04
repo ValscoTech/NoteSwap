@@ -19,7 +19,9 @@ class _RootPageState extends State<RootPage> {
         actions: [
           IconButton(
             icon: const Icon(Icons.settings),
-            onPressed: () {},
+            onPressed: () {
+              context.go('/auth');
+            },
           ),
         ],
       ),

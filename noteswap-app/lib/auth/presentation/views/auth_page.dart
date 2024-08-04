@@ -278,7 +278,7 @@ class AuthFields extends StatelessWidget {
     return InputDecoration(
       labelText: labelText,
       filled: true,
-      fillColor: Theme.of(context).colorScheme.surface,
+      fillColor: Theme.of(context).colorScheme.onSurface,
       contentPadding: const EdgeInsets.symmetric(vertical: 18, horizontal: 24),
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(14),
