@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:noteswap/auth/presentation/views/auth_page.dart';
+import 'package:noteswap/routes.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -8,13 +8,12 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     // TODO: change theme logic
     // TODO: auth root logic
-    // TODO: Router setup
     var brightness = MediaQuery.of(context).platformBrightness;
-    return MaterialApp(
+    return MaterialApp.router(
       debugShowCheckedModeBanner: false,
-      title: "Book Keeper",
+      title: "NoteSwap",
       theme: brightness == Brightness.dark ? ThemeData.dark() : ThemeData.light(),
-      home:  const AuthPage(),
+      routerConfig: router,
     );
   }
 }
