@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:noteswap/auth/views/auth_page.dart';
+import 'package:noteswap/auth/presentation/views/auth_page.dart';
 
 class App extends StatelessWidget {
   const App({super.key});

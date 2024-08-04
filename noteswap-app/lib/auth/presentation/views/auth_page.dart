@@ -2,8 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:noteswap/auth/controllers/auth_controller.dart';
-import 'package:noteswap/auth/widgets/custom_button.dart';
-import 'package:noteswap/auth/widgets/top_container.dart';
+import 'package:noteswap/auth/presentation/widgets/custom_button.dart';
+import 'package:noteswap/auth/presentation/widgets/top_container.dart';
 import 'package:validators/validators.dart';
 
 class AuthPage extends ConsumerStatefulWidget {
