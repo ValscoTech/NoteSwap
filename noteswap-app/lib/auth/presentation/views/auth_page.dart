@@ -135,7 +135,7 @@ class _AuthPageState extends ConsumerState<AuthPage> {
                               },
                             ),
                             CustomButton(
-                              path: 'assets/icons/google-icon.svg',
+                              path: 'assets/icons/facebook-icon.svg',
                               ltext: 'Facebook',
                               onPressed: () {
                                 // Handle Apple sign-in

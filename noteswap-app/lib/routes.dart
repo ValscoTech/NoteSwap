@@ -32,12 +32,11 @@ final router = GoRouter(
         GoRoute(
           path: '/search',
           builder: (context, state) => Container(
-            decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.surface,
-            ),
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height,
-            child: const Placeholder(),
+            child: const Placeholder(
+              color: Colors.white,
+            ),
           ),
         ),
         GoRoute(
