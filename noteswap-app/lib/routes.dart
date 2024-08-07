@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:noteswap/auth/presentation/views/auth_page.dart';
+import 'package:noteswap/profile/presentation/profile_page.dart';
+import 'package:noteswap/profile/presentation/profile_update_page.dart';
 import 'package:noteswap/root_page.dart';
 
 final GlobalKey<NavigatorState> rootKey = GlobalKey<NavigatorState>();
@@ -12,6 +14,10 @@ final router = GoRouter(
     GoRoute(
       path: '/auth',
       builder: (context, state) => const AuthPage(),
+    ),
+    GoRoute(
+      path: '/update-profile',
+      builder: (context, state) => const ProfileUpdatePage(),
     ),
     ShellRoute(
       builder: (context, state, child) {
@@ -31,12 +37,10 @@ final router = GoRouter(
         ),
         GoRoute(
           path: '/search',
-          builder: (context, state) => Container(
+          builder: (context, state) => SizedBox(
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height,
-            child: const Placeholder(
-              color: Colors.white,
-            ),
+            child: const Placeholder(),
           ),
         ),
         GoRoute(
@@ -63,13 +67,13 @@ final router = GoRouter(
         ),
         GoRoute(
           path: '/profile',
-          builder: (context, state) => Container(
+          builder: (context, state) => Container( 
             decoration: BoxDecoration(
               color: Theme.of(context).colorScheme.surface,
             ),
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height,
-            child: const Placeholder(),
+            child: const ProfilePage(),
           ),
         ),
       ],

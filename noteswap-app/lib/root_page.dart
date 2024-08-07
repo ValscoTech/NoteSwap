@@ -39,7 +39,7 @@ class _RootPageState extends State<RootPage> {
           IconButton(
             icon: const Icon(Icons.settings),
             onPressed: () {
-              context.go('/auth');
+              context.go('/update-profile');
             },
           ),
         ],
