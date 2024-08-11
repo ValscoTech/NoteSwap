@@ -8,7 +8,7 @@ class ProfileUpdatePage extends StatefulWidget {
   const ProfileUpdatePage({super.key});
 
   @override
-  _ProfileUpdatePageState createState() => _ProfileUpdatePageState();
+  State<ProfileUpdatePage> createState() => _ProfileUpdatePageState();
 }
 
 class _ProfileUpdatePageState extends State<ProfileUpdatePage> {
@@ -34,7 +34,6 @@ class _ProfileUpdatePageState extends State<ProfileUpdatePage> {
 
   void _saveProfile() {
     if (_formKey.currentState!.validate()) {
-      // Save profile logic here
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Profile Saved')),
       );
@@ -44,6 +43,21 @@ class _ProfileUpdatePageState extends State<ProfileUpdatePage> {
 
   @override
   Widget build(BuildContext context) {
+    InputDecoration buildInputDecoration(
+        String labelText, BuildContext context) {
+      return InputDecoration(
+        labelText: labelText,
+        labelStyle: const TextStyle(
+          color: Color.fromRGBO(13, 13, 13, 1),
+          fontFamily: 'ClashDisplay',
+          fontWeight: FontWeight.w400,
+          fontSize: 20,
+        ),
+        contentPadding:
+            const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+      );
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Update Profile'),
@@ -64,16 +78,21 @@ class _ProfileUpdatePageState extends State<ProfileUpdatePage> {
           key: _formKey,
           child: ListView(
             children: <Widget>[
-              _image == null
-                  ? const Text('No image selected.')
-                  : Image.file(_image!),
-              ElevatedButton(
-                onPressed: _pickImage,
-                child: const Text('Choose Photo'),
+              Center(
+                child: GestureDetector(
+                  onTap: _pickImage,
+                  child: CircleAvatar(
+                    radius: 50,
+                    backgroundImage: _image != null
+                        ? FileImage(_image!)
+                        : const AssetImage('assets/icons/pfp.png'),
+                  ),
+                ),
               ),
+              const SizedBox(height: 16),
               TextFormField(
                 controller: _nameController,
-                decoration: const InputDecoration(labelText: 'Name'),
+                decoration: buildInputDecoration('Name:', context),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Please enter your name';
@@ -83,7 +102,7 @@ class _ProfileUpdatePageState extends State<ProfileUpdatePage> {
               ),
               TextFormField(
                 controller: _blockController,
-                decoration: const InputDecoration(labelText: 'Block'),
+                decoration: buildInputDecoration('Block:', context),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Please enter your block';
@@ -93,7 +112,7 @@ class _ProfileUpdatePageState extends State<ProfileUpdatePage> {
               ),
               TextFormField(
                 controller: _roomNumberController,
-                decoration: const InputDecoration(labelText: 'Room Number'),
+                decoration: buildInputDecoration('Room:', context),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Please enter your room number';
@@ -103,7 +122,7 @@ class _ProfileUpdatePageState extends State<ProfileUpdatePage> {
               ),
               TextFormField(
                 controller: _departmentController,
-                decoration: const InputDecoration(labelText: 'Department'),
+                decoration: buildInputDecoration('Block:', context),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Please enter your department';
@@ -113,7 +132,7 @@ class _ProfileUpdatePageState extends State<ProfileUpdatePage> {
               ),
               TextFormField(
                 controller: _specializationController,
-                decoration: const InputDecoration(labelText: 'Specialization'),
+                decoration: buildInputDecoration('Specialization:', context),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Please enter your specialization';
@@ -123,7 +142,7 @@ class _ProfileUpdatePageState extends State<ProfileUpdatePage> {
               ),
               TextFormField(
                 controller: _bioController,
-                decoration: const InputDecoration(labelText: 'Bio'),
+                decoration: buildInputDecoration('Bio:', context),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Please enter your bio';
@@ -134,7 +153,21 @@ class _ProfileUpdatePageState extends State<ProfileUpdatePage> {
               const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: _saveProfile,
-                child: const Text('Save'),
+                style: ElevatedButton.styleFrom(
+                  minimumSize: const Size(263, 60),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 18, horizontal: 24),
+                  backgroundColor: const Color(0xFFB594CD),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                ),
+                child: const Text(
+                  'Save',
+                  style: TextStyle(
+                    fontSize: 16, // Adjust font size if needed
+                  ),
+                ),
               ),
             ],
           ),
