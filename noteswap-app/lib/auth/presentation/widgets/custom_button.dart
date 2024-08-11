@@ -15,13 +15,14 @@ class CustomButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final color = Theme.of(context).colorScheme;
     return GestureDetector(
       onTap: onPressed,
       child: Container(
         width: MediaQuery.of(context).size.width * 0.4,
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.onSurface,
+          color: color.surface,
           borderRadius: BorderRadius.circular(14),
         ),
         child: Row(
@@ -38,12 +39,11 @@ class CustomButton extends StatelessWidget {
                 ? Text(
                     ltext as String,
                     style: TextStyle(
-                      fontFamily: 'ClashDisplay ',
                       fontSize: 16,
                       fontStyle: FontStyle.normal,
                       fontWeight: FontWeight.w500,
                       height: 1.5,
-                      color: Theme.of(context).colorScheme.secondary,
+                      color: color.primary,
                     ),
                   )
                 : ltext as Widget,

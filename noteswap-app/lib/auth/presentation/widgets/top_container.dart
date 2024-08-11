@@ -6,10 +6,12 @@ class TopContainer extends StatelessWidget {
   const TopContainer({super.key, required this.isSignUp});
   @override
   Widget build(BuildContext context) {
+    final layout = MediaQuery.of(context).size;
+    final color = Theme.of(context).colorScheme;
     return Container(
       alignment: Alignment.center,
-      height: MediaQuery.of(context).size.height * 0.4,
-      color: Theme.of(context).colorScheme.surface,
+      height: layout.height * 0.4,
+      color: color.surface,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -19,7 +21,7 @@ class TopContainer extends StatelessWidget {
               fontSize: 32,
               fontFamily: 'ClashDisplay',
               fontWeight: FontWeight.bold,
-              color: Theme.of(context).colorScheme.onSurface,
+              color: color.primary,
               height: MediaQuery.of(context).size.height * 0.25 * 0.01,
             ),
           ),
@@ -31,7 +33,7 @@ class TopContainer extends StatelessWidget {
               fontSize: 18,
               fontFamily: 'ClashDisplay',
               fontWeight: FontWeight.w400,
-              color: Theme.of(context).colorScheme.onSurface,
+              color: color.primary,
               letterSpacing: -0.9,
               height: 0,
             ),

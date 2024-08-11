@@ -92,7 +92,8 @@ class _AuthPageState extends ConsumerState<AuthPage> {
       //   //TODO: Logic yet to decide
       // }
     });
-
+    final layout = MediaQuery.of(context).size;
+    final color = Theme.of(context).colorScheme;
     return Scaffold(
       body: Stack(
         children: [
@@ -103,10 +104,10 @@ class _AuthPageState extends ConsumerState<AuthPage> {
             child: Align(
               alignment: Alignment.bottomCenter,
               child: Container(
-                height: MediaQuery.of(context).size.height * 0.68,
-                decoration: const BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.only(
+                height: layout.height * 0.68,
+                decoration: BoxDecoration(
+                  color: color.primary,
+                  borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(32),
                     topRight: Radius.circular(32),
                   ),
@@ -145,31 +146,36 @@ class _AuthPageState extends ConsumerState<AuthPage> {
                         ),
                         SizedBox(
                             height: isSignUp
-                                ? MediaQuery.of(context).size.height * 0.01
-                                : MediaQuery.of(context).size.height * 0.025),
+                                ? layout.height * 0.01
+                                : layout.height * 0.025),
                         Row(
                           children: [
-                            const Expanded(child: Divider()),
+                            Expanded(
+                                child: Divider(
+                              color: color.surface,
+                            )),
                             Padding(
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 8.0),
                               child: Text(
                                 'Or',
                                 style: TextStyle(
-                                  fontFamily: 'ClashDisplay',
                                   fontSize: 14,
                                   fontWeight: FontWeight.w400,
-                                  color: Theme.of(context).colorScheme.surface,
+                                  color: color.surface,
                                 ),
                               ),
                             ),
-                            const Expanded(child: Divider()),
+                            Expanded(
+                                child: Divider(
+                              color: color.surface,
+                            )),
                           ],
                         ),
                         SizedBox(
                             height: isSignUp
-                                ? MediaQuery.of(context).size.height * 0.01
-                                : MediaQuery.of(context).size.height * 0.025),
+                                ? layout.height * 0.01
+                                : layout.height * 0.025),
                         AuthFields(
                           isSignUp: isSignUp,
                           nameController: nameController,
@@ -180,12 +186,19 @@ class _AuthPageState extends ConsumerState<AuthPage> {
                         ),
                         SizedBox(
                             height: isSignUp
-                                ? MediaQuery.of(context).size.height * 0.01
-                                : MediaQuery.of(context).size.height * 0.04),
+                                ? layout.height * 0.01
+                                : layout.height * 0.04),
                         if (isSignUp)
                           Row(
                             children: [
                               Checkbox(
+                                focusColor: color.primary,
+                                activeColor: color.surface,
+                                checkColor: Colors.white,
+                                side: BorderSide(
+                                  color: color.surface,
+                                  width: 2.0,
+                                ),
                                 value: isChecked,
                                 onChanged: (bool? value) {
                                   setState(() {
@@ -197,12 +210,9 @@ class _AuthPageState extends ConsumerState<AuthPage> {
                                 child: Text(
                                   'I agree to The Terms and Conditions and Privacy Policy.',
                                   style: TextStyle(
-                                      fontFamily: 'ClashDisplay',
                                       fontSize: 14,
                                       fontWeight: FontWeight.w400,
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .onPrimary),
+                                      color: color.surface),
                                 ),
                               ),
                             ],
@@ -213,7 +223,7 @@ class _AuthPageState extends ConsumerState<AuthPage> {
                             minimumSize: const Size(263, 60),
                             padding: const EdgeInsets.symmetric(
                                 vertical: 18, horizontal: 24),
-                            backgroundColor: const Color(0xFFB594CD),
+                            backgroundColor: color.secondary,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(15),
                             ),
@@ -222,16 +232,15 @@ class _AuthPageState extends ConsumerState<AuthPage> {
                             isSignUp ? 'Create Account' : 'Login',
                             style: TextStyle(
                               fontSize: 16,
-                              fontFamily: 'ClashDisplay',
                               fontWeight: FontWeight.w500,
-                              color: Theme.of(context).colorScheme.onPrimary,
+                              color: color.surface,
                             ),
                           ),
                         ),
                         SizedBox(
                             height: isSignUp
-                                ? MediaQuery.of(context).size.height * 0.01
-                                : MediaQuery.of(context).size.height * 0.025),
+                                ? layout.height * 0.01
+                                : layout.height * 0.025),
                         TextButton(
                           onPressed: () {
                             isSignUpToggle();
@@ -240,6 +249,9 @@ class _AuthPageState extends ConsumerState<AuthPage> {
                             isSignUp
                                 ? 'Already have an Account? Login'
                                 : "Don't Have an account? SignUp",
+                            style: TextStyle(
+                                color: color.surface,
+                                fontFamily: 'ClashDisplay'),
                           ),
                         ),
                       ],
@@ -275,10 +287,16 @@ class AuthFields extends StatelessWidget {
 
   InputDecoration _buildInputDecoration(String labelText, BuildContext context,
       {Widget? suffixIcon}) {
+    final color = Theme.of(context).colorScheme;
     return InputDecoration(
       labelText: labelText,
+      labelStyle: TextStyle(
+        color: color.primary,
+        fontSize: 16,
+        fontWeight: FontWeight.w400,
+      ),
       filled: true,
-      fillColor: Theme.of(context).colorScheme.onSurface,
+      fillColor: color.surface,
       contentPadding: const EdgeInsets.symmetric(vertical: 18, horizontal: 24),
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(14),
@@ -290,6 +308,7 @@ class AuthFields extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final layout = MediaQuery.of(context).size;
     return Column(
       children: [
         if (isSignUp)
@@ -304,9 +323,7 @@ class AuthFields extends StatelessWidget {
             },
           ),
         SizedBox(
-            height: isSignUp
-                ? MediaQuery.of(context).size.height * 0.01
-                : MediaQuery.of(context).size.height * 0.02),
+            height: isSignUp ? layout.height * 0.01 : layout.height * 0.02),
         TextFormField(
           controller: emailController,
           decoration: _buildInputDecoration('Email', context),
@@ -320,9 +337,7 @@ class AuthFields extends StatelessWidget {
           },
         ),
         SizedBox(
-            height: isSignUp
-                ? MediaQuery.of(context).size.height * 0.01
-                : MediaQuery.of(context).size.height * 0.02),
+            height: isSignUp ? layout.height * 0.01 : layout.height * 0.02),
         TextFormField(
           controller: passwordController,
           decoration: _buildInputDecoration(

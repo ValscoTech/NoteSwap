@@ -8,7 +8,7 @@ final GlobalKey<NavigatorState> rootKey = GlobalKey<NavigatorState>();
 final router = GoRouter(
   navigatorKey: rootKey,
   debugLogDiagnostics: true,
-  initialLocation: '/home',
+  initialLocation: '/auth',
   routes: <RouteBase>[
     GoRoute(
       path: '/auth',
