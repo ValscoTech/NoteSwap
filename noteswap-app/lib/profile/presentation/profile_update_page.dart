@@ -47,8 +47,8 @@ class _ProfileUpdatePageState extends State<ProfileUpdatePage> {
         String labelText, BuildContext context) {
       return InputDecoration(
         labelText: labelText,
-        labelStyle: const TextStyle(
-          color: Color.fromRGBO(13, 13, 13, 1),
+        labelStyle: TextStyle(
+          color: Theme.of(context).colorScheme.secondary,
           fontFamily: 'ClashDisplay',
           fontWeight: FontWeight.w400,
           fontSize: 20,
@@ -162,11 +162,13 @@ class _ProfileUpdatePageState extends State<ProfileUpdatePage> {
                     borderRadius: BorderRadius.circular(15),
                   ),
                 ),
-                child: const Text(
+                child: Text(
                   'Save',
                   style: TextStyle(
-                    fontSize: 16, // Adjust font size if needed
-                  ),
+                      color: Theme.of(context).colorScheme.onPrimary,
+                      fontFamily: 'ClashDisplay',
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600),
                 ),
               ),
             ],
