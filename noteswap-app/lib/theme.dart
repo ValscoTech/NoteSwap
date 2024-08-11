@@ -20,7 +20,7 @@ final lightTheme = ThemeData(
     primary: Color.fromRGBO(255, 255, 255, 1),
     onPrimary: Colors.white38,
     secondary: Color.fromRGBO(181, 148, 205, 1),
-    onSecondary: Colors.black,
+    onSecondary: Colors.black54,
     error: Colors.red,
     onError: Colors.redAccent,
     surface: Colors.black,
@@ -55,4 +55,3 @@ final darkTheme = ThemeData(
     onSurface: Colors.white70,
   ),
 );
-

@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:noteswap/profile/presentation/profile_update_page.dart';
 
 class RootPage extends StatefulWidget {
   final Widget child;
@@ -16,44 +17,46 @@ class _RootPageState extends State<RootPage> {
   int currentIndex = 0;
   @override
   Widget build(BuildContext context) {
+    final color = Theme.of(context).colorScheme;
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () {},
-        ),
-        title: const Text(
-          "NoteSwap",
-          style: TextStyle(
-            fontFamily: "ClashDisplay",
-            fontSize: 20,
-            fontStyle: FontStyle.normal,
-            fontWeight: FontWeight.w400,
-          ),
-        ),
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(
-            Radius.circular(32),
-          ),
-        ),
-        backgroundColor: Theme.of(context).colorScheme.surface,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.settings),
-            onPressed: () {
-              context.go('/update-profile');
-            },
-          ),
-        ],
-      ),
-      body: Container(
-        color: Theme.of(context).colorScheme.surface,
-        child: widget.child,
-      ),
+      appBar: currentIndex == 4
+          ? null
+          : AppBar(
+              leading: IconButton(
+                icon: const Icon(Icons.arrow_back),
+                onPressed: () {},
+              ),
+              title: const Text(
+                "NoteSwap",
+                style: TextStyle(
+                  fontFamily: "ClashDisplay",
+                  fontSize: 20,
+                  fontStyle: FontStyle.normal,
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.vertical(
+                    top: Radius.circular(12), bottom: Radius.circular(32)),
+              ),
+              backgroundColor: color.primary,
+              actions: [
+                IconButton(
+                  icon: const Icon(Icons.settings),
+                  onPressed: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                          builder: (context) => const ProfileUpdatePage()),
+                    );
+                  },
+                ),
+              ],
+            ),
+      body: widget.child,
       bottomNavigationBar: ClipRRect(
         borderRadius: const BorderRadius.vertical(top: Radius.circular(15)),
         child: BottomNavigationBar(
-          backgroundColor: Theme.of(context).colorScheme.onSurface,
+          backgroundColor: color.primary,
           type: BottomNavigationBarType.fixed,
           currentIndex: currentIndex,
           onTap: (index) {
@@ -82,17 +85,13 @@ class _RootPageState extends State<RootPage> {
             BottomNavigationBarItem(
               icon: SvgPicture.asset(
                 'assets/icons/home.svg',
-                color: currentIndex == 0
-                    ? const Color.fromRGBO(180, 148, 205, 1)
-                    : const Color.fromRGBO(166, 166, 166, 1),
+                color: currentIndex == 0 ? color.secondary : color.onSurface,
               ),
               label: "",
             ),
             BottomNavigationBarItem(
               icon: SvgPicture.asset('assets/icons/search.svg',
-                  color: currentIndex == 1
-                      ? const Color.fromRGBO(180, 148, 205, 1)
-                      : const Color.fromRGBO(166, 166, 166, 1)),
+                  color: currentIndex == 1 ? color.secondary : color.onSurface),
               label: "",
             ),
             BottomNavigationBarItem(
@@ -112,18 +111,14 @@ class _RootPageState extends State<RootPage> {
             BottomNavigationBarItem(
               icon: SvgPicture.asset(
                 'assets/icons/notification.svg',
-                color: currentIndex == 3
-                    ? const Color.fromRGBO(180, 148, 205, 1)
-                    : const Color.fromRGBO(166, 166, 166, 1),
+                color: currentIndex == 3 ? color.secondary : color.onSurface,
               ),
               label: "",
             ),
             BottomNavigationBarItem(
               icon: SvgPicture.asset(
                 'assets/icons/profile.svg',
-                color: currentIndex == 4
-                    ? const Color.fromRGBO(180, 148, 205, 1)
-                    : const Color.fromRGBO(166, 166, 166, 1),
+                color: currentIndex == 4 ? color.secondary : color.onSurface,
               ),
               label: "",
             ),

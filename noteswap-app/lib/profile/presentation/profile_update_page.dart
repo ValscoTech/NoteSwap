@@ -43,12 +43,13 @@ class _ProfileUpdatePageState extends State<ProfileUpdatePage> {
 
   @override
   Widget build(BuildContext context) {
+    final color = Theme.of(context).colorScheme;
     InputDecoration buildInputDecoration(
         String labelText, BuildContext context) {
       return InputDecoration(
         labelText: labelText,
         labelStyle: TextStyle(
-          color: Theme.of(context).colorScheme.secondary,
+          color: color.onSecondary,
           fontFamily: 'ClashDisplay',
           fontWeight: FontWeight.w400,
           fontSize: 20,
@@ -59,16 +60,24 @@ class _ProfileUpdatePageState extends State<ProfileUpdatePage> {
     }
 
     return Scaffold(
+      backgroundColor: color.primary,
       appBar: AppBar(
-        title: const Text('Update Profile'),
+        backgroundColor: color.primary,
+        title: const Text(
+          'Update Profile',
+          style: TextStyle(
+            fontFamily: 'ClashDisplay',
+            fontWeight: FontWeight.w400,
+            fontSize: 20,
+          ),
+        ),
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
+          icon: Icon(
+            Icons.arrow_back,
+            color: color.onSecondary,
+          ),
           onPressed: () {
-            if (GoRouter.of(context).canPop()) {
-              GoRouter.of(context).pop();
-            } else {
-              GoRouter.of(context).go('/profile');
-            }
+            Navigator.of(context).pop();
           },
         ),
       ),
@@ -165,7 +174,7 @@ class _ProfileUpdatePageState extends State<ProfileUpdatePage> {
                 child: Text(
                   'Save',
                   style: TextStyle(
-                      color: Theme.of(context).colorScheme.onPrimary,
+                      color: color.surface,
                       fontFamily: 'ClashDisplay',
                       fontSize: 16,
                       fontWeight: FontWeight.w600),
