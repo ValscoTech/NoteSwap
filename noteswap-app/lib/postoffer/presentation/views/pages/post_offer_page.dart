@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:noteswap/postoffer/domain/notes_model.dart';
-import 'package:noteswap/postoffer/views/widgets/dropdown_card.dart';
+import 'package:noteswap/postoffer/presentation/views/widgets/dropdown_card.dart';
+import 'package:noteswap/postoffer/presentation/views/widgets/upload_section.dart';
 
 class PostOfferPage extends StatefulWidget {
   const PostOfferPage({super.key});
@@ -19,9 +20,17 @@ class _PostOfferPageState extends State<PostOfferPage> {
   final List<String> modules = ['Module 1', 'Module 2', 'Module 3'];
   String? selectedSchool;
   List<String> selectedModules = [];
+  double _sliderValue = 0.0;
+
+  void onChanged(double value) {
+    setState(() {
+      priceController.text = value.toString();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
+    final layout = MediaQuery.of(context).size;
     final color = Theme.of(context).colorScheme;
     InputDecoration buildInputDecoration(
         String? labelText, BuildContext context) {
@@ -42,7 +51,6 @@ class _PostOfferPageState extends State<PostOfferPage> {
       child: Container(
         padding: const EdgeInsets.all(18),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
               'Offer Your Notes',
@@ -55,6 +63,7 @@ class _PostOfferPageState extends State<PostOfferPage> {
             Form(
               key: formKey,
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   TextFormField(
                     controller: titleController,
@@ -86,7 +95,7 @@ class _PostOfferPageState extends State<PostOfferPage> {
                       return null;
                     },
                   ),
-                  SizedBox(height: MediaQuery.of(context).size.height * 0.05),
+                  SizedBox(height: layout.height * 0.05),
                   DropdownCard(
                     hintText: 'Select School',
                     selectedValue: selectedSchool,
@@ -103,7 +112,7 @@ class _PostOfferPageState extends State<PostOfferPage> {
                       return null;
                     },
                   ),
-                  SizedBox(height: MediaQuery.of(context).size.height * 0.03),
+                  SizedBox(height: layout.height * 0.03),
                   DropdownCard(
                     hintText: 'Select Module',
                     selectedValue:
@@ -121,18 +130,68 @@ class _PostOfferPageState extends State<PostOfferPage> {
                       return null;
                     },
                   ),
-                  TextFormField(
-                    controller: priceController,
-                    decoration: buildInputDecoration('Price', context),
-                    keyboardType: TextInputType.number,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter a price';
-                      }
-                      return null;
-                    },
+                  SizedBox(height: layout.height * 0.03),
+                  Text(
+                    'Upload Preview of Notes',
+                    style: TextStyle(
+                      color: color.primary,
+                      fontSize: 20,
+                      fontWeight: FontWeight.w400,
+                    ),
                   ),
-                  // SizedBox(height: 20),
+                  SizedBox(height: layout.height * 0.02),
+                  const UploadSection(),
+                  SizedBox(height: layout.height * 0.02),
+                  Text(
+                    'Set Price',
+                    style: TextStyle(
+                      color: color.primary,
+                      fontSize: 20,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                  SliderTheme(
+                    data: SliderTheme.of(context).copyWith(
+                      trackHeight: 2.0,
+                      thumbShape:
+                          const RoundSliderThumbShape(enabledThumbRadius: 8.0),
+                      overlayShape:
+                          const RoundSliderOverlayShape(overlayRadius: 16.0),
+                      valueIndicatorTextStyle: TextStyle(
+                        color: color.surface,
+                      ),
+                    ),
+                    child: Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text('0 Rs',
+                                style: TextStyle(color: color.primary)),
+                            Expanded(
+                              child: Slider(
+                                value: _sliderValue,
+                                inactiveColor: color.primary,
+                                min: 0.0,
+                                max: 150.0,
+                                divisions: 150,
+                                label: _sliderValue.round().toString(),
+                                onChanged: (double value) {
+                                  setState(() {
+                                    _sliderValue = value;
+                                  });
+                                },
+                              ),
+                            ),
+                            Text('150 Rs',
+                                style: TextStyle(color: color.primary)),
+                          ],
+                        ),
+                        SizedBox(height: layout.height * 0.03),
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: layout.height * 0.02),
                   ElevatedButton(
                     onPressed: () {
                       if (formKey.currentState!.validate()) {
@@ -150,7 +209,23 @@ class _PostOfferPageState extends State<PostOfferPage> {
                         // Handle the notes object as needed
                       }
                     },
-                    child: Text('Submit'),
+                    style: ElevatedButton.styleFrom(
+                      minimumSize: const Size(263, 60),
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 18, horizontal: 24),
+                      backgroundColor: color.secondary,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                    ),
+                    child: Text(
+                      'Post Offer',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                        color: color.surface,
+                      ),
+                    ),
                   ),
                 ],
               ),

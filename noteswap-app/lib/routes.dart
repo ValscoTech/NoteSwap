@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:noteswap/auth/presentation/views/auth_page.dart';
-import 'package:noteswap/postoffer/views/pages/post_offer_page.dart';
+import 'package:noteswap/postoffer/presentation/views/pages/post_offer_page.dart';
 import 'package:noteswap/profile/presentation/profile_page.dart';
 import 'package:noteswap/root_page.dart';
 
