@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:noteswap/postoffer/domain/notes_model.dart';
+import 'package:noteswap/rentoffer/presentation/pages/rent_offer_page.dart';
 
 class RentCard extends StatefulWidget {
   final NotesModel notes;
@@ -154,9 +155,12 @@ class _RentCardState extends State<RentCard> {
                       ),
                     ),
                     onPressed: () {
-                      setState(() {
-                        isExpanded = !isExpanded;
-                      });
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              RentOfferPage(notes: widget.notes),
+                        ),
+                      );
                     },
                     child: Text(
                       'Rent Notes',
