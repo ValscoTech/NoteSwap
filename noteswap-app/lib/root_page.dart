@@ -23,13 +23,16 @@ class _RootPageState extends State<RootPage> {
           ? null
           : AppBar(
               leading: IconButton(
-                icon: const Icon(Icons.arrow_back),
+                icon: Icon(
+                  Icons.arrow_back,
+                  color: color.surface,
+                ),
                 onPressed: () {},
               ),
-              title: const Text(
+              title: Text(
                 "NoteSwap",
                 style: TextStyle(
-                  fontFamily: "ClashDisplay",
+                  color: color.surface,
                   fontSize: 20,
                   fontStyle: FontStyle.normal,
                   fontWeight: FontWeight.w400,
@@ -42,7 +45,10 @@ class _RootPageState extends State<RootPage> {
               backgroundColor: color.primary,
               actions: [
                 IconButton(
-                  icon: const Icon(Icons.settings),
+                  icon: Icon(
+                    Icons.settings,
+                    color: color.surface,
+                  ),
                   onPressed: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(
@@ -103,7 +109,9 @@ class _RootPageState extends State<RootPage> {
                     width: 2,
                   ),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  context.go('/add');
+                },
                 child: const Icon(Icons.add),
               ),
               label: "",

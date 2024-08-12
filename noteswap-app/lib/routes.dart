@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:noteswap/auth/presentation/views/auth_page.dart';
+import 'package:noteswap/postoffer/views/pages/post_offer_page.dart';
 import 'package:noteswap/profile/presentation/profile_page.dart';
 import 'package:noteswap/root_page.dart';
 
@@ -8,7 +9,7 @@ final GlobalKey<NavigatorState> rootKey = GlobalKey<NavigatorState>();
 final router = GoRouter(
   navigatorKey: rootKey,
   debugLogDiagnostics: true,
-  initialLocation: '/auth',
+  initialLocation: '/home',
   routes: <RouteBase>[
     GoRoute(
       path: '/auth',
@@ -29,7 +30,7 @@ final router = GoRouter(
         ),
         GoRoute(
           path: '/add',
-          builder: (context, state) => const Placeholder(),
+          builder: (context, state) => const PostOfferPage(),
         ),
         GoRoute(
           path: '/notification',

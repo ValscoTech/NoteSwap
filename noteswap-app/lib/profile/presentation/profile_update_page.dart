@@ -50,7 +50,6 @@ class _ProfileUpdatePageState extends State<ProfileUpdatePage> {
         labelText: labelText,
         labelStyle: TextStyle(
           color: color.onSecondary,
-          fontFamily: 'ClashDisplay',
           fontWeight: FontWeight.w400,
           fontSize: 20,
         ),
@@ -66,7 +65,6 @@ class _ProfileUpdatePageState extends State<ProfileUpdatePage> {
         title: const Text(
           'Update Profile',
           style: TextStyle(
-            fontFamily: 'ClashDisplay',
             fontWeight: FontWeight.w400,
             fontSize: 20,
           ),
@@ -166,7 +164,7 @@ class _ProfileUpdatePageState extends State<ProfileUpdatePage> {
                   minimumSize: const Size(263, 60),
                   padding:
                       const EdgeInsets.symmetric(vertical: 18, horizontal: 24),
-                  backgroundColor: const Color(0xFFB594CD),
+                  backgroundColor: color.secondary,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(15),
                   ),
@@ -175,7 +173,6 @@ class _ProfileUpdatePageState extends State<ProfileUpdatePage> {
                   'Save',
                   style: TextStyle(
                       color: color.surface,
-                      fontFamily: 'ClashDisplay',
                       fontSize: 16,
                       fontWeight: FontWeight.w600),
                 ),

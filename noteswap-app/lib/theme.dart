@@ -24,7 +24,7 @@ final lightTheme = ThemeData(
     error: Colors.red,
     onError: Colors.redAccent,
     surface: Colors.black,
-    onSurface: Colors.white70,
+    onSurface: Colors.grey,
   ),
 );
 
@@ -52,6 +52,6 @@ final darkTheme = ThemeData(
     error: Colors.red,
     onError: Colors.redAccent,
     surface: Colors.white,
-    onSurface: Colors.white70,
+    onSurface: Colors.grey,
   ),
 );
