@@ -1,7 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:noteswap/auth/controllers/auth_controller.dart';
 import 'package:noteswap/auth/presentation/widgets/custom_button.dart';
 import 'package:noteswap/auth/presentation/widgets/top_container.dart';
 import 'package:validators/validators.dart';
@@ -62,36 +60,36 @@ class _AuthPageState extends ConsumerState<AuthPage> {
       return;
     }
 
-    if (formKey.currentState!.validate()) {
-      if (isSignUp) {
-        ref.read(authControllerProvider.notifier).signUpWithEmailAndPassword(
-              nameController.text,
-              emailController.text,
-              passwordController.text,
-            );
-      } else {
-        ref.read(authControllerProvider.notifier).signInWithEmailAndPassword(
-              emailController.text,
-              passwordController.text,
-            );
-      }
-    }
+    // if (formKey.currentState!.validate()) {
+    //   if (isSignUp) {
+    //     ref.read(authControllerProvider.notifier).signUpWithEmailAndPassword(
+    //           nameController.text,
+    //           emailController.text,
+    //           passwordController.text,
+    //         );
+    //   } else {
+    //     ref.read(authControllerProvider.notifier).signInWithEmailAndPassword(
+    //           emailController.text,
+    //           passwordController.text,
+    //         );
+    //   }
+    // }
   }
 
   @override
   Widget build(BuildContext context) {
-    final AsyncValue<void> authState = ref.watch(authControllerProvider);
-    ref.listen<AsyncValue<void>>(authControllerProvider, (_, state) {
-      if (!state.isLoading && state.error != null) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(state.error.toString()),
-          ),
-        );
-      } // else if (!state.isLoading && state.hasValue) {
-      //   //TODO: Logic yet to decide
-      // }
-    });
+    // final AsyncValue<void> authState = ref.watch(authControllerProvider);
+    // ref.listen<AsyncValue<void>>(authControllerProvider, (_, state) {
+    //   if (!state.isLoading && state.error != null) {
+    //     ScaffoldMessenger.of(context).showSnackBar(
+    //       SnackBar(
+    //         content: Text(state.error.toString()),
+    //       ),
+    //     );
+    //   } // else if (!state.isLoading && state.hasValue) {
+    //   //   //TODO: Logic yet to decide
+    //   // }
+    // });
     final layout = MediaQuery.of(context).size;
     final color = Theme.of(context).colorScheme;
     return Scaffold(
@@ -122,19 +120,19 @@ class _AuthPageState extends ConsumerState<AuthPage> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            CustomButton(
-                              path: 'assets/icons/google-icon.svg',
-                              ltext: authState.isLoading
-                                  ? const CupertinoActivityIndicator()
-                                  : 'Google',
-                              onPressed: () {
-                                authState.isLoading
-                                    ? null
-                                    : ref
-                                        .read(authControllerProvider.notifier)
-                                        .signInWithGoogle();
-                              },
-                            ),
+                            // CustomButton(
+                            //   path: 'assets/icons/google-icon.svg',
+                            //   ltext: authState.isLoading
+                            //       ? const CupertinoActivityIndicator()
+                            //       : 'Google',
+                            //   onPressed: () {
+                            //     authState.isLoading
+                            //         ? null
+                            //         : ref
+                            //             .read(authControllerProvider.notifier)
+                            //             .signInWithGoogle();
+                            //   },
+                            // ),
                             CustomButton(
                               path: 'assets/icons/facebook-icon.svg',
                               ltext: 'Facebook',
