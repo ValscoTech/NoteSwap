@@ -3,10 +3,10 @@ export default function AccountPage() {
     <>
       {/* Navbar Component to be added*/}
 
-      <div className="bg-backgound-color w-full md:w-dvh">
+      <div className="bg-black w-full md:w-dvh">
         {/* Edit and Darkmode button */}
         <div className="justify-end items-center flex">
-          <button className="text-white bg-btn-bg-color text-xl md:text-3xl h-max text-center cursor-pointer rounded-xl my-5 mx-5 px-8 md:px-16 font-semibold py-3">
+          <button className="text-white bg-[#A883C5] text-xl md:text-3xl h-max text-center cursor-pointer rounded-xl my-5 mx-5 px-8 md:px-16 font-semibold py-3">
             Edit
           </button>
           <img
