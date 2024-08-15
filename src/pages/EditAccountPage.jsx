@@ -84,7 +84,7 @@ export default function EditAccountPage() {
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                className="md:border-b-2 ml-5 md:ml-0 text-xl bg-black text-white border-b-2 border-white h-12 px-2"
+                className="md:border-b-2 ml-5 md:ml-0 text-xl bg-black text-white border-b-2 border-white"
               />
             </div>
             <div className="py-5 flex md:block">
@@ -93,7 +93,7 @@ export default function EditAccountPage() {
                 type="text"
                 value={roomNo}
                 onChange={(e) => setRoomNo(e.target.value)}
-                className="md:border-b-2 ml-5 md:ml-0 text-xl bg-black text-white border-b-2 border-white h-12 px-2"
+                className="md:border-b-2 ml-5 md:ml-0 text-xl bg-black text-white border-b-2 border-white"
               />
             </div>
             <div className="py-5 flex md:block">
@@ -102,7 +102,7 @@ export default function EditAccountPage() {
                 type="text"
                 value={department}
                 onChange={(e) => setDepartment(e.target.value)}
-                className="md:border-b-2 ml-5 md:ml-0 text-xl bg-black text-white border-b-2 border-white h-12 px-2"
+                className="md:border-b-2 ml-5 md:ml-0 text-xl bg-black text-white border-b-2 border-white"
               />
             </div>
             <div className="py-5 flex md:block">
@@ -111,7 +111,7 @@ export default function EditAccountPage() {
                 type="text"
                 value={specialization}
                 onChange={(e) => setSpecialization(e.target.value)}
-                className="md:border-b-2 ml-5 md:ml-0 text-xl bg-black text-white border-b-2 border-white h-12 px-2"
+                className="md:border-b-2 ml-5 md:ml-0 text-xl bg-black text-white border-b-2 border-white"
               />
             </div>
           </div>
@@ -126,7 +126,7 @@ export default function EditAccountPage() {
               type="text"
               value={block}
               onChange={(e) => setBlock(e.target.value)}
-              className="border-b-2 text-xl bg-black text-white border-none flex-1 h-12 px-2"
+              className="border-b-2 text-xl bg-black text-white border-none flex-1"
               placeholder="          "
             />
           </div>
@@ -137,7 +137,7 @@ export default function EditAccountPage() {
               type="text"
               value={additionalRoomNo}
               onChange={(e) => setAdditionalRoomNo(e.target.value)}
-              className="border-b-2 text-xl bg-black text-white border-none flex-1 h-12 px-2"
+              className="border-b-2 text-xl bg-black text-white border-none flex-1"
               placeholder="          "
             />
           </div>
@@ -148,7 +148,7 @@ export default function EditAccountPage() {
               type="text"
               value={additionalDeptSpec}
               onChange={(e) => setAdditionalDeptSpec(e.target.value)}
-              className="border-b-2 text-xl bg-black text-white border-none flex-1 h-12 px-2"
+              className="border-b-2 text-xl bg-black text-white border-none flex-1"
               placeholder="                  "
             />
           </div>
