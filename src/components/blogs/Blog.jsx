@@ -1,13 +1,13 @@
 import { memo } from 'react'
-import blog1 from '@/components/images/blog1.jpg'
-import blog2 from '@/components/images/Blog2.png'
-import blog3 from '@/components/images/blog3.png'
+import blog1 from '@/assets/images/blog1.jpg'
+import blog2 from '@/assets/images/blog2.png'
+import blog3 from '@/assets/images/blog3.png'
 
 const Blog = () => {
     return (
         <div className='mx-4 md:mx-10 lg:mx-14'>
             <div className=''>
-                <h1 className='font-bold text-3xl sm:text-4xl lg:text-5xl mt-4 sm:mt-6 lg:mt-8 mb-6 sm:mb-8 lg:mb-12'>
+                <h1 className='font-bold text-3xl sm:text-4xl lg:text-5xl mb-6 sm:mb-8 lg:mb-12  mt-4 sm:mt-6 lg:mt-8'>
                     Blogs and Articles
                 </h1>
                 <h1 className='font-semibold text-2xl sm:text-3xl lg:text-4xl'>
