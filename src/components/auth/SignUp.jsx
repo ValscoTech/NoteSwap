@@ -73,7 +73,7 @@ function SignUp(){
                     <Link to="">
                         <button type="submit"
                              className="w-full bg-black text-white text-center py-3 rounded-md"
-                        >LOG IN</button>   
+                        >SIGN UP</button>   
                     </Link>
                     <br/>
                     <br/>
@@ -86,7 +86,7 @@ function SignUp(){
                             <button onClick={clickHandler}
                             className="text-[#A883C5]"
                             >
-                                Sign Up
+                                Log In
                             </button>
                         </div>
                     </div>
