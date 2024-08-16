@@ -23,6 +23,11 @@ notesRouter.get('/',async (req,res)=>{
         if(req.query.posted_by){
             queryToGetNotes=queryToGetNotes.eq('posted_by',req.query.posted_by);
         }
+
+        if(req.query.modulesCovered){
+            const modules=req.query.modulesCovered.split(',').map(module=>module.trim())
+            queryToGetNotes=queryToGetNotes.contains('modulesCovered',modules);
+        }
         const {data,error}=await queryToGetNotes;
         if(error){
             throw error;
