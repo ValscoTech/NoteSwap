@@ -5,6 +5,7 @@ import shelf from "../assets/images/shelf.png";
 import img3 from "../assets/images/image3.png";
 import img4 from "../assets/images/image4.png";
 import { GoArrowDownRight } from "react-icons/go";
+import Navbar from "@/components/layout/navbar";
 
 
 {/*Temporarily storing values locally */}
@@ -60,7 +61,7 @@ const data = [
 
 ];
 
-export default function HomePage() {
+export default function NotesPage() {
   const [minPrice, setMinPrice] = useState("");
   const [maxPrice, setMaxPrice] = useState("");
   const [selectedTypes, setSelectedTypes] = useState([]);
@@ -98,7 +99,7 @@ export default function HomePage() {
 
   return (
     <div className="font-clash">
-      {/*Navbar part*/}
+      {/*The navigation bar */}
       <div className="flex justify-center pb-20 pt-20">
         <form onSubmit={handleSubmit}>
           <div className="w-fit bg-white text-black pl-12 pr-8 pb-10 rounded-2xl">
@@ -185,7 +186,7 @@ export default function HomePage() {
       <div className="flex justify-center">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-20 justify-center gap-x-11 ">
           {filteredData.map((item) => (
-            <Link key={item.id} href={item.link}>
+            <a key={item.id} href={item.link}>
               <div className="bg-white text-black p-4 rounded-2xl w-fit cursor-pointer">
                 <div className="flex justify-normal gap-x-4 items-start">
                   <div className="pt-1">{item.department}</div>
@@ -219,11 +220,11 @@ export default function HomePage() {
                   </div>
                 </div>
               </div>
-            </Link>
+            </a>
           ))}
         </div>
       </div>
-      {/*Footer Part*/}
+      {/*The footer part */}
     </div>
   );
 }
