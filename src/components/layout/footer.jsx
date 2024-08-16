@@ -7,7 +7,7 @@ export default function Footer(){
 
    
     return(      
-            <div className="bg-black pt-10 text-white px-8 pb-[9rem] font-[clash]">
+            <div className="bg-black pt-10 text-white px-8 pb-[9rem] font-clash">
                 <hr className=" h-[4px]  bg-white  "></hr>
                 <div className="flex pt-9 pb-14 justify-between items-start ">
                     <span className=" text-2xl font-bold pt-0.5">NoteSwap</span>
