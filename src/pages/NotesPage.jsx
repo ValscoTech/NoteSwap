@@ -98,6 +98,7 @@ export default function HomePage() {
 
   return (
     <div className="font-clash">
+      {/*Navbar part*/}
       <div className="flex justify-center pb-20 pt-20">
         <form onSubmit={handleSubmit}>
           <div className="w-fit bg-white text-black pl-12 pr-8 pb-10 rounded-2xl">
@@ -222,7 +223,7 @@ export default function HomePage() {
           ))}
         </div>
       </div>
-      <Footer />
+      {/*Footer Part*/}
     </div>
   );
 }
