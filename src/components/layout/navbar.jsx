@@ -79,14 +79,14 @@ export default function Navbar() {
         <li>
           <button className="border-2 border-white text-white bg-black rounded-full px-4 py-2">
             <a href="src\components\offer">
-            Offer
+              Offer
             </a>
           </button>
         </li>
         <li>
           <button className="border-2 border-black text-black bg-white rounded-full px-4 py-2">
             <a href="src\components\rent">
-            Rent
+              Rent
             </a>
           </button>
         </li>
@@ -94,4 +94,3 @@ export default function Navbar() {
     </nav>
   );
 }
-navbar
