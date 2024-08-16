@@ -2,6 +2,7 @@ import { memo } from 'react'
 import blog1 from '@/assets/images/blog1.jpg'
 import blog2 from '@/assets/images/blog2.png'
 import blog3 from '@/assets/images/blog3.png'
+import blog4 from '@/assets/images/blog4.png'
 
 const Blog = () => {
     return (
@@ -43,33 +44,33 @@ const Blog = () => {
                         <div className="space-y-5 lg:ml-60 max-w-[400px]">
                             <div className="rounded-md">
                                 <h3 className="text-xl font-bold text-[#A883C5] uppercase">Popular Posts</h3>
-                                <div className="border-b border-white my-5 flex flex-row">
-                                    <div className='my-3' >
-                                        <img src={blog2} alt="blog2" className='w-40 h-28 sm:w-28 sm:h-28 lg:w-32 lg:h-32 object-cover' />
+                                <a href={'https://www.valscotech.com/BlogPage/4hNtpJZQNN5O8jzCt6HP'} target='_blank' className="border-b border-white my-5 flex flex-row hover:bg-[#626161] transition-all duration-300 ease-in-out transform hover:scale-105">
+                                    <div className='my-3 w-40' >
+                                        <img src={blog4} alt="blog2" className=' h-28 sm:w-28 sm:h-28 lg:w-32 lg:h-32 object-fill' />
                                     </div>
                                     <div className='my-3 mx-3'>
-                                        <h4 className="text-lg font-medium text-[#A883C5] uppercase">Product</h4>
-                                        <p className='text-xl'>Meet Jurident: The App that revolutionizes Legal Workflow</p>
+                                        <h4 className="text-sm font-medium text-[#A883C5] uppercase">Product</h4>
+                                        <p className='text-lg'>Meet Jurident: The App that revolutionizes Legal Workflow</p>
                                     </div>
-                                </div>
-                                <div className="border-b border-white my-5 flex flex-row">
-                                    <div className='my-3' >
-                                        <img src={blog3} alt="blog2" className='w-40 h-28 sm:w-28 sm:h-28 lg:w-32 lg:h-32 object-cover' />
-                                    </div>
-                                    <div className='my-3 mx-3'>
-                                        <h4 className="text-lg font-medium text-[#A883C5] uppercase">Blogs | Nishita jaiswal</h4>
-                                        <p className='text-xl'>AI in the Courtroom: A New Era of Litigation. </p>
-                                    </div>
-                                </div>
-                                <div className="border-b border-white my-5 flex flex-row">
-                                    <div className='my-3' >
-                                        <img src={blog2} alt="blog2" className='w-40 h-28 sm:w-28 sm:h-28 lg:w-32 lg:h-32 object-cover' />
+                                </a>
+                                <a href={"https://www.valscotech.com/BlogPage/kGdtskcO7XdIpW3D637h"} target='_blank' className="border-b border-white my-5 flex flex-row hover:bg-[#626161] transition-all duration-300 ease-in-out transform hover:scale-105">
+                                    <div className='my-3 w-32' >
+                                        <img src={blog3} alt="blog2" className=' h-28 sm:w-28 sm:h-28 lg:w-32 lg:h-32 object-fill' />
                                     </div>
                                     <div className='my-3 mx-3'>
-                                        <h4 className="text-lg font-medium text-[#A883C5] uppercase">Blogs | akshat singh</h4>
-                                        <p className='text-xl'>The benefits of implementing a National Legal Case Database </p>
+                                        <h4 className="text-sm font-medium text-[#A883C5] uppercase">Blogs | Nishita jaiswal</h4>
+                                        <p className='text-lg'>AI in the Courtroom: A New Era of Litigation. </p>
                                     </div>
-                                </div>
+                                </a>
+                                <a href={"https://www.valscotech.com/BlogPage/BB3kYZMXjDw8Jr6I0fsQ"} target='_blank' className="border-b border-white my-5 flex flex-row hover:bg-[#626161] transition-all duration-300 ease-in-out transform hover:scale-105">
+                                    <div className='my-3 w-40' >
+                                        <img src={blog2} alt="blog2" className='w-40 h-28 sm:w-28 sm:h-28 lg:w-32 lg:h-32 object-fill' />
+                                    </div>
+                                    <div className='my-3 mx-3'>
+                                        <h4 className="text-sm font-medium text-[#A883C5] uppercase">Blogs | akshat singh</h4>
+                                        <p className='text-lg'>The benefits of implementing a National Legal Case Database </p>
+                                    </div>
+                                </a>
                             </div>
                             <div className="flex flex-col text-center rounded-none">
                                 <div className="flex flex-col items-center px-10 py-8 w-full rounded bg-[#A883C5]">
@@ -77,7 +78,7 @@ const Blog = () => {
                                     <p className="self-stretch mt-4 text-xl leading-8 bg-[#A883C5] text-[#060125]">
                                         Energize Your Software Solutions with our comprehensive range of services.
                                     </p>
-                                    <button className={` mt-14 py-3 pr-7 pl-8 max-w-full text-base leading-none bg-[#DEEBFF] rounded border-2 border-solid text-[#091E42] w-[162px]`}> Get Started
+                                    <button className={` mt-14 py-3 pr-7 pl-8 max-w-full text-base leading-none bg-[#DEEBFF] rounded border-2 border-solid text-[#091E42] w-[162px] transition-all duration-300 ease-in-out transform hover:scale-105`}> Get Started
                                     </button>
                                 </div>
                             </div>
