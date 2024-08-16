@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { HomePage, AccountPage, NotesPage, OfferNotesPage, RentNotesPage, BlogsPage, LoginPage, EditAccountPage } from '@/pages';
+import { HomePage, AccountPage, NotesPage, OfferNotesPage, RentNotesPage, BlogsPage, LoginPage, EditAccountPage,SignUpPage } from '@/pages';
 
 function App() {
   return (
@@ -15,6 +15,7 @@ function App() {
             <Route path="/rent" element={<RentNotesPage />} />
             <Route path="/blog" element={<BlogsPage />} />
             <Route path="/edit-account" element={<EditAccountPage />} />
+            <Route path="/signup" element={<><SignUpPage/></>}/>
           </Routes>
         </BrowserRouter>
       </div>

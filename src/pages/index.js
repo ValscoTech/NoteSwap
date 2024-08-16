@@ -7,3 +7,4 @@ export { default as RentNotesPage } from './RentNotesPage';
 export { default as BlogsPage } from './BlogsPage';
 export { default as LoginPage } from './LoginPage';
 export { default as EditAccountPage } from './EditAccountPage'; // Make sure this line is present
+export { default as SignUpPage } from './SignUpPage';
