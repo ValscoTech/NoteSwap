@@ -50,7 +50,7 @@ const data = [
 
 ];
 
-export default function NotesPage() {
+export default function HomePage() {
   const navigate=useNavigate();
   const [minPrice, setMinPrice] = useState("");
   const [maxPrice, setMaxPrice] = useState("");
