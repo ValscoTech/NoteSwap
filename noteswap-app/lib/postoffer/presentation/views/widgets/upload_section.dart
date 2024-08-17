@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter_svg/svg.dart';
 
 class UploadSection extends StatefulWidget {
   const UploadSection({super.key});
@@ -10,7 +11,6 @@ class UploadSection extends StatefulWidget {
 
 class _UploadSectionState extends State<UploadSection> {
   final double _uploadProgress = 0.0;
-
 
   Future<void> _pickFiles() async {
     FilePickerResult? result =
@@ -82,8 +82,8 @@ class _UploadSectionState extends State<UploadSection> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Image.asset(
-                      'assets/upload.png',
+                    SvgPicture.asset(
+                      'assets/icons/upload.svg',
                     ),
                     const SizedBox(height: 5),
                     const Text(
