@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:noteswap/auth/presentation/widgets/custom_button.dart';
 import 'package:noteswap/auth/presentation/widgets/top_container.dart';
 import 'package:validators/validators.dart';
@@ -57,9 +58,8 @@ class _AuthPageState extends ConsumerState<AuthPage> {
           ],
         ),
       );
-      return;
     }
-
+    context.go('/home');
     // if (formKey.currentState!.validate()) {
     //   if (isSignUp) {
     //     ref.read(authControllerProvider.notifier).signUpWithEmailAndPassword(
@@ -120,19 +120,17 @@ class _AuthPageState extends ConsumerState<AuthPage> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            // CustomButton(
-                            //   path: 'assets/icons/google-icon.svg',
-                            //   ltext: authState.isLoading
-                            //       ? const CupertinoActivityIndicator()
-                            //       : 'Google',
-                            //   onPressed: () {
-                            //     authState.isLoading
-                            //         ? null
-                            //         : ref
-                            //             .read(authControllerProvider.notifier)
-                            //             .signInWithGoogle();
-                            //   },
-                            // ),
+                            CustomButton(
+                              path: 'assets/icons/google-icon.svg',
+                              ltext: 'Google',
+                              onPressed: () {
+                                // authState.isLoading
+                                //     ? null
+                                //     : ref
+                                //         .read(authControllerProvider.notifier)
+                                //         .signInWithGoogle();
+                              },
+                            ),
                             CustomButton(
                               path: 'assets/icons/facebook-icon.svg',
                               ltext: 'Facebook',

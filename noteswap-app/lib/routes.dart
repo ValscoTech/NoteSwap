@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:noteswap/onboarding/presentation/onboarding_slides_screen.dart';
+import 'package:noteswap/onboarding/presentation/splash_screen.dart';
 import 'package:noteswap/root_page.dart';
 import 'package:noteswap/auth/presentation/views/auth_page.dart';
 import 'package:noteswap/feed/presentation/feed_screen.dart';
@@ -12,8 +14,16 @@ final GlobalKey<NavigatorState> rootKey = GlobalKey<NavigatorState>();
 final router = GoRouter(
   navigatorKey: rootKey,
   debugLogDiagnostics: true,
-  initialLocation: '/home',
+  initialLocation: '/splash',
   routes: <RouteBase>[
+    GoRoute(
+      path: '/splash',
+      builder: (context, state) => const SplashScreen(),
+    ),
+    GoRoute(
+      path: '/board',
+      builder: (context, state) => const OnboardingSlidesScreen(),
+    ),
     GoRoute(
       path: '/auth',
       builder: (context, state) => const AuthPage(),
