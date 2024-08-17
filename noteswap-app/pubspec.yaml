@@ -39,6 +39,7 @@ flutter:
     - assets/
     - assets/icons/
     - assets/school/
+    - assets/onboarding/
   fonts:
     - family: ClashDisplay
       fonts:
