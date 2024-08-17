@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:noteswap/root_page.dart';
 import 'package:noteswap/auth/presentation/views/auth_page.dart';
+import 'package:noteswap/feed/presentation/feed_screen.dart';
 import 'package:noteswap/postoffer/presentation/views/pages/post_offer_page.dart';
 import 'package:noteswap/profile/presentation/profile_page.dart';
 import 'package:noteswap/rentoffer/presentation/pages/rent_offer_feed_page.dart';
-import 'package:noteswap/root_page.dart';
+import 'package:noteswap/search/presentation/search_notes_page.dart';
 
 final GlobalKey<NavigatorState> rootKey = GlobalKey<NavigatorState>();
 final router = GoRouter(
@@ -23,11 +25,11 @@ final router = GoRouter(
       routes: [
         GoRoute(
           path: '/home',
-          builder: (context, state) => const Placeholder(),
+          builder: (context, state) => const FeedScreen(),
         ),
         GoRoute(
           path: '/search',
-          builder: (context, state) => const Placeholder(),
+          builder: (context, state) => const SearchNotesPage(),
         ),
         GoRoute(
           path: '/add',

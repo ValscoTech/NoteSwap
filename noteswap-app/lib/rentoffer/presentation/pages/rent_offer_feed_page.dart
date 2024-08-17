@@ -15,17 +15,19 @@ class _RentOfferFeedPageState extends State<RentOfferFeedPage> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Container(
-        padding: const EdgeInsets.all(16.0),
-        child: ListView.builder(
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          itemCount: rentOffers.length,
-          itemBuilder: (context, index) {
-            final rentOffer = rentOffers[index];
-            return RentCard(notes: rentOffer);
-          },
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: Container(
+          padding: const EdgeInsets.all(16.0),
+          child: ListView.builder(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: rentOffers.length,
+            itemBuilder: (context, index) {
+              final rentOffer = rentOffers[index];
+              return RentCard(notes: rentOffer);
+            },
+          ),
         ),
       ),
     );
