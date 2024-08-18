@@ -199,10 +199,10 @@ class _OnboardingSlidesScreenState extends State<OnboardingSlidesScreen>
     return Container(
       color: color.surface,
       width: double.infinity,
-      height: 240,
+      height: 260,
       padding: const EdgeInsets.symmetric(
         horizontal: 32.0,
-        vertical: 64,
+        vertical: 62,
       ),
       child: buildText(
         text,
@@ -254,8 +254,9 @@ class _OnboardingSlidesScreenState extends State<OnboardingSlidesScreen>
       child: ElevatedButton(
         onPressed: _nextPage,
         style: ElevatedButton.styleFrom(
+          minimumSize: const Size(263, 60),
+          padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 24),
           backgroundColor: color.secondary,
-          padding: const EdgeInsets.symmetric(horizontal: 100, vertical: 18),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(15),
           ),
@@ -263,9 +264,9 @@ class _OnboardingSlidesScreenState extends State<OnboardingSlidesScreen>
         child: Text(
           'Next',
           style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.w600,
             color: color.surface,
-            fontSize: 18.0,
-            fontWeight: FontWeight.w500,
           ),
         ),
       ),
