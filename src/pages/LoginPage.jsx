@@ -7,10 +7,10 @@ export default function LoginPage() {
   return (
     <>
       <div className="flex flex-col flex-wrap gap-y-4">
-      <Navbar/>
+      
       <Login/>
       <Character/>
-      <Footer/>
+      
       </div>
     </>
   )
