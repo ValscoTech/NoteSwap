@@ -1,5 +1,5 @@
 import React from "react";
-
+import logo from "@/assets/images/logo.png";
 export default function Navbar() {
   return (
 
@@ -7,7 +7,7 @@ export default function Navbar() {
       <div className="logo">
         <a href="/">
           <img
-            src="src\assets\images\logo.png"
+            src={logo}
             alt="Logo"
             className="w-[272px] h-[122px] flex-shrink-0"
           />
@@ -79,14 +79,14 @@ export default function Navbar() {
         <li>
           <button className="border-2 border-white text-white bg-black rounded-full px-4 py-2">
             <a href="src\components\offer">
-              Offer
+            Offer
             </a>
           </button>
         </li>
         <li>
           <button className="border-2 border-black text-black bg-white rounded-full px-4 py-2">
             <a href="src\components\rent">
-              Rent
+            Rent
             </a>
           </button>
         </li>
