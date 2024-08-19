@@ -1,22 +1,25 @@
 import Footer from "@/components/layout/footer";
+import Navbar from "@/components/layout/navbar";
 import { useNavigate } from "react-router-dom";
 
-export default function AccountPage() {
-
+export default function AccountPage({}) {
   const navigate = useNavigate();
 
   const handleChange = () => {
-    navigate('/edit-account'); // Navigate to edit account page
+    navigate("/edit-account"); // Navigate to edit account page
   };
 
   return (
     <>
-      {/* Navbar Component to be added*/}
+      <Navbar />
 
       <div className="bg-backgound-color w-full md:w-dvh">
         {/* Edit and Darkmode button */}
         <div className="justify-end items-center flex">
-          <button onClick={handleChange} className="text-white bg-[#A883C5] text-xl md:text-3xl h-max text-center cursor-pointer rounded-xl my-5 mx-5 px-8 md:px-16 font-semibold py-3">
+          <button
+            onClick={handleChange}
+            className="text-white bg-[#A883C5] text-xl md:text-3xl h-max text-center cursor-pointer rounded-xl my-5 mx-5 px-8 md:px-16 font-semibold py-3"
+          >
             Edit
           </button>
           <img
