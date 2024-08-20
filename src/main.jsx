@@ -13,13 +13,13 @@ if (!PUBLISHABLE_KEY) {
 const clerkFrontendApi = import.meta.env.VITE_CLERK_FRONTEND_API_URL;
 
 if (!clerkFrontendApi) {
-    throw new Error("Missing frontend api")
-  }
+  throw new Error("Missing frontend api")
+}
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <ClerkProvider publishableKey={PUBLISHABLE_KEY} afterSignOutUrl="/">
-    {/* <ClerkProvider frontendApi={clerkFrontendApi} publishableKey={PUBLISHABLE_KEY}> */}
+      {/* <ClerkProvider frontendApi={clerkFrontendApi} publishableKey={PUBLISHABLE_KEY}> */}
       <App />
     </ClerkProvider>
   </StrictMode>,
