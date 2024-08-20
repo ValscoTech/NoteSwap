@@ -1,3 +1,4 @@
+import NotesView from "@/components/common/NotesView";
 import Footer from "@/components/layout/footer";
 import Navbar from "@/components/layout/navbar";
 import { useNavigate } from "react-router-dom";
@@ -11,8 +12,6 @@ export default function AccountPage({}) {
 
   return (
     <>
-      <Navbar />
-
       <div className="bg-backgound-color w-full md:w-dvh">
         {/* Edit and Darkmode button */}
         <div className="justify-end items-center flex">
@@ -88,8 +87,6 @@ export default function AccountPage({}) {
           {/* Notes Components to be added*/}
         </div>
       </div>
-
-      <Footer />
     </>
   );
 }
