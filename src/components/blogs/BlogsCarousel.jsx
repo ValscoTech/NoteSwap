@@ -37,8 +37,6 @@ const BlogsCarousel = () => {
     };
 
 
-
-
     return (
         <div className='my-14 mx-4 md:mx-10 lg:mx-14'>
             <div className='my-3'>
