@@ -170,8 +170,6 @@ export default function EditAccountPage() {
           </div>
         </div>
       </div>
-
-      {/* Footer Component to be added */}
     </>
   );
 }
