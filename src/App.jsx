@@ -8,7 +8,7 @@ function App() {
   return (
     <>
       <div className='font-clash bg-black text-white min-h-screen'>
-        <SignedOut>
+        {/* <SignedOut>
           <main className='h-screen flex items-center justify-center'>
             <BrowserRouter>
               <Routes>
@@ -16,9 +16,9 @@ function App() {
                 <Route path="/sign-in" element={<SignIn routing="hash" />} />
               </Routes>
             </BrowserRouter>
-          </main>
-        </SignedOut>
-        <SignedIn>
+          </main> */}
+        {/* </SignedOut> */}
+        {/* <SignedIn> */}
           <Navbar />
           <BrowserRouter>
             {/* <UserButton/> */}
@@ -35,7 +35,7 @@ function App() {
             </Routes>
           </BrowserRouter>
           <Footer />
-        </SignedIn>
+        {/* </SignedIn> */}
       </div>
     </>
   );

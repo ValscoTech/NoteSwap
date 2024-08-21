@@ -12,11 +12,10 @@ export default function EditAccountPage() {
   const [block, setBlock] = useState('');
   const [additionalRoomNo, setAdditionalRoomNo] = useState('');
   const [additionalDeptSpec, setAdditionalDeptSpec] = useState('');
-  const [profilePic, setProfilePic] = useState('src/components/images/userProfilePhoto.png');
+  const [profilePic, setProfilePic] = useState('/src/assets/images/userProfilePhoto.png');
 
   // Handle save action
   const handleSave = () => {
-    // Save user details and profile pic here
     localStorage.setItem(
       'userDetails',
       JSON.stringify({
@@ -53,7 +52,7 @@ export default function EditAccountPage() {
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        setProfilePic(reader.result);
+        setProfilePic(reader.result); // Set the new profile picture URL
       };
       reader.readAsDataURL(file);
     }
@@ -63,10 +62,10 @@ export default function EditAccountPage() {
     <>
       {/* Navbar Component to be added */}
 
-      <div className="bg-black w-full md:w-dvh">
+      <div className="bg-backgound-color w-full md:w-dvh">
         {/* Profile Photo and User Details */}
         <div className="text-white md:flex">
-          {/* Profile Photo */}
+          {/* profile photo  */}
           <div className="max-w-3xl w-full md:w-1/2 flex justify-center">
             <img
               src={profilePic}
@@ -84,7 +83,7 @@ export default function EditAccountPage() {
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                className="md:border-b-2 ml-5 md:ml-0 text-xl bg-black text-white border-b-2 border-white"
+                className="md:border-b-2 ml-5 md:ml-0 text-xl bg-black text-white border-b-2 border-white w-full"
               />
             </div>
             <div className="py-5 flex md:block">
@@ -93,7 +92,7 @@ export default function EditAccountPage() {
                 type="text"
                 value={roomNo}
                 onChange={(e) => setRoomNo(e.target.value)}
-                className="md:border-b-2 ml-5 md:ml-0 text-xl bg-black text-white border-b-2 border-white"
+                className="md:border-b-2 ml-5 md:ml-0 text-xl bg-black text-white border-b-2 border-white w-full"
               />
             </div>
             <div className="py-5 flex md:block">
@@ -102,7 +101,7 @@ export default function EditAccountPage() {
                 type="text"
                 value={department}
                 onChange={(e) => setDepartment(e.target.value)}
-                className="md:border-b-2 ml-5 md:ml-0 text-xl bg-black text-white border-b-2 border-white"
+                className="md:border-b-2 ml-5 md:ml-0 text-xl bg-black text-white border-b-2 border-white w-full"
               />
             </div>
             <div className="py-5 flex md:block">
@@ -111,7 +110,7 @@ export default function EditAccountPage() {
                 type="text"
                 value={specialization}
                 onChange={(e) => setSpecialization(e.target.value)}
-                className="md:border-b-2 ml-5 md:ml-0 text-xl bg-black text-white border-b-2 border-white"
+                className="md:border-b-2 ml-5 md:ml-0 text-xl bg-black text-white border-b-2 border-white w-full"
               />
             </div>
           </div>
@@ -127,7 +126,6 @@ export default function EditAccountPage() {
               value={block}
               onChange={(e) => setBlock(e.target.value)}
               className="border-b-2 text-xl bg-black text-white border-none flex-1"
-              placeholder="          "
             />
           </div>
           <div className="py-5 flex items-center">
@@ -138,7 +136,6 @@ export default function EditAccountPage() {
               value={additionalRoomNo}
               onChange={(e) => setAdditionalRoomNo(e.target.value)}
               className="border-b-2 text-xl bg-black text-white border-none flex-1"
-              placeholder="          "
             />
           </div>
           <div className="py-5 items-center">
@@ -149,7 +146,6 @@ export default function EditAccountPage() {
               value={additionalDeptSpec}
               onChange={(e) => setAdditionalDeptSpec(e.target.value)}
               className="border-b-2 text-xl bg-black text-white border-none flex-1"
-              placeholder="                  "
             />
           </div>
         </div>
@@ -158,22 +154,22 @@ export default function EditAccountPage() {
         <div className="flex justify-center my-80">
           <div className="flex flex-col items-center">
             <button
-              className="text-white bg-[#A883C5] text-xl md:text-3xl w-[800px] h-[167px] text-center cursor-pointer rounded-xl mb-5 font-semibold py-3"
+              className="text-white bg-[#A883C5] text-xl md:text-3xl text-center cursor-pointer rounded-xl mb-5 font-semibold py-3"
               onClick={handleSave}
+              style={{ width: '745px', height: '167px' }}
             >
               Save
             </button>
             <button
-              className="text-white bg-[#A883C5] text-xl md:text-3xl w-[800px] h-[167px] text-center cursor-pointer rounded-xl font-semibold py-3"
+              className="text-white bg-[#A883C5] text-xl md:text-3xl text-center cursor-pointer rounded-xl font-semibold py-3"
               onClick={handleLogOut}
+              style={{ width: '745px', height: '167px' }}
             >
               Log Out
             </button>
           </div>
         </div>
       </div>
-
-      {/* Footer Component to be added */}
     </>
   );
 }
