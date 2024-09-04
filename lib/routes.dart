@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:noteswap/onboarding/presentation/onboarding_slides_screen.dart';
 import 'package:noteswap/onboarding/presentation/splash_screen.dart';
+import 'package:noteswap/payments/presentation/payment_screen.dart';
 import 'package:noteswap/root_page.dart';
 import 'package:noteswap/auth/presentation/views/auth_page.dart';
 import 'package:noteswap/feed/presentation/feed_screen.dart';
@@ -27,6 +28,10 @@ final router = GoRouter(
     GoRoute(
       path: '/auth',
       builder: (context, state) => const AuthPage(),
+    ),
+    GoRoute(
+      path: '/payment',
+      builder: (context, state) => const PaymentScreen(),
     ),
     ShellRoute(
       builder: (context, state, child) {
