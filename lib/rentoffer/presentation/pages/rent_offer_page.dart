@@ -10,6 +10,7 @@ class RentOfferPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = Theme.of(context).colorScheme;
     final layout = MediaQuery.of(context).size;
+    final bright = Theme.of(context).brightness;
     return Scaffold(
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20),
@@ -77,14 +78,22 @@ class RentOfferPage extends StatelessWidget {
             SizedBox(height: layout.height * 0.03),
             Card(
               elevation: 4.0,
+              color: color.secondary,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(8.0),
               ),
               child: Theme(
                 data: ThemeData(
-                  colorScheme: ColorScheme.light(
-                    primary: color.secondary,
-                  ),
+                  brightness: bright,
+                  colorScheme: bright == Brightness.light
+                      ? ColorScheme.light(
+                          primary: color.primary,
+                          onPrimary: color.surface,
+                        )
+                      : ColorScheme.dark(
+                          primary: color.surface,
+                          onPrimary: color.primary,
+                        ),
                   textButtonTheme: TextButtonThemeData(
                     style: TextButton.styleFrom(
                       iconColor: color.secondary,

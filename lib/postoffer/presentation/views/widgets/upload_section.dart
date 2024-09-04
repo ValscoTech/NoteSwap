@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter_svg/svg.dart';
@@ -19,11 +20,15 @@ class _UploadSectionState extends State<UploadSection> {
     if (result != null) {
       for (var file in result.files) {
         // _uploadFile(file);
-        print('File selected: ${file.name}');
+        if (kDebugMode) {
+          print('File selected: ${file.name}');
+        }
       }
     } else {
       // User canceled the picker
-      print('File selection canceled');
+      if (kDebugMode) {
+        print('File selection canceled');
+      }
     }
     ('File selection canceled');
   }

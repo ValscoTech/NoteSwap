@@ -335,11 +335,11 @@ class _CreditCardState extends State<CreditCard> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Row(
+            const Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Icon(Icons.security, color: Colors.white, size: 20),
-                const Icon(Icons.more_vert, color: Colors.white, size: 20),
+                Icon(Icons.security, color: Colors.white, size: 20),
+                Icon(Icons.more_vert, color: Colors.white, size: 20),
               ],
             ),
             const SizedBox(
