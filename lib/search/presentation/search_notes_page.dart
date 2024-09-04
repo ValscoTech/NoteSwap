@@ -14,26 +14,54 @@ class _SearchNotesPageState extends State<SearchNotesPage> {
     return Scaffold(
       body: Column(
         children: [
-          Center(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-              child: TextField(
-                decoration: InputDecoration(
-                  hintText: 'Search',
-                  hintStyle: TextStyle(color: color.onSurface),
-                  prefixIcon: Icon(
-                    Icons.search,
-                    color: color.primary,
+          Row(
+            children: [
+              Expanded(
+                child: Center(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 24, vertical: 16),
+                    child: TextField(
+                      decoration: InputDecoration(
+                        hintText: 'Search',
+                        hintStyle: TextStyle(color: color.onSurface),
+                        prefixIcon: Icon(
+                          Icons.search,
+                          color: color.primary,
+                        ),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(30),
+                          borderSide: BorderSide.none,
+                        ),
+                        filled: true,
+                        fillColor: color.onInverseSurface,
+                      ),
+                    ),
                   ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30),
-                    borderSide: BorderSide.none,
-                  ),
-                  filled: true,
-                  fillColor: color.onInverseSurface,
                 ),
               ),
-            ),
+              ElevatedButton(
+                onPressed: () {
+                  // Handle button press event (e.g., open filter options)
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.black,
+                  foregroundColor: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                ),
+                child: const Row(
+                  children: [
+                    Icon(
+                      Icons.filter_list,
+                      color: Colors.white,
+                    ),
+                    Text('Filter', style: TextStyle(color: Colors.white)),
+                  ],
+                ),
+              ),
+            ],
           ),
           Expanded(
             child: ListView.builder(

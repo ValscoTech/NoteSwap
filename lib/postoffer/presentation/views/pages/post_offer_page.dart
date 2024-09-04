@@ -18,8 +18,10 @@ class _PostOfferPageState extends State<PostOfferPage> {
   final priceController = TextEditingController();
   final List<String> schools = ['A', ' B', 'C'];
   final List<String> modules = ['Module 1', 'Module 2', 'Module 3'];
+  final List<String> slots = ['slot 1', 'slot 2', 'slot 3'];
   String? selectedSchool;
   List<String> selectedModules = [];
+  List<String> selectedSlots = [];
   double _sliderValue = 0.0;
 
   void onChanged(double value) {
@@ -128,6 +130,24 @@ class _PostOfferPageState extends State<PostOfferPage> {
                       validator: (value) {
                         if (value == null) {
                           return 'Please select a module';
+                        }
+                        return null;
+                      },
+                    ),
+                    SizedBox(height: layout.height * 0.03),
+                    DropdownCard(
+                      hintText: 'Select Slot',
+                      selectedValue:
+                          selectedSlots.isNotEmpty ? selectedSlots[0] : null,
+                      items: slots,
+                      onChanged: (newValue) {
+                        setState(() {
+                          selectedSlots = [newValue!];
+                        });
+                      },
+                      validator: (value) {
+                        if (value == null) {
+                          return 'Please select a slot';
                         }
                         return null;
                       },
