@@ -1,6 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:noteswap/auth/controller/auth_controller.dart';
 import 'package:noteswap/auth/presentation/widgets/custom_button.dart';
 import 'package:noteswap/auth/presentation/widgets/top_container.dart';
 import 'package:validators/validators.dart';
@@ -20,6 +22,7 @@ class _AuthPageState extends ConsumerState<AuthPage> {
   final formKey = GlobalKey<FormState>();
   @override
   void dispose() {
+    nameController.dispose();
     emailController.dispose();
     passwordController.dispose();
     super.dispose();
@@ -48,7 +51,7 @@ class _AuthPageState extends ConsumerState<AuthPage> {
       showDialog(
         context: context,
         builder: (context) => AlertDialog(
-          title: const Text('Error'),
+          title: const Text('Terms and Conditions'),
           content: const Text('You must agree to the terms and conditions.'),
           actions: [
             TextButton(
@@ -58,40 +61,54 @@ class _AuthPageState extends ConsumerState<AuthPage> {
           ],
         ),
       );
+      return;
     }
-    context.go('/home');
-    // if (formKey.currentState!.validate()) {
-    //   if (isSignUp) {
-    //     ref.read(authControllerProvider.notifier).signUpWithEmailAndPassword(
-    //           nameController.text,
-    //           emailController.text,
-    //           passwordController.text,
-    //         );
-    //   } else {
-    //     ref.read(authControllerProvider.notifier).signInWithEmailAndPassword(
-    //           emailController.text,
-    //           passwordController.text,
-    //         );
-    //   }
-    // }
+    if (formKey.currentState!.validate()) {
+      if (isSignUp) {
+        ref.read(authControllerProvider.notifier).signUpWithEmailAndPassword(
+              emailController.text,
+              nameController.text,
+              passwordController.text,
+            );
+      }
+    } else {
+      if (formKey.currentState!.validate()) {
+        if (!isSignUp) {
+          ref.read(authControllerProvider.notifier).loginWithEmailAndPassword(
+                emailController.text,
+                passwordController.text,
+              );
+        }
+      }
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    // final AsyncValue<void> authState = ref.watch(authControllerProvider);
-    // ref.listen<AsyncValue<void>>(authControllerProvider, (_, state) {
-    //   if (!state.isLoading && state.error != null) {
-    //     ScaffoldMessenger.of(context).showSnackBar(
-    //       SnackBar(
-    //         content: Text(state.error.toString()),
-    //       ),
-    //     );
-    //   } // else if (!state.isLoading && state.hasValue) {
-    //   //   //TODO: Logic yet to decide
-    //   // }
-    // });
     final layout = MediaQuery.of(context).size;
     final color = Theme.of(context).colorScheme;
+    final AsyncValue<void> state = ref.watch(authControllerProvider);
+    ref.listen<AsyncValue>(
+      authControllerProvider,
+      (_, state) {
+        if (!state.isLoading && state.hasError) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(state.error.toString())),
+          );
+        } else if (!state.isLoading && state.hasValue) {
+          if (isSignUp) {
+            setState(() {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('Please Login to continue')),
+              );
+              isSignUp = false;
+            });
+          } else {
+            GoRouter.of(context).go('/home');
+          }
+        }
+      },
+    );
     return Scaffold(
       body: Stack(
         children: [
@@ -224,14 +241,16 @@ class _AuthPageState extends ConsumerState<AuthPage> {
                               borderRadius: BorderRadius.circular(15),
                             ),
                           ),
-                          child: Text(
-                            isSignUp ? 'Create Account' : 'Login',
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
-                              color: color.surface,
-                            ),
-                          ),
+                          child: state.isLoading
+                              ? const CupertinoActivityIndicator()
+                              : Text(
+                                  isSignUp ? 'Create Account' : 'Login',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w500,
+                                    color: color.surface,
+                                  ),
+                                ),
                         ),
                         SizedBox(
                             height: isSignUp

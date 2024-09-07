@@ -3,21 +3,51 @@
   "packages": [
     {
       "name": "_fe_analyzer_shared",
-      "rootUri": "file:///Users/devkeshwani/.pub-cache/hosted/pub.dev/_fe_analyzer_shared-67.0.0",
+      "rootUri": "file:///Users/devkeshwani/.pub-cache/hosted/pub.dev/_fe_analyzer_shared-72.0.0",
       "packageUri": "lib/",
-      "languageVersion": "3.0"
+      "languageVersion": "3.3"
+    },
+    {
+      "name": "_macros",
+      "rootUri": "file:///Users/devkeshwani/Documents/dev-installs/flutter/bin/cache/dart-sdk/pkg/_macros",
+      "packageUri": "lib/",
+      "languageVersion": "3.4"
     },
     {
       "name": "analyzer",
-      "rootUri": "file:///Users/devkeshwani/.pub-cache/hosted/pub.dev/analyzer-6.4.1",
+      "rootUri": "file:///Users/devkeshwani/.pub-cache/hosted/pub.dev/analyzer-6.7.0",
       "packageUri": "lib/",
-      "languageVersion": "3.0"
+      "languageVersion": "3.3"
     },
     {
       "name": "analyzer_plugin",
       "rootUri": "file:///Users/devkeshwani/.pub-cache/hosted/pub.dev/analyzer_plugin-0.11.3",
       "packageUri": "lib/",
       "languageVersion": "3.0"
+    },
+    {
+      "name": "app_links",
+      "rootUri": "file:///Users/devkeshwani/.pub-cache/hosted/pub.dev/app_links-6.3.2",
+      "packageUri": "lib/",
+      "languageVersion": "3.3"
+    },
+    {
+      "name": "app_links_linux",
+      "rootUri": "file:///Users/devkeshwani/.pub-cache/hosted/pub.dev/app_links_linux-1.0.3",
+      "packageUri": "lib/",
+      "languageVersion": "3.2"
+    },
+    {
+      "name": "app_links_platform_interface",
+      "rootUri": "file:///Users/devkeshwani/.pub-cache/hosted/pub.dev/app_links_platform_interface-2.0.2",
+      "packageUri": "lib/",
+      "languageVersion": "3.2"
+    },
+    {
+      "name": "app_links_web",
+      "rootUri": "file:///Users/devkeshwani/.pub-cache/hosted/pub.dev/app_links_web-1.0.4",
+      "packageUri": "lib/",
+      "languageVersion": "3.2"
     },
     {
       "name": "args",
@@ -63,15 +93,15 @@
     },
     {
       "name": "build_runner",
-      "rootUri": "file:///Users/devkeshwani/.pub-cache/hosted/pub.dev/build_runner-2.4.11",
+      "rootUri": "file:///Users/devkeshwani/.pub-cache/hosted/pub.dev/build_runner-2.4.12",
       "packageUri": "lib/",
-      "languageVersion": "3.4"
+      "languageVersion": "3.5"
     },
     {
       "name": "build_runner_core",
-      "rootUri": "file:///Users/devkeshwani/.pub-cache/hosted/pub.dev/build_runner_core-7.3.1",
+      "rootUri": "file:///Users/devkeshwani/.pub-cache/hosted/pub.dev/build_runner_core-7.3.2",
       "packageUri": "lib/",
-      "languageVersion": "3.4"
+      "languageVersion": "3.5"
     },
     {
       "name": "built_collection",
@@ -147,19 +177,19 @@
     },
     {
       "name": "custom_lint",
-      "rootUri": "file:///Users/devkeshwani/.pub-cache/hosted/pub.dev/custom_lint-0.6.4",
+      "rootUri": "file:///Users/devkeshwani/.pub-cache/hosted/pub.dev/custom_lint-0.6.5",
       "packageUri": "lib/",
       "languageVersion": "3.0"
     },
     {
       "name": "custom_lint_builder",
-      "rootUri": "file:///Users/devkeshwani/.pub-cache/hosted/pub.dev/custom_lint_builder-0.6.4",
+      "rootUri": "file:///Users/devkeshwani/.pub-cache/hosted/pub.dev/custom_lint_builder-0.6.5",
       "packageUri": "lib/",
       "languageVersion": "3.0"
     },
     {
       "name": "custom_lint_core",
-      "rootUri": "file:///Users/devkeshwani/.pub-cache/hosted/pub.dev/custom_lint_core-0.6.3",
+      "rootUri": "file:///Users/devkeshwani/.pub-cache/hosted/pub.dev/custom_lint_core-0.6.5",
       "packageUri": "lib/",
       "languageVersion": "3.0"
     },
@@ -284,6 +314,12 @@
       "languageVersion": "3.0"
     },
     {
+      "name": "functions_client",
+      "rootUri": "file:///Users/devkeshwani/.pub-cache/hosted/pub.dev/functions_client-2.3.2",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
       "name": "glob",
       "rootUri": "file:///Users/devkeshwani/.pub-cache/hosted/pub.dev/glob-2.1.2",
       "packageUri": "lib/",
@@ -338,10 +374,22 @@
       "languageVersion": "3.3"
     },
     {
+      "name": "gotrue",
+      "rootUri": "file:///Users/devkeshwani/.pub-cache/hosted/pub.dev/gotrue-2.8.4",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
       "name": "graphs",
       "rootUri": "file:///Users/devkeshwani/.pub-cache/hosted/pub.dev/graphs-2.3.2",
       "packageUri": "lib/",
       "languageVersion": "3.4"
+    },
+    {
+      "name": "gtk",
+      "rootUri": "file:///Users/devkeshwani/.pub-cache/hosted/pub.dev/gtk-2.1.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
     },
     {
       "name": "hotreloader",
@@ -375,9 +423,9 @@
     },
     {
       "name": "image_picker_android",
-      "rootUri": "file:///Users/devkeshwani/.pub-cache/hosted/pub.dev/image_picker_android-0.8.12+12",
+      "rootUri": "file:///Users/devkeshwani/.pub-cache/hosted/pub.dev/image_picker_android-0.8.12+13",
       "packageUri": "lib/",
-      "languageVersion": "3.4"
+      "languageVersion": "3.5"
     },
     {
       "name": "image_picker_for_web",
@@ -440,14 +488,20 @@
       "languageVersion": "3.0"
     },
     {
+      "name": "jwt_decode",
+      "rootUri": "file:///Users/devkeshwani/.pub-cache/hosted/pub.dev/jwt_decode-0.3.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "leak_tracker",
-      "rootUri": "file:///Users/devkeshwani/.pub-cache/hosted/pub.dev/leak_tracker-10.0.4",
+      "rootUri": "file:///Users/devkeshwani/.pub-cache/hosted/pub.dev/leak_tracker-10.0.5",
       "packageUri": "lib/",
       "languageVersion": "3.2"
     },
     {
       "name": "leak_tracker_flutter_testing",
-      "rootUri": "file:///Users/devkeshwani/.pub-cache/hosted/pub.dev/leak_tracker_flutter_testing-3.0.3",
+      "rootUri": "file:///Users/devkeshwani/.pub-cache/hosted/pub.dev/leak_tracker_flutter_testing-3.0.5",
       "packageUri": "lib/",
       "languageVersion": "3.2"
     },
@@ -470,6 +524,12 @@
       "languageVersion": "2.19"
     },
     {
+      "name": "macros",
+      "rootUri": "file:///Users/devkeshwani/.pub-cache/hosted/pub.dev/macros-0.1.2-main.4",
+      "packageUri": "lib/",
+      "languageVersion": "3.4"
+    },
+    {
       "name": "matcher",
       "rootUri": "file:///Users/devkeshwani/.pub-cache/hosted/pub.dev/matcher-0.12.16+1",
       "packageUri": "lib/",
@@ -477,13 +537,13 @@
     },
     {
       "name": "material_color_utilities",
-      "rootUri": "file:///Users/devkeshwani/.pub-cache/hosted/pub.dev/material_color_utilities-0.8.0",
+      "rootUri": "file:///Users/devkeshwani/.pub-cache/hosted/pub.dev/material_color_utilities-0.11.1",
       "packageUri": "lib/",
       "languageVersion": "2.17"
     },
     {
       "name": "meta",
-      "rootUri": "file:///Users/devkeshwani/.pub-cache/hosted/pub.dev/meta-1.12.0",
+      "rootUri": "file:///Users/devkeshwani/.pub-cache/hosted/pub.dev/meta-1.15.0",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -572,6 +632,12 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "postgrest",
+      "rootUri": "file:///Users/devkeshwani/.pub-cache/hosted/pub.dev/postgrest-2.1.4",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
       "name": "pub_semver",
       "rootUri": "file:///Users/devkeshwani/.pub-cache/hosted/pub.dev/pub_semver-2.1.4",
       "packageUri": "lib/",
@@ -584,6 +650,18 @@
       "languageVersion": "3.0"
     },
     {
+      "name": "realtime_client",
+      "rootUri": "file:///Users/devkeshwani/.pub-cache/hosted/pub.dev/realtime_client-2.2.1",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
+      "name": "retry",
+      "rootUri": "file:///Users/devkeshwani/.pub-cache/hosted/pub.dev/retry-3.1.2",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
       "name": "riverpod",
       "rootUri": "file:///Users/devkeshwani/.pub-cache/hosted/pub.dev/riverpod-2.5.1",
       "packageUri": "lib/",
@@ -591,7 +669,7 @@
     },
     {
       "name": "riverpod_analyzer_utils",
-      "rootUri": "file:///Users/devkeshwani/.pub-cache/hosted/pub.dev/riverpod_analyzer_utils-0.5.1",
+      "rootUri": "file:///Users/devkeshwani/.pub-cache/hosted/pub.dev/riverpod_analyzer_utils-0.5.4",
       "packageUri": "lib/",
       "languageVersion": "3.0"
     },
@@ -603,21 +681,63 @@
     },
     {
       "name": "riverpod_generator",
-      "rootUri": "file:///Users/devkeshwani/.pub-cache/hosted/pub.dev/riverpod_generator-2.4.0",
+      "rootUri": "file:///Users/devkeshwani/.pub-cache/hosted/pub.dev/riverpod_generator-2.4.3",
       "packageUri": "lib/",
       "languageVersion": "2.17"
     },
     {
       "name": "riverpod_lint",
-      "rootUri": "file:///Users/devkeshwani/.pub-cache/hosted/pub.dev/riverpod_lint-2.3.10",
+      "rootUri": "file:///Users/devkeshwani/.pub-cache/hosted/pub.dev/riverpod_lint-2.3.13",
       "packageUri": "lib/",
       "languageVersion": "2.17"
     },
     {
       "name": "rxdart",
-      "rootUri": "file:///Users/devkeshwani/.pub-cache/hosted/pub.dev/rxdart-0.27.7",
+      "rootUri": "file:///Users/devkeshwani/.pub-cache/hosted/pub.dev/rxdart-0.28.0",
       "packageUri": "lib/",
       "languageVersion": "2.12"
+    },
+    {
+      "name": "shared_preferences",
+      "rootUri": "file:///Users/devkeshwani/.pub-cache/hosted/pub.dev/shared_preferences-2.3.2",
+      "packageUri": "lib/",
+      "languageVersion": "3.4"
+    },
+    {
+      "name": "shared_preferences_android",
+      "rootUri": "file:///Users/devkeshwani/.pub-cache/hosted/pub.dev/shared_preferences_android-2.3.2",
+      "packageUri": "lib/",
+      "languageVersion": "3.4"
+    },
+    {
+      "name": "shared_preferences_foundation",
+      "rootUri": "file:///Users/devkeshwani/.pub-cache/hosted/pub.dev/shared_preferences_foundation-2.5.2",
+      "packageUri": "lib/",
+      "languageVersion": "3.3"
+    },
+    {
+      "name": "shared_preferences_linux",
+      "rootUri": "file:///Users/devkeshwani/.pub-cache/hosted/pub.dev/shared_preferences_linux-2.4.1",
+      "packageUri": "lib/",
+      "languageVersion": "3.3"
+    },
+    {
+      "name": "shared_preferences_platform_interface",
+      "rootUri": "file:///Users/devkeshwani/.pub-cache/hosted/pub.dev/shared_preferences_platform_interface-2.4.1",
+      "packageUri": "lib/",
+      "languageVersion": "3.2"
+    },
+    {
+      "name": "shared_preferences_web",
+      "rootUri": "file:///Users/devkeshwani/.pub-cache/hosted/pub.dev/shared_preferences_web-2.4.2",
+      "packageUri": "lib/",
+      "languageVersion": "3.4"
+    },
+    {
+      "name": "shared_preferences_windows",
+      "rootUri": "file:///Users/devkeshwani/.pub-cache/hosted/pub.dev/shared_preferences_windows-2.4.1",
+      "packageUri": "lib/",
+      "languageVersion": "3.3"
     },
     {
       "name": "shelf",
@@ -674,6 +794,12 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "storage_client",
+      "rootUri": "file:///Users/devkeshwani/.pub-cache/hosted/pub.dev/storage_client-2.0.3",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
       "name": "stream_channel",
       "rootUri": "file:///Users/devkeshwani/.pub-cache/hosted/pub.dev/stream_channel-2.1.2",
       "packageUri": "lib/",
@@ -692,6 +818,18 @@
       "languageVersion": "2.18"
     },
     {
+      "name": "supabase",
+      "rootUri": "file:///Users/devkeshwani/.pub-cache/hosted/pub.dev/supabase-2.3.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
+      "name": "supabase_flutter",
+      "rootUri": "file:///Users/devkeshwani/.pub-cache/hosted/pub.dev/supabase_flutter-2.6.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
       "name": "term_glyph",
       "rootUri": "file:///Users/devkeshwani/.pub-cache/hosted/pub.dev/term_glyph-1.2.1",
       "packageUri": "lib/",
@@ -699,9 +837,9 @@
     },
     {
       "name": "test_api",
-      "rootUri": "file:///Users/devkeshwani/.pub-cache/hosted/pub.dev/test_api-0.7.0",
+      "rootUri": "file:///Users/devkeshwani/.pub-cache/hosted/pub.dev/test_api-0.7.2",
       "packageUri": "lib/",
-      "languageVersion": "3.0"
+      "languageVersion": "3.2"
     },
     {
       "name": "timing",
@@ -714,6 +852,54 @@
       "rootUri": "file:///Users/devkeshwani/.pub-cache/hosted/pub.dev/typed_data-1.3.2",
       "packageUri": "lib/",
       "languageVersion": "2.17"
+    },
+    {
+      "name": "url_launcher",
+      "rootUri": "file:///Users/devkeshwani/.pub-cache/hosted/pub.dev/url_launcher-6.3.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.2"
+    },
+    {
+      "name": "url_launcher_android",
+      "rootUri": "file:///Users/devkeshwani/.pub-cache/hosted/pub.dev/url_launcher_android-6.3.10",
+      "packageUri": "lib/",
+      "languageVersion": "3.5"
+    },
+    {
+      "name": "url_launcher_ios",
+      "rootUri": "file:///Users/devkeshwani/.pub-cache/hosted/pub.dev/url_launcher_ios-6.3.1",
+      "packageUri": "lib/",
+      "languageVersion": "3.2"
+    },
+    {
+      "name": "url_launcher_linux",
+      "rootUri": "file:///Users/devkeshwani/.pub-cache/hosted/pub.dev/url_launcher_linux-3.2.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.3"
+    },
+    {
+      "name": "url_launcher_macos",
+      "rootUri": "file:///Users/devkeshwani/.pub-cache/hosted/pub.dev/url_launcher_macos-3.2.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.1"
+    },
+    {
+      "name": "url_launcher_platform_interface",
+      "rootUri": "file:///Users/devkeshwani/.pub-cache/hosted/pub.dev/url_launcher_platform_interface-2.3.2",
+      "packageUri": "lib/",
+      "languageVersion": "3.1"
+    },
+    {
+      "name": "url_launcher_web",
+      "rootUri": "file:///Users/devkeshwani/.pub-cache/hosted/pub.dev/url_launcher_web-2.3.3",
+      "packageUri": "lib/",
+      "languageVersion": "3.3"
+    },
+    {
+      "name": "url_launcher_windows",
+      "rootUri": "file:///Users/devkeshwani/.pub-cache/hosted/pub.dev/url_launcher_windows-3.1.2",
+      "packageUri": "lib/",
+      "languageVersion": "3.2"
     },
     {
       "name": "uuid",
@@ -753,7 +939,7 @@
     },
     {
       "name": "vm_service",
-      "rootUri": "file:///Users/devkeshwani/.pub-cache/hosted/pub.dev/vm_service-14.2.1",
+      "rootUri": "file:///Users/devkeshwani/.pub-cache/hosted/pub.dev/vm_service-14.2.5",
       "packageUri": "lib/",
       "languageVersion": "3.3"
     },
@@ -806,16 +992,22 @@
       "languageVersion": "2.19"
     },
     {
+      "name": "yet_another_json_isolate",
+      "rootUri": "file:///Users/devkeshwani/.pub-cache/hosted/pub.dev/yet_another_json_isolate-2.0.2",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
       "name": "noteswap",
       "rootUri": "../",
       "packageUri": "lib/",
       "languageVersion": "3.4"
     }
   ],
-  "generated": "2024-09-04T12:32:38.112656Z",
+  "generated": "2024-09-07T18:46:17.185782Z",
   "generator": "pub",
-  "generatorVersion": "3.4.4",
+  "generatorVersion": "3.5.2",
   "flutterRoot": "file:///Users/devkeshwani/Documents/dev-installs/flutter",
-  "flutterVersion": "3.22.3",
+  "flutterVersion": "3.24.2",
   "pubCache": "file:///Users/devkeshwani/.pub-cache"
 }
