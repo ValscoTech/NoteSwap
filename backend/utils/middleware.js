@@ -1,9 +1,7 @@
-const supabase=require('../supabaseclient');
-
 const authenticateUser=async(req,res,next)=>{
     const token=req.headers.authorization?.split(' ')[1];
     try{
-        const {data,error}=await supabase.auth.getUser(token);
+        const {data,error}=await auth.getUser(token);
         
     
         if(error){
@@ -18,4 +16,4 @@ const authenticateUser=async(req,res,next)=>{
     }
 }
 
-module.exports={authenticateUser};
+export default authenticateUser;

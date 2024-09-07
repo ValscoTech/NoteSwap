@@ -1,7 +1,6 @@
-const authRouter=require('express').Router();   
-const supabase=require('../supabaseclient');
-const supabaseAdmin=require('../supabaseAdmin');
-const authenticateUser=require('../utils/middleware').authenticateUser;
+import supabase from '../database/supabaseClient.js';
+import supabaseAdmin from '../database/supabaseAdmin.js';
+import authenticateUser  from '../utils/middleware.js';
 
 
 authRouter.post('/signup',async(req,res)=>{
@@ -19,7 +18,7 @@ authRouter.post('/signup',async(req,res)=>{
             throw error
         }
 
-        res.status(201).json({message:"Succesful signup",data})
+        res.status(201).json({message:"Successful signup",data})
 
     }
     catch(err){
@@ -58,7 +57,7 @@ authRouter.post('/logout',async(req,res)=>{
         if(error){
             throw error
         }
-        res.status(200).json({message:"Succesful logout"})  
+        res.status(200).json({message:"Successful logout"})  
     }
     catch(err){
         res.status(404).json({error:err.message})
@@ -144,7 +143,6 @@ authRouter.post('/deleteUser',authenticateUser,async(req,res)=>{
     }
 })
 
-module.exports=authRouter;
 
 
-
+export default authRouter;

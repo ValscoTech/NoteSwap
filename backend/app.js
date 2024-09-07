@@ -1,11 +1,12 @@
-const express=require('express');
-const cors=require('cors');
+import express, { json, urlencoded } from 'express';
+import cors from 'cors';
+import  authenticateUser  from './utils/middleware.js';
+import notesRouter from './controllers/notes.js';
+import profileRouter from './controllers/userprofile.js';
+import authRouter from './controllers/customAuth.js';
+
+
 const app=express();
-const authenticateUser=require('./utils/middleware').authenticateUser;
-const notesRouter=require('./controllers/notes');
-const profileRouter=require('./controllers/userprofile');
-const authRouter=require('./controllers/customAuth');
-// const {supabase}=require('./supabaseclient');
 
 app.use(cors())
 app.use(express.json())
@@ -33,4 +34,4 @@ app.use((err, req, res, next) => {
 
 
 
-module.exports={app};
+export default{app};

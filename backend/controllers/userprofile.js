@@ -1,12 +1,11 @@
 const profileRouter=require('express').Router();   
-const supabase=require('../supabaseclient');
-const supabaseAdmin=require('../supabaseAdmin');
-const multer=require('multer')
-const storage=multer.memoryStorage();
+import supabase from '../database/supabaseClient.js';
+import supabaseAdmin from '../database/supabaseAdmin.js';
+import multer, { memoryStorage } from 'multer';
+const storage=memoryStorage();
 const upload=multer({storage:storage});
 
 
-//Get the profile info a particular user
 profileRouter.get('/',async(req,res)=>{
 
     const id=req.user.id;
@@ -94,6 +93,6 @@ profileRouter.delete('/',async(req,res)=>{
     }
 })
 
-module.exports=profileRouter;
+export default profileRouter;
 
 

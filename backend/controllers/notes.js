@@ -1,10 +1,10 @@
-const supabase=require('../supabaseclient');
-const supabaseAdmin=require('../supabaseAdmin')
+import supabase from '../database/supabaseClient.js';
+import supabaseAdmin from '../database/supabaseAdmin.js';
 const notesRouter=require('express').Router();
 
 
-const multer=require('multer');
-const storage=multer.memoryStorage();
+import multer, { memoryStorage } from 'multer';
+const storage=memoryStorage();
 const upload=multer({storage:storage});
 
 notesRouter.get('/',async (req,res)=>{
@@ -101,5 +101,5 @@ notesRouter.post('/',upload.fields([{name:'pdfFile',maxCount:1},{name:'imageFile
 
 
 
-module.exports=notesRouter;
+export default notesRouter;
 
