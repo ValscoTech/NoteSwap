@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:noteswap/auth/presentation/views/login_auth_page.dart';
 import 'package:noteswap/onboarding/presentation/onboarding_slides_screen.dart';
 import 'package:noteswap/onboarding/presentation/splash_screen.dart';
 import 'package:noteswap/payments/presentation/payment_screen.dart';
 import 'package:noteswap/root_page.dart';
-import 'package:noteswap/auth/presentation/views/auth_page.dart';
+import 'package:noteswap/auth/presentation/views/signup_auth_page.dart';
 import 'package:noteswap/feed/presentation/feed_screen.dart';
 import 'package:noteswap/postoffer/presentation/views/pages/post_offer_page.dart';
 import 'package:noteswap/profile/presentation/profile_page.dart';
@@ -26,8 +27,12 @@ final router = GoRouter(
       builder: (context, state) => const OnboardingSlidesScreen(),
     ),
     GoRoute(
-      path: '/auth',
-      builder: (context, state) => const AuthPage(),
+      path: '/signup',
+      builder: (context, state) => const SignUpAuthPage(),
+    ),
+    GoRoute(
+      path: '/login',
+      builder: (context, state) => const LoginAuthPage(),
     ),
     GoRoute(
       path: '/payment',

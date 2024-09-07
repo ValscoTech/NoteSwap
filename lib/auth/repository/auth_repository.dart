@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:noteswap/response_model.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -8,6 +8,8 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 part 'auth_repository.g.dart';
+
+final platform = Platform.isAndroid ? 'ANDROID' : 'IOS';
 
 abstract class AuthRepository {
   Future<void> signInWithEmailAndPassword({
@@ -27,7 +29,7 @@ abstract class AuthRepository {
 }
 
 class AuthImplRepository extends AuthRepository {
-  var url = '${dotenv.env['BASE_URL']}/auth/';
+  var url = '${dotenv.env['${platform}_BASE_URL']}/auth/';
   @override
   Future<void> signInWithEmailAndPassword({
     required String username,
@@ -52,6 +54,7 @@ class AuthImplRepository extends AuthRepository {
         print(body);
       }
     } else {
+      print(response.body);
       throw Exception('Failed to sign in');
     }
   }
@@ -62,6 +65,9 @@ class AuthImplRepository extends AuthRepository {
     required String password,
   }) async {
     url = '${url}login';
+    if (kDebugMode) {
+      print(url);
+    }
     final response = await http.post(
       Uri.parse(url),
       body: {

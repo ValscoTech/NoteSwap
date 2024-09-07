@@ -36,7 +36,7 @@ class _OnboardingSlidesScreenState extends State<OnboardingSlidesScreen>
       if (_currentPage < 2) {
         _currentPage++;
       } else {
-        context.go('/auth');
+        context.go('/signup');
       }
       _controller.forward(from: 0.0);
     });

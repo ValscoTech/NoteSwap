@@ -23,7 +23,10 @@ class AuthController extends _$AuthController {
     );
   }
 
-  Future<void> loginWithEmailAndPassword(String email, String password) async {
+  Future<void> loginWithEmailAndPassword(
+    String email,
+    String password,
+  ) async {
     final authRepository = ref.read(authImplRepositoryProvider);
     state = const AsyncLoading();
     state = await AsyncValue.guard(

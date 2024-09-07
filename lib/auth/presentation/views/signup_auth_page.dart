@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -7,14 +9,14 @@ import 'package:noteswap/auth/presentation/widgets/custom_button.dart';
 import 'package:noteswap/auth/presentation/widgets/top_container.dart';
 import 'package:validators/validators.dart';
 
-class AuthPage extends ConsumerStatefulWidget {
-  const AuthPage({super.key});
+class SignUpAuthPage extends ConsumerStatefulWidget {
+  const SignUpAuthPage({super.key});
 
   @override
-  ConsumerState<AuthPage> createState() => _AuthPageState();
+  ConsumerState<SignUpAuthPage> createState() => _SignUpAuthPageState();
 }
 
-class _AuthPageState extends ConsumerState<AuthPage> {
+class _SignUpAuthPageState extends ConsumerState<SignUpAuthPage> {
   var isChecked = false;
   final TextEditingController nameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
@@ -28,15 +30,13 @@ class _AuthPageState extends ConsumerState<AuthPage> {
     super.dispose();
   }
 
-  bool isSignUp = false;
   void isSignUpToggle() {
     setState(() {
-      // isSignUp = !isSignUp;
       isChecked = false;
       formKey.currentState?.reset();
       FocusScope.of(context).unfocus();
-      isSignUp = !isSignUp;
     });
+    context.go('/login');
   }
 
   bool isPasswordVisible = false;
@@ -47,7 +47,7 @@ class _AuthPageState extends ConsumerState<AuthPage> {
   }
 
   void handleSubmit() {
-    if (isSignUp && !isChecked) {
+    if (!isChecked) {
       showDialog(
         context: context,
         builder: (context) => AlertDialog(
@@ -64,22 +64,11 @@ class _AuthPageState extends ConsumerState<AuthPage> {
       return;
     }
     if (formKey.currentState!.validate()) {
-      if (isSignUp) {
-        ref.read(authControllerProvider.notifier).signUpWithEmailAndPassword(
-              emailController.text,
-              nameController.text,
-              passwordController.text,
-            );
-      }
-    } else {
-      if (formKey.currentState!.validate()) {
-        if (!isSignUp) {
-          ref.read(authControllerProvider.notifier).loginWithEmailAndPassword(
-                emailController.text,
-                passwordController.text,
-              );
-        }
-      }
+      ref.read(authControllerProvider.notifier).signUpWithEmailAndPassword(
+            emailController.text,
+            nameController.text,
+            passwordController.text,
+          );
     }
   }
 
@@ -87,6 +76,7 @@ class _AuthPageState extends ConsumerState<AuthPage> {
   Widget build(BuildContext context) {
     final layout = MediaQuery.of(context).size;
     final color = Theme.of(context).colorScheme;
+    final platform = Platform.isIOS;
     final AsyncValue<void> state = ref.watch(authControllerProvider);
     ref.listen<AsyncValue>(
       authControllerProvider,
@@ -96,24 +86,20 @@ class _AuthPageState extends ConsumerState<AuthPage> {
             SnackBar(content: Text(state.error.toString())),
           );
         } else if (!state.isLoading && state.hasValue) {
-          if (isSignUp) {
-            setState(() {
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Please Login to continue')),
-              );
-              isSignUp = false;
-            });
-          } else {
-            GoRouter.of(context).go('/home');
-          }
+          setState(() {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('Please Login to continue')),
+            );
+            isSignUpToggle();
+          });
         }
       },
     );
     return Scaffold(
       body: Stack(
         children: [
-          TopContainer(
-            isSignUp: isSignUp,
+          const TopContainer(
+            isSignUp: true,
           ),
           SafeArea(
             child: Align(
@@ -157,10 +143,7 @@ class _AuthPageState extends ConsumerState<AuthPage> {
                             ),
                           ],
                         ),
-                        SizedBox(
-                            height: isSignUp
-                                ? layout.height * 0.01
-                                : layout.height * 0.025),
+                        SizedBox(height: layout.height * 0.01),
                         Row(
                           children: [
                             Expanded(
@@ -185,51 +168,43 @@ class _AuthPageState extends ConsumerState<AuthPage> {
                             )),
                           ],
                         ),
-                        SizedBox(
-                            height: isSignUp
-                                ? layout.height * 0.01
-                                : layout.height * 0.025),
+                        SizedBox(height: layout.height * 0.01),
                         AuthFields(
-                          isSignUp: isSignUp,
                           nameController: nameController,
                           emailController: emailController,
                           passwordController: passwordController,
                           isPasswordVisible: isPasswordVisible,
                           togglePasswordVisibility: togglePasswordVisibility,
                         ),
-                        SizedBox(
-                            height: isSignUp
-                                ? layout.height * 0.01
-                                : layout.height * 0.04),
-                        if (isSignUp)
-                          Row(
-                            children: [
-                              Checkbox(
-                                focusColor: color.primary,
-                                activeColor: color.surface,
-                                checkColor: Colors.white,
-                                side: BorderSide(
-                                  color: color.surface,
-                                  width: 2.0,
-                                ),
-                                value: isChecked,
-                                onChanged: (bool? value) {
-                                  setState(() {
-                                    isChecked = value!;
-                                  });
-                                },
+                        SizedBox(height: layout.height * 0.01),
+                        Row(
+                          children: [
+                            Checkbox(
+                              focusColor: color.primary,
+                              activeColor: color.surface,
+                              checkColor: Colors.white,
+                              side: BorderSide(
+                                color: color.surface,
+                                width: 2.0,
                               ),
-                              Expanded(
-                                child: Text(
-                                  'I agree to The Terms and Conditions and Privacy Policy.',
-                                  style: TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w400,
-                                      color: color.surface),
-                                ),
+                              value: isChecked,
+                              onChanged: (bool? value) {
+                                setState(() {
+                                  isChecked = value!;
+                                });
+                              },
+                            ),
+                            Expanded(
+                              child: Text(
+                                'I agree to The Terms and Conditions and Privacy Policy.',
+                                style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w400,
+                                    color: color.surface),
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
+                        ),
                         ElevatedButton(
                           onPressed: handleSubmit,
                           style: ElevatedButton.styleFrom(
@@ -242,9 +217,15 @@ class _AuthPageState extends ConsumerState<AuthPage> {
                             ),
                           ),
                           child: state.isLoading
-                              ? const CupertinoActivityIndicator()
+                              ? (platform
+                                  ? const CupertinoActivityIndicator()
+                                  : CircularProgressIndicator(
+                                      valueColor: AlwaysStoppedAnimation<Color>(
+                                        color.surface,
+                                      ),
+                                    ))
                               : Text(
-                                  isSignUp ? 'Create Account' : 'Login',
+                                  'Create Account',
                                   style: TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.w500,
@@ -252,18 +233,13 @@ class _AuthPageState extends ConsumerState<AuthPage> {
                                   ),
                                 ),
                         ),
-                        SizedBox(
-                            height: isSignUp
-                                ? layout.height * 0.01
-                                : layout.height * 0.025),
+                        SizedBox(height: layout.height * 0.01),
                         TextButton(
                           onPressed: () {
                             isSignUpToggle();
                           },
                           child: Text(
-                            isSignUp
-                                ? 'Already have an Account? Login'
-                                : "Don't Have an account? SignUp",
+                            'Already have an Account? Login',
                             style: TextStyle(
                                 color: color.surface,
                                 fontFamily: 'ClashDisplay'),
@@ -283,7 +259,6 @@ class _AuthPageState extends ConsumerState<AuthPage> {
 }
 
 class AuthFields extends StatelessWidget {
-  final bool isSignUp;
   final TextEditingController nameController;
   final TextEditingController emailController;
   final TextEditingController passwordController;
@@ -292,7 +267,6 @@ class AuthFields extends StatelessWidget {
 
   const AuthFields({
     super.key,
-    required this.isSignUp,
     required this.nameController,
     required this.emailController,
     required this.passwordController,
@@ -326,19 +300,17 @@ class AuthFields extends StatelessWidget {
     final layout = MediaQuery.of(context).size;
     return Column(
       children: [
-        if (isSignUp)
-          TextFormField(
-            controller: nameController,
-            decoration: _buildInputDecoration('Name', context),
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return "Please enter your name";
-              }
-              return null;
-            },
-          ),
-        SizedBox(
-            height: isSignUp ? layout.height * 0.01 : layout.height * 0.02),
+        TextFormField(
+          controller: nameController,
+          decoration: _buildInputDecoration('Name', context),
+          validator: (value) {
+            if (value == null || value.isEmpty) {
+              return "Please enter your name";
+            }
+            return null;
+          },
+        ),
+        SizedBox(height: layout.height * 0.01),
         TextFormField(
           controller: emailController,
           decoration: _buildInputDecoration('Email', context),
@@ -351,8 +323,7 @@ class AuthFields extends StatelessWidget {
             return null;
           },
         ),
-        SizedBox(
-            height: isSignUp ? layout.height * 0.01 : layout.height * 0.02),
+        SizedBox(height: layout.height * 0.01),
         TextFormField(
           controller: passwordController,
           decoration: _buildInputDecoration(

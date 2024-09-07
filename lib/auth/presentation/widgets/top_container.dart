@@ -10,7 +10,7 @@ class TopContainer extends StatelessWidget {
     final color = Theme.of(context).colorScheme;
     return Container(
       alignment: Alignment.center,
-      height: layout.height * 0.4,
+      height: layout.height * 0.3,
       color: color.surface,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
