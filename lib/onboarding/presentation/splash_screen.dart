@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:go_router/go_router.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -13,6 +14,25 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
+    _checkSession();
+  }
+
+  Future<void> _checkSession() async {
+    final prefs = await SharedPreferences.getInstance();
+    final accessToken = prefs.getString('access_token');
+    final expiresAt = prefs.getInt('expires_at');
+
+    if (accessToken != null && expiresAt != null) {
+      final currentTime = DateTime.now().millisecondsSinceEpoch ~/ 1000;
+      if (currentTime < expiresAt) {
+        Timer(const Duration(seconds: 3), () {
+          if (mounted) {
+            context.go('/home');
+          }
+        });
+        return;
+      }
+    }
     Timer(const Duration(seconds: 4), () {
       if (mounted) {
         context.go('/board');

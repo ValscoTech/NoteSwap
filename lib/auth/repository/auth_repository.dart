@@ -78,7 +78,9 @@ class AuthImplRepository extends AuthRepository {
             'access_token', responseModel.session!.accessToken);
         await prefs.setString(
             'refresh_token', responseModel.session!.refreshToken);
-        await prefs.setInt('expires_at', responseModel.session!.expiresAt);
+        final expiresAt =
+            (responseModel.session!.expiresAt).millisecondsSinceEpoch ~/ 1000;
+        await prefs.setInt('expires_at', expiresAt);
       }
       if (kDebugMode) {
         print(body);
