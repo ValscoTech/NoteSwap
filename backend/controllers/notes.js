@@ -99,6 +99,130 @@ notesRouter.post('/',upload.fields([{name:'pdfFile',maxCount:1},{name:'imageFile
     }
 })
 
+notesRouter.put('/:id', upload.fields([{ name: 'pdfFile', maxCount: 1 }, { name: 'imageFile', maxCount: 1 }]), async (req, res) => {
+    const { id } = req.params; 
+    const pdfFile = req.files['pdfFile'] ? req.files['pdfFile'][0] : null;
+    const imageFile = req.files['imageFile'] ? req.files['imageFile'][0] : null;
+
+    if (!id) {
+        return res.status(400).json({ error: 'Note ID is required' });
+    }
+
+    const { price, stockRemaining, courseId, modulesCovered } = req.body;
+    const posted_by = req.user.id;
+    
+    let updates = {};
+    
+    if (price) updates.price = price;
+    if (stockRemaining) updates.stockRemaining = stockRemaining;
+    if (courseId) updates.courseId = courseId;
+    if (modulesCovered) {
+        try {
+            updates.modulesCovered = JSON.parse(modulesCovered);
+        } catch (error) {
+            return res.status(400).json({ error: 'Invalid modulesCovered format' });
+        }
+    }
+
+    try {
+        let modulesCoveredString = '';
+        if (Array.isArray(updates.modulesCovered)) {
+            modulesCoveredString = updates.modulesCovered.join('-');
+        }
+
+        if (pdfFile) {
+            const pdfName = `${req.user.id}-${courseId}-${modulesCoveredString}-notes`;
+            
+            const { data: pdfData, error: pdfError } = await supabaseAdmin.storage.from('Notes').upload(pdfName, pdfFile.buffer, {
+                upsert: true,
+                contentType: pdfFile.mimetype
+            });
+            if (pdfError) {
+                throw pdfError;
+            }
+            updates.fileUrl = supabase.storage.from('Notes').getPublicUrl(pdfName).data.publicUrl;
+        }
+
+        if (imageFile) {
+            const imageName = `${req.user.id}-${courseId}-${modulesCoveredString}-themeImg`;
+            const { data: imageData, error: imageError } = await supabaseAdmin.storage.from('Notes').upload(imageName, imageFile.buffer, {
+                upsert: true,
+                contentType: imageFile.mimetype
+            });
+            if (imageError) {
+                throw imageError;
+            }
+            updates.themeImg = supabase.storage.from('Notes').getPublicUrl(imageName).data.publicUrl;
+        }
+
+        const { data, error } = await supabase.from('CourseNotes').update(updates).eq('id', id).select();
+        if (error) {
+            throw error;
+        }
+
+        res.status(200).json(data);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: err.message });
+    }
+});
+
+notesRouter.delete('/:id', async (req, res) => {
+    const { id } = req.params;
+
+    if (!req.user) {
+        return res.status(401).json({ error: 'Unauthorized' });
+    }
+
+    try {
+        
+        const { data: note, error: getNoteError } = await supabase
+            .from('CourseNotes')
+            .select('*')
+            .eq('id', id)
+            .eq('posted_by', req.user.id)
+            .single();
+
+        if (getNoteError) {
+            throw getNoteError;
+        }
+
+        if (!note) {
+            return res.status(404).json({ error: 'Note not found or not authorized to delete' });
+        }
+
+       
+        const pdfPath = note.fileUrl.split('/').pop();
+        const imagePath = note.themeImg.split('/').pop();
+
+        
+        const { error: pdfDeleteError } = await supabaseAdmin.storage.from('Notes').remove([pdfPath]);
+        if (pdfDeleteError) {
+            throw pdfDeleteError;
+        }
+
+        
+        const { error: imageDeleteError } = await supabaseAdmin.storage.from('Notes').remove([imagePath]);
+        if (imageDeleteError) {
+            throw imageDeleteError;
+        }
+
+        
+        const { data: deleteData, error: deleteError } = await supabase
+            .from('CourseNotes')
+            .delete()
+            .eq('id', id);
+
+        if (deleteError) {
+            throw deleteError;
+        }
+
+        res.status(200).json({ message: 'Note deleted successfully' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: error.message });
+    }
+});
 
 
 export default notesRouter;
