@@ -27,7 +27,7 @@ class Session {
   @JsonKey(name: 'refresh_token')
   final String refreshToken;
   @JsonKey(name: 'expires_at')
-  final DateTime expiresAt;
+  final int expiresAt;
 
   Session({
     required this.accessToken,

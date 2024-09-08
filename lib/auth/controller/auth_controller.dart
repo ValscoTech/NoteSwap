@@ -17,8 +17,8 @@ class AuthController extends _$AuthController {
     state = await AsyncValue.guard(
       () => authRepository.signInWithEmailAndPassword(
         email: email,
-        username: name,
         password: password,
+        username: name,
       ),
     );
   }

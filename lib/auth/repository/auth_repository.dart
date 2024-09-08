@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:noteswap/response_model.dart';
@@ -40,23 +41,27 @@ class AuthImplRepository extends AuthRepository {
     if (kDebugMode) {
       print(url);
     }
+
     final response = await http.post(
       Uri.parse(url),
       body: {
         'email': email,
-        'username': username,
         'password': password,
+        'username': username,
       },
     );
+    if (kDebugMode) {
+      log('Response status: ${response.statusCode}');
+      log('Response body: ${response.body}');
+    }
+
     if (response.statusCode == 200) {
       final Map<String, dynamic> body = jsonDecode(response.body);
-      if (kDebugMode) {
-        print(body);
-      }
-    } else {
-      print(response.body);
-      throw Exception('Failed to sign in');
+      final responseModel = ResponseModel.fromJson(body);
+      print(responseModel);
+      return;
     }
+    throw Exception('Failed to sign up: ${response.body}');
   }
 
   @override
@@ -68,6 +73,7 @@ class AuthImplRepository extends AuthRepository {
     if (kDebugMode) {
       print(url);
     }
+
     final response = await http.post(
       Uri.parse(url),
       body: {
@@ -75,6 +81,11 @@ class AuthImplRepository extends AuthRepository {
         'password': password,
       },
     );
+    // Log the response from the API
+    if (kDebugMode) {
+      log('Response status: ${response.statusCode}');
+      log('Response body: ${response.body}');
+    }
     if (response.statusCode == 200) {
       final Map<String, dynamic> body = jsonDecode(response.body);
       final responseModel = ResponseModel.fromJson(body);
@@ -84,16 +95,20 @@ class AuthImplRepository extends AuthRepository {
             'access_token', responseModel.session!.accessToken);
         await prefs.setString(
             'refresh_token', responseModel.session!.refreshToken);
-        final expiresAt =
-            (responseModel.session!.expiresAt).millisecondsSinceEpoch ~/ 1000;
-        await prefs.setInt('expires_at', expiresAt);
+        await prefs.setInt('expires_at', responseModel.session!.expiresAt);
+
+        if (kDebugMode) {
+          log('Access Token: ${prefs.getString('access_token')}');
+          log('Refresh Token: ${prefs.getString('refresh_token')}');
+          log('Expires At: ${prefs.getInt('expires_at')}');
+        }
       }
       if (kDebugMode) {
-        print(body);
+        log(body.toString());
       }
-    } else {
-      throw Exception('Failed to login');
+      return;
     }
+    throw Exception('Failed to login: ${response.body}');
   }
 }
 

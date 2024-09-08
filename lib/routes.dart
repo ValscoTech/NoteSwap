@@ -26,18 +26,6 @@ final router = GoRouter(
       path: '/board',
       builder: (context, state) => const OnboardingSlidesScreen(),
     ),
-    GoRoute(
-      path: '/signup',
-      builder: (context, state) => const SignUpAuthPage(),
-    ),
-    GoRoute(
-      path: '/login',
-      builder: (context, state) => const LoginAuthPage(),
-    ),
-    GoRoute(
-      path: '/payment',
-      builder: (context, state) => const PaymentScreen(),
-    ),
     ShellRoute(
       builder: (context, state, child) {
         return RootPage(child: child);
@@ -64,6 +52,18 @@ final router = GoRouter(
           builder: (context, state) => const ProfilePage(),
         ),
       ],
+    ),
+    GoRoute(
+      path: '/signup',
+      builder: (context, state) => const SignUpAuthPage(),
+    ),
+    GoRoute(
+      path: '/login',
+      builder: (context, state) => const LoginAuthPage(),
+    ),
+    GoRoute(
+      path: '/payment',
+      builder: (context, state) => const PaymentScreen(),
     ),
   ],
 );

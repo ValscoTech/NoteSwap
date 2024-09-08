@@ -1,3 +1,6 @@
+import 'dart:math';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:go_router/go_router.dart';
@@ -21,23 +24,37 @@ class _SplashScreenState extends State<SplashScreen> {
     final prefs = await SharedPreferences.getInstance();
     final accessToken = prefs.getString('access_token');
     final expiresAt = prefs.getInt('expires_at');
-
-    if (accessToken != null && expiresAt != null) {
-      final currentTime = DateTime.now().millisecondsSinceEpoch ~/ 1000;
-      if (currentTime < expiresAt) {
-        Timer(const Duration(seconds: 3), () {
-          if (mounted) {
-            context.go('/home');
-          }
-        });
-        return;
-      }
+    if (kDebugMode) {
+      print(accessToken);
+      print(expiresAt);
     }
-    Timer(const Duration(seconds: 4), () {
-      if (mounted) {
-        context.go('/board');
-      }
-    });
+
+    if (accessToken == null || expiresAt == null) {
+      Timer(const Duration(seconds: 3), () {
+        if (mounted) {
+          context.go('/board');
+        }
+      });
+      return;
+    }
+
+    final currentTime = DateTime.now().millisecondsSinceEpoch ~/ 1000000;
+    if (kDebugMode) {
+      print(("currentTime $currentTime"));
+    }
+    if (currentTime < expiresAt) {
+      Timer(const Duration(seconds: 3), () {
+        if (mounted) {
+          context.go('/home');
+        }
+      });
+    } else {
+      Timer(const Duration(seconds: 3), () {
+        if (mounted) {
+          context.go('/board');
+        }
+      });
+    }
   }
 
   @override
