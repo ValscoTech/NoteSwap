@@ -1,4 +1,5 @@
-const profileRouter=require('express').Router();   
+import express from 'express';
+const profileRouter=express.Router();
 import supabase from '../database/supabaseClient.js';
 import supabaseAdmin from '../database/supabaseAdmin.js';
 import multer, { memoryStorage } from 'multer';

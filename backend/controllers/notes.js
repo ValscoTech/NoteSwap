@@ -1,8 +1,7 @@
 import supabase from '../database/supabaseClient.js';
 import supabaseAdmin from '../database/supabaseAdmin.js';
-const notesRouter=require('express').Router();
-
-
+import express from 'express';
+const notesRouter=express.Router();
 import multer, { memoryStorage } from 'multer';
 const storage=memoryStorage();
 const upload=multer({storage:storage});

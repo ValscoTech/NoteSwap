@@ -1,3 +1,5 @@
+import express from 'express';
+const authRouter=express.Router();
 import supabase from '../database/supabaseClient.js';
 import supabaseAdmin from '../database/supabaseAdmin.js';
 import authenticateUser  from '../utils/middleware.js';
