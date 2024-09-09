@@ -57,15 +57,32 @@ notesRouter.post('/',upload.fields([{name:'pdfFile',maxCount:1},{name:'imageFile
         return res.status(400).json({error:"Please upload the pdf and the image"})
     }
 
+    const {price,stockRemaining,courseId,modulesCovered}=req.body
+
+    let modulesCoveredArray = [];
+    
+    if (modulesCovered) {
+        if (typeof modulesCovered === 'string') {
+            // Remove square brackets if present (in case sent as a stringified array)
+            modulesCoveredArray = modulesCovered.replace(/[\[\]"]/g, '').split(',');
+        } else if (Array.isArray(modulesCovered)) {
+            modulesCoveredArray = modulesCovered;
+        } else {
+            return res.status(400).json({ error: 'Invalid modulesCovered format' });
+        }
+    }
 
     try{
 
         
-        const {price,stockRemaining,courseId,modulesCovered}=req.body
+        
         const posted_by=req.user.id;
         
+        const modulesString = modulesCoveredArray.join('-');
+        const pdfName = `${posted_by}-${courseId}-${modulesString}-notes`;
+        const imageName = `${posted_by}-${courseId}-${modulesString}-themeImg`;
 
-        const pdfName=`${pdfFile.originalname.split('.')}`
+        
         const {data:pdfData,error:pdfError}=await supabaseAdmin.storage.from('Notes').upload(pdfName,pdfFile.buffer,{
             upsert:true,
             contentType:pdfFile.mimetype})
@@ -73,7 +90,7 @@ notesRouter.post('/',upload.fields([{name:'pdfFile',maxCount:1},{name:'imageFile
             throw pdfError;
         }
 
-        const imageName=`${imageFile.originalname.split('.')}`
+        
         const {data:imageData,error:imageError}=await supabaseAdmin.storage.from('Notes').upload(imageName,imageFile.buffer,{
             upsert:true,
             contentType:imageFile.mimetype
@@ -86,7 +103,7 @@ notesRouter.post('/',upload.fields([{name:'pdfFile',maxCount:1},{name:'imageFile
         const fileUrl= supabase.storage.from('Notes').getPublicUrl(pdfName).data.publicUrl;
         const themeImg= supabase.storage.from('Notes').getPublicUrl(imageName).data.publicUrl;
 
-        const {data,error}=await supabase.from('CourseNotes').insert([{price,stockRemaining,courseId,themeImg,modulesCovered,fileUrl,posted_by}]).select();
+        const {data,error}=await supabase.from('CourseNotes').insert([{price,stockRemaining,courseId,themeImg,modulesCovered:modulesCoveredArray,fileUrl,posted_by}]).select();
         if(error){
             throw error;
         }
@@ -98,73 +115,159 @@ notesRouter.post('/',upload.fields([{name:'pdfFile',maxCount:1},{name:'imageFile
     }
 })
 
-notesRouter.put('/:id', upload.fields([{ name: 'pdfFile', maxCount: 1 }, { name: 'imageFile', maxCount: 1 }]), async (req, res) => {
-    const { id } = req.params; 
-    const pdfFile = req.files['pdfFile'] ? req.files['pdfFile'][0] : null;
-    const imageFile = req.files['imageFile'] ? req.files['imageFile'][0] : null;
+// notesRouter.put('/:id', upload.fields([{ name: 'pdfFile', maxCount: 1 }, { name: 'imageFile', maxCount: 1 }]), async (req, res) => {
+//     const { id } = req.params; 
+//     const pdfFile = req.files['pdfFile'] ? req.files['pdfFile'][0] : null;
+//     const imageFile = req.files['imageFile'] ? req.files['imageFile'][0] : null;
 
-    if (!id) {
-        return res.status(400).json({ error: 'Note ID is required' });
-    }
+//     if (!id) {
+//         return res.status(400).json({ error: 'Note ID is required' });
+//     }
 
-    const { price, stockRemaining, courseId, modulesCovered } = req.body;
-    const posted_by = req.user.id;
+//     const { price, stockRemaining, courseId, modulesCovered } = req.body;
+//     const posted_by = req.user.id;
     
-    let updates = {};
+//     let updates = {};
     
-    if (price) updates.price = price;
-    if (stockRemaining) updates.stockRemaining = stockRemaining;
-    if (courseId) updates.courseId = courseId;
-    if (modulesCovered) {
-        try {
-            updates.modulesCovered = JSON.parse(modulesCovered);
-        } catch (error) {
-            return res.status(400).json({ error: 'Invalid modulesCovered format' });
-        }
-    }
+//     if (price) updates.price = price;
+//     if (stockRemaining) updates.stockRemaining = stockRemaining;
+//     if (courseId) updates.courseId = courseId;
+//     if (modulesCovered) {
+//         try {
+//             updates.modulesCovered = JSON.parse(modulesCovered);
+//         } catch (error) {
+//             return res.status(400).json({ error: 'Invalid modulesCovered format' });
+//         }
+//     }
 
-    try {
-        let modulesCoveredString = '';
-        if (Array.isArray(updates.modulesCovered)) {
-            modulesCoveredString = updates.modulesCovered.join('-');
-        }
+//     try {
+//         let modulesCoveredString = '';
+//         if (Array.isArray(updates.modulesCovered)) {
+//             modulesCoveredString = updates.modulesCovered.join('-');
+//         }
 
-        if (pdfFile) {
-            const pdfName = `${req.user.id}-${courseId}-${modulesCoveredString}-notes`;
+//         if (pdfFile) {
+//             const pdfName = `${req.user.id}-${courseId}-${modulesCoveredString}-notes`;
             
-            const { data: pdfData, error: pdfError } = await supabaseAdmin.storage.from('Notes').upload(pdfName, pdfFile.buffer, {
-                upsert: true,
-                contentType: pdfFile.mimetype
-            });
-            if (pdfError) {
-                throw pdfError;
-            }
-            updates.fileUrl = supabase.storage.from('Notes').getPublicUrl(pdfName).data.publicUrl;
-        }
+//             const { data: pdfData, error: pdfError } = await supabaseAdmin.storage.from('Notes').upload(pdfName, pdfFile.buffer, {
+//                 upsert: true,
+//                 contentType: pdfFile.mimetype
+//             });
+//             if (pdfError) {
+//                 throw pdfError;
+//             }
+//             updates.fileUrl = supabase.storage.from('Notes').getPublicUrl(pdfName).data.publicUrl;
+//         }
 
-        if (imageFile) {
-            const imageName = `${req.user.id}-${courseId}-${modulesCoveredString}-themeImg`;
-            const { data: imageData, error: imageError } = await supabaseAdmin.storage.from('Notes').upload(imageName, imageFile.buffer, {
-                upsert: true,
-                contentType: imageFile.mimetype
-            });
-            if (imageError) {
-                throw imageError;
-            }
-            updates.themeImg = supabase.storage.from('Notes').getPublicUrl(imageName).data.publicUrl;
-        }
+//         if (imageFile) {
+//             const imageName = `${req.user.id}-${courseId}-${modulesCoveredString}-themeImg`;
+//             const { data: imageData, error: imageError } = await supabaseAdmin.storage.from('Notes').upload(imageName, imageFile.buffer, {
+//                 upsert: true,
+//                 contentType: imageFile.mimetype
+//             });
+//             if (imageError) {
+//                 throw imageError;
+//             }
+//             updates.themeImg = supabase.storage.from('Notes').getPublicUrl(imageName).data.publicUrl;
+//         }
 
-        const { data, error } = await supabase.from('CourseNotes').update(updates).eq('id', id).select();
-        if (error) {
-            throw error;
-        }
+//         const { data, error } = await supabase.from('CourseNotes').update(updates).eq('id', id).select();
+//         if (error) {
+//             throw error;
+//         }
 
-        res.status(200).json(data);
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ error: err.message });
+//         res.status(200).json(data);
+//     } catch (err) {
+//         console.error(err);
+//         res.status(500).json({ error: err.message });
+//     }
+// });
+
+notesRouter.put('/:id',upload.fields([{name:'pdfFile',maxCount:1},{name:'imageFile',maxCount:1}]),async(req,res)=>{
+    const {id}= req.params
+    const pdfFile=req.files['pdfFile']? req.files['pdfFile'][0]:null
+    const imageFile=req.files['imageFile']? req.files['imageFile'][0]:null
+    
+    if(!id){
+        return res.status(400).json({error:"Note ID is required"})
     }
-});
+
+    const {price,stockRemaining,courseId,modulesCovered}=req.body
+    const posted_by=req.user.id
+
+    let updates={}
+    try{
+        const {data:existingNote,error:noteError}=await supabase.from('CourseNotes').select('*').eq('id',id).single()
+        if(noteError || !existingNote){
+            return res.status(404).json({error:"Note not found"})
+        }
+
+        if (price) updates.price=price
+        if(stockRemaining) updates.stockRemaining=stockRemaining
+        if(courseId) updates.courseId=courseId || existingNote.courseId
+
+        let modulesCoveredArray = [];
+        if(modulesCovered){
+            if(typeof modulesCovered === 'string'){
+                modulesCoveredArray=modulesCovered.replace(/[\[\]"]/g,'').split(',')
+            }
+            else if(Array.isArray(modulesCovered)){
+                modulesCoveredArray=modulesCovered
+            }
+            else{
+                return res.status(400).json({error:"Invalid modulesCovered format"})
+            }
+            updates.modulesCovered=modulesCoveredArray
+        }
+        else{
+            modulesCoveredArray=existingNote.modulesCovered
+        }
+
+        let modulesCoveredString=modulesCoveredArray.join('-')
+        if(pdfFile){
+            if(existingNote.fileUrl){
+                const oldPdfName=existingNote.fileUrl.split('/').pop()
+                await supabaseAdmin.storage.from('Notes').remove([oldPdfName])
+            }
+
+            const pdfName=`${req.user.id}-${updates.courseId}-${modulesCoveredString}-notes`
+            const {data:pdfData,error:pdfError}=await supabaseAdmin.storage.from('Notes').upload(pdfName,pdfFile.buffer,{
+                upsert:true,
+                contentType:pdfFile.mimetype
+            })
+            if(pdfError){
+                throw pdfError
+            }
+            updates.fileUrl=supabase.storage.from('Notes').getPublicUrl(pdfName).data.publicUrl
+        }
+
+        if(imageFile){
+            if(existingNote.themeImg){
+                const oldImageName=existingNote.themeImg.split('/').pop()
+                await supabaseAdmin.storage.from('Notes').remove([oldImageName])
+            }
+            const imageName=`${req.user.id}-${updates.courseId}-${modulesCoveredString}-themeImg`
+            const {data:imageData,error:imageError}=await supabaseAdmin.storage.from('Notes').upload(imageName,imageFile.buffer,{
+                upsert:true,
+                contentType:imageFile.mimetype
+            })
+
+            if(imageError){
+                throw imageError
+            }
+            updates.themeImg=supabase.storage.from('Notes').getPublicUrl(imageName).data.publicUrl
+        }
+
+        const {data,error}=await supabase.from('CourseNotes').update(updates).eq('id',id).select()
+        if(error){
+            throw error
+        }
+        res.status(200).json(data)
+    }
+    catch(err){
+        res.status(500).json({error:err.message})
+    }
+})
 
 notesRouter.delete('/:id', async (req, res) => {
     const { id } = req.params;

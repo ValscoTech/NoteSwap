@@ -35,7 +35,7 @@ profileRouter.post('/',upload.fields([{name:'profileImg',maxCount:1}]),async(req
     const {name,block,dept,specialization,sold,purchased,phone}=req.body
 
     try{
-        const profilePicName=`${profileImg.originalname.split('.')}`
+        const profilePicName=`${req.user.id}-profilePic`
         
         const {data:imageData,error:errorData}=await supabaseAdmin.storage.from('Notes').upload(profilePicName,profileImg.buffer,{
             upsert:true,
