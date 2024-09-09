@@ -30,8 +30,6 @@ profileRouter.post('/',upload.fields([{name:'profileImg',maxCount:1}]),async(req
     
     
     const profileImg=req.files['profileImg']?req.files['profileImg'][0] : null
-    
-    
     const {name,block,dept,specialization,sold,purchased,phone}=req.body
 
     try{

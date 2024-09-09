@@ -1,24 +1,21 @@
 import express from "express";
+const pgRouter = express.Router();
 import axios from "axios";
-import cors from "cors";
 import uniqid from "uniqid";
 import sha256 from "sha256";
 import dotenv from "dotenv";
 
 dotenv.config();
-
-const app = express();
-const port = 5173;
+const port = process.env.PORT;
 
 const PHONEPE_URL = process.env.PHONEPE_URL;
 const MERCHANT_ID = process.env.MERCHANT_ID;
 const SALT_KEY = process.env.SALT_KEY;
 const SALT_KEY_INDEX = process.env.SALT_KEY_INDEX;
 
-app.use(cors());
-app.use(express.json());
+pgRouter.use(express.json());
 
-app.post("/payments/init", async (req, res) => {
+pgRouter.post("/init", async (req, res) => {
     const { userId,  amount, mobileNo } = req.body;
     const payEndPoint = "/pg/v1/pay";
     const orderId = uniqid();
@@ -74,7 +71,4 @@ app.post("/payments/init", async (req, res) => {
     }
 });
 
-
-app.listen(port, () => {
-    console.log(`Server Is Running On Port : ${port}`);
-});
+export default pgRouter;

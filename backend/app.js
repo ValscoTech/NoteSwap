@@ -4,7 +4,7 @@ import  authenticateUser  from './utils/middleware.js';
 import notesRouter from './controllers/notes.js';
 import profileRouter from './controllers/userprofile.js';
 import authRouter from './controllers/customAuth.js';
-
+import pgRouter from './payments/phonepe/index.js';
 
 const app=express();
 
@@ -17,13 +17,13 @@ app.use('/api/auth',authRouter);
 app.use('/api/notes',authenticateUser,notesRouter); 
 app.use('/api/profile',authenticateUser,profileRouter); 
 
+app.use('/api/payments', pgRouter);
 
 app.use((req, res, next) => {
     res.status(404).json({
         message: 'Route not found',
     });
 });
-
 
 app.use((err, req, res, next) => {
     console.error(err.stack);
