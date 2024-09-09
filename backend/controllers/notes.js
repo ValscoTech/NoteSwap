@@ -57,13 +57,14 @@ notesRouter.post('/',upload.fields([{name:'pdfFile',maxCount:1},{name:'imageFile
         return res.status(400).json({error:"Please upload the pdf and the image"})
     }
 
+
     const {price,stockRemaining,courseId,modulesCovered}=req.body
 
     let modulesCoveredArray = [];
     
     if (modulesCovered) {
         if (typeof modulesCovered === 'string') {
-            // Remove square brackets if present (in case sent as a stringified array)
+            
             modulesCoveredArray = modulesCovered.replace(/[\[\]"]/g, '').split(',');
         } else if (Array.isArray(modulesCovered)) {
             modulesCoveredArray = modulesCovered;
@@ -72,9 +73,11 @@ notesRouter.post('/',upload.fields([{name:'pdfFile',maxCount:1},{name:'imageFile
         }
     }
 
+
     try{
 
         
+
         
         const posted_by=req.user.id;
         
@@ -83,6 +86,7 @@ notesRouter.post('/',upload.fields([{name:'pdfFile',maxCount:1},{name:'imageFile
         const imageName = `${posted_by}-${courseId}-${modulesString}-themeImg`;
 
         
+
         const {data:pdfData,error:pdfError}=await supabaseAdmin.storage.from('Notes').upload(pdfName,pdfFile.buffer,{
             upsert:true,
             contentType:pdfFile.mimetype})
@@ -90,7 +94,7 @@ notesRouter.post('/',upload.fields([{name:'pdfFile',maxCount:1},{name:'imageFile
             throw pdfError;
         }
 
-        
+
         const {data:imageData,error:imageError}=await supabaseAdmin.storage.from('Notes').upload(imageName,imageFile.buffer,{
             upsert:true,
             contentType:imageFile.mimetype
@@ -103,7 +107,9 @@ notesRouter.post('/',upload.fields([{name:'pdfFile',maxCount:1},{name:'imageFile
         const fileUrl= supabase.storage.from('Notes').getPublicUrl(pdfName).data.publicUrl;
         const themeImg= supabase.storage.from('Notes').getPublicUrl(imageName).data.publicUrl;
 
+
         const {data,error}=await supabase.from('CourseNotes').insert([{price,stockRemaining,courseId,themeImg,modulesCovered:modulesCoveredArray,fileUrl,posted_by}]).select();
+
         if(error){
             throw error;
         }
@@ -114,7 +120,6 @@ notesRouter.post('/',upload.fields([{name:'pdfFile',maxCount:1},{name:'imageFile
         console.log(err)
     }
 })
-
 
 
 notesRouter.put('/:id',upload.fields([{name:'pdfFile',maxCount:1},{name:'imageFile',maxCount:1}]),async(req,res)=>{
@@ -202,6 +207,7 @@ notesRouter.put('/:id',upload.fields([{name:'pdfFile',maxCount:1},{name:'imageFi
         res.status(500).json({error:err.message})
     }
 })
+
 
 notesRouter.delete('/:id', async (req, res) => {
     const { id } = req.params;
