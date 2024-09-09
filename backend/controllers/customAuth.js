@@ -53,7 +53,7 @@ authRouter.post('/login',async(req,res)=>{
 })
 
 authRouter.post('/logout',async(req,res)=>{
-    const token=req.headers.authorization?.split(' ')[1];
+
     try{
         const {error}=await supabase.auth.admin.signOut(token);
         if(error){
@@ -67,9 +67,7 @@ authRouter.post('/logout',async(req,res)=>{
 })
 
 authRouter.post('/refresh',async(req,res)=>{
-    const {refreshToken}=req.body
-    console.log(refreshToken);
-    
+
 
     try{
         const { data,error }=await supabase.auth.refreshSession()
