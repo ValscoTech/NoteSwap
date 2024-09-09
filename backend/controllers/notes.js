@@ -1,20 +1,29 @@
 const supabase=require('../supabaseclient');
+const supabaseAdmin=require('../supabaseAdmin')
 const notesRouter=require('express').Router();
 
 
+const multer=require('multer');
+const storage=multer.memoryStorage();
+const upload=multer({storage:storage});
 
 notesRouter.get('/',async (req,res)=>{
+    
     try{
+        
+        if(!req.user){
+            return res.status(401).json({error:"Unauthorized"});
+        }
         let queryToGetNotes= supabase.from('CourseNotes').select('*');
 
-    
+        
 
         if(req.query.minPrice){
             queryToGetNotes=queryToGetNotes.gte('price',req.query.minPrice);
         }
 
         if(req.query.maxPrice){
-            queryToGetNotes=queryToGetNotes.length('price',req.query.maxPrice);
+            queryToGetNotes=queryToGetNotes.lte('price',req.query.maxPrice);
         }
 
         if(req.query.courseId){
@@ -40,12 +49,45 @@ notesRouter.get('/',async (req,res)=>{
     }
 })
 
-notesRouter.post('/',async (req,res)=>{
+notesRouter.post('/',upload.fields([{name:'pdfFile',maxCount:1},{name:'imageFile',maxCount:1}]),async (req,res)=>{
+    
+    
+    const pdfFile=req.files['pdfFile']?req.files['pdfFile'][0] : null
+    const imageFile=req.files['imageFile']?req.files['imageFile'][0] : null
+    if(!pdfFile || !imageFile){
+        return res.status(400).json({error:"Please upload the pdf and the image"})
+    }
+
+
     try{
-        const {posted_by,price,stockRemaining,courseId,themeImg,modulesCovered}=req.body
 
+        
+        const {price,stockRemaining,courseId,modulesCovered}=req.body
+        const posted_by=req.user.id;
+        
 
-        const {data,error}=await supabase.from('CourseNotes').insert([{posted_by,price,stockRemaining,courseId,themeImg,modulesCovered}]).select();
+        const pdfName=`${pdfFile.originalname.split('.')}`
+        const {data:pdfData,error:pdfError}=await supabaseAdmin.storage.from('Notes').upload(pdfName,pdfFile.buffer,{
+            upsert:true,
+            contentType:pdfFile.mimetype})
+        if(pdfError){
+            throw pdfError;
+        }
+
+        const imageName=`${imageFile.originalname.split('.')}`
+        const {data:imageData,error:imageError}=await supabaseAdmin.storage.from('Notes').upload(imageName,imageFile.buffer,{
+            upsert:true,
+            contentType:imageFile.mimetype
+        })
+
+        if(imageError){
+            throw imageError;
+        }
+
+        const fileUrl= supabase.storage.from('Notes').getPublicUrl(pdfName).data.publicUrl;
+        const themeImg= supabase.storage.from('Notes').getPublicUrl(imageName).data.publicUrl;
+
+        const {data,error}=await supabase.from('CourseNotes').insert([{price,stockRemaining,courseId,themeImg,modulesCovered,fileUrl,posted_by}]).select();
         if(error){
             throw error;
         }
@@ -57,4 +99,7 @@ notesRouter.post('/',async (req,res)=>{
     }
 })
 
+
+
 module.exports=notesRouter;
+

@@ -1,14 +1,18 @@
 const profileRouter=require('express').Router();   
 const supabase=require('../supabaseclient');
-
+const supabaseAdmin=require('../supabaseAdmin');
+const multer=require('multer')
+const storage=multer.memoryStorage();
+const upload=multer({storage:storage});
 
 
 //Get the profile info a particular user
-profileRouter.get('/:id',async(req,res)=>{
+profileRouter.get('/',async(req,res)=>{
 
-    const id=req.params.id;
+    const id=req.user.id;
+    console.log(id)
     try{
-        const {data,error}=await supabase.from('UsersGen').select('*').eq('id',id);
+        const {data,error}=await supabase.from('UsersGen').select('*').eq('user_id',id);
         if(error){
             throw error;
         }
@@ -22,20 +26,34 @@ profileRouter.get('/:id',async(req,res)=>{
 })
 
 
-profileRouter.post('/',async(req,res)=>{
+profileRouter.post('/',upload.fields([{name:'profileImg',maxCount:1}]),async(req,res)=>{
     
-    const {username,name,block,dept,specialization,image_url,phone}=req.body
+    console.log(req.user.id)
+    console.log(req.user.email)
+    const profileImg=req.files['profileImg']?req.files['profileImg'][0] : null
+    console.log(profileImg)
+    
+    const {name,block,dept,specialization,sold,purchased,phone}=req.body
 
     try{
-        const {data:dataBack,error:errorBack}=await supabase.from('UserCred').select('id').eq('username',username);
-        
-        
-        const id=dataBack[0].id
-        const sold=0
-        const purchased=0
+        const profilePicName=`${profileImg.originalname.split('.')}`
+        console.log(profilePicName)
+        const {data:imageData,error:errorData}=await supabaseAdmin.storage.from('Notes').upload(profilePicName,profileImg.buffer,{
+            upsert:true,
+            contentType:profileImg.mimetype
+        })
 
-        const {data:dataIn,error:errorIn}=await supabase.from('UsersGen').insert([{id,image_url,block,dept,specialization,sold,purchased,username,name,phone}]).select('*')
-
+        const image_url= supabase.storage.from('Notes').getPublicUrl(profilePicName).data.publicUrl
+        console.log(image_url)
+        
+        const soldNo=req.body.sold?req.body.sold:0
+        const purchasedNo=req.body.purchased?req.body.purchased:0
+        console.log(soldNo+" "+purchasedNo)
+        const id=req.user.id
+        console.log(id)
+        const username=req.user.username?req.user.username:req.user.email
+        const {data:dataIn,error:errorIn}=await supabase.from('UsersGen').insert([{user_id:id,image_url,block,dept,specialization,sold:soldNo,purchased:purchasedNo,name,phone,username}]).select()
+        console.log(dataIn)
         res.status(201).json(dataIn);
     }
     catch(error){
@@ -43,26 +61,26 @@ profileRouter.post('/',async(req,res)=>{
     }
 })
 
-profileRouter.put('/:id',async(req,res)=>{
-    const id=req.params.id
-
+profileRouter.put('/',async(req,res)=>{
+    const user=req.user
+    const id=user.id
 
     try{
-        //const {data:user,error:errorUser}=await supabase.from('UserCred').select('username').eq('id',id)
-        const {data,error}=await supabase.from('UsersGen').update(req.body).eq('id',id).select()
-        if(error){
-            throw error;
+        
+            const {data,error}=await supabase.from('UsersGen').update(req.body).eq('user_id',id).select()
+            if(error){
+                throw error;
+            }
+            res.status(200).json(data);
         }
-        res.status(200).json(data);
-    }
-    catch(error){
-        res.status(404).json({error:error.message});
+        catch(error){
+            res.status(404).json({error:error.message});
     }
 
 })
 
-profileRouter.delete('/:id',async(req,res)=>{
-    const id=req.params.id;
+profileRouter.delete('/',async(req,res)=>{
+    const id=req.user.id;
 
     try{
         const {data,error}=await supabase.from('UsersGen').delete().eq('id',id).select()
