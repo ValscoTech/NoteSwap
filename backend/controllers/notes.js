@@ -115,73 +115,7 @@ notesRouter.post('/',upload.fields([{name:'pdfFile',maxCount:1},{name:'imageFile
     }
 })
 
-// notesRouter.put('/:id', upload.fields([{ name: 'pdfFile', maxCount: 1 }, { name: 'imageFile', maxCount: 1 }]), async (req, res) => {
-//     const { id } = req.params; 
-//     const pdfFile = req.files['pdfFile'] ? req.files['pdfFile'][0] : null;
-//     const imageFile = req.files['imageFile'] ? req.files['imageFile'][0] : null;
 
-//     if (!id) {
-//         return res.status(400).json({ error: 'Note ID is required' });
-//     }
-
-//     const { price, stockRemaining, courseId, modulesCovered } = req.body;
-//     const posted_by = req.user.id;
-    
-//     let updates = {};
-    
-//     if (price) updates.price = price;
-//     if (stockRemaining) updates.stockRemaining = stockRemaining;
-//     if (courseId) updates.courseId = courseId;
-//     if (modulesCovered) {
-//         try {
-//             updates.modulesCovered = JSON.parse(modulesCovered);
-//         } catch (error) {
-//             return res.status(400).json({ error: 'Invalid modulesCovered format' });
-//         }
-//     }
-
-//     try {
-//         let modulesCoveredString = '';
-//         if (Array.isArray(updates.modulesCovered)) {
-//             modulesCoveredString = updates.modulesCovered.join('-');
-//         }
-
-//         if (pdfFile) {
-//             const pdfName = `${req.user.id}-${courseId}-${modulesCoveredString}-notes`;
-            
-//             const { data: pdfData, error: pdfError } = await supabaseAdmin.storage.from('Notes').upload(pdfName, pdfFile.buffer, {
-//                 upsert: true,
-//                 contentType: pdfFile.mimetype
-//             });
-//             if (pdfError) {
-//                 throw pdfError;
-//             }
-//             updates.fileUrl = supabase.storage.from('Notes').getPublicUrl(pdfName).data.publicUrl;
-//         }
-
-//         if (imageFile) {
-//             const imageName = `${req.user.id}-${courseId}-${modulesCoveredString}-themeImg`;
-//             const { data: imageData, error: imageError } = await supabaseAdmin.storage.from('Notes').upload(imageName, imageFile.buffer, {
-//                 upsert: true,
-//                 contentType: imageFile.mimetype
-//             });
-//             if (imageError) {
-//                 throw imageError;
-//             }
-//             updates.themeImg = supabase.storage.from('Notes').getPublicUrl(imageName).data.publicUrl;
-//         }
-
-//         const { data, error } = await supabase.from('CourseNotes').update(updates).eq('id', id).select();
-//         if (error) {
-//             throw error;
-//         }
-
-//         res.status(200).json(data);
-//     } catch (err) {
-//         console.error(err);
-//         res.status(500).json({ error: err.message });
-//     }
-// });
 
 notesRouter.put('/:id',upload.fields([{name:'pdfFile',maxCount:1},{name:'imageFile',maxCount:1}]),async(req,res)=>{
     const {id}= req.params
