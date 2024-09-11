@@ -44,7 +44,7 @@ const Blog = () => {
                         <div className="space-y-5 lg:ml-60 max-w-[400px]">
                             <div className="rounded-md">
                                 <h3 className="text-xl font-bold text-[#A883C5] uppercase">Popular Posts</h3>
-                                <a href={'https://www.valscotech.com/BlogPage/4hNtpJZQNN5O8jzCt6HP'} target='_blank' className="border-b border-white my-5 flex flex-row hover:bg-[#626161] transition-all duration-300 ease-in-out transform hover:scale-105">
+                                <a href={'https://play.google.com/store/apps/details?id=com.jurident.valsco'} target='_blank' className="border-b border-white my-5 flex flex-row hover:bg-[#626161] transition-all duration-300 ease-in-out transform hover:scale-105">
                                     <div className='my-3 w-40' >
                                         <img src={blog4} alt="blog2" className=' h-28 sm:w-28 sm:h-28 lg:w-32 lg:h-32 object-fill' />
                                     </div>
