@@ -13,9 +13,8 @@ notesRouter.get('/',async (req,res)=>{
         if(!req.user){
             return res.status(401).json({error:"Unauthorized"});
         }
-        let queryToGetNotes= supabase.from('CourseNotes').select('*');
-
         
+        let queryToGetNotes= supabase.from('CourseNotes').select('*');
 
         if(req.query.minPrice){
             queryToGetNotes=queryToGetNotes.gte('price',req.query.minPrice);

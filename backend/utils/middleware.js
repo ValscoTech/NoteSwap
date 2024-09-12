@@ -11,7 +11,6 @@ const authenticateUser=async(req,res,next)=>{
 
     try{
         const {data,error}=await supabase.auth.getUser(token);
-        
     
         if(error){
             throw error
