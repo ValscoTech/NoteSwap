@@ -130,9 +130,9 @@ export default function OfferNotesPage() {
               <button className="mt-4 w-full py-2 bg-[#DEEBFF] text-black font-normal rounded-md">Save Price</button>
             </div>
           </div>
-          <button
+           <button
             type="submit"
-            className="w-[520px] ml-5 py-2 px-4 bg-[#A883C5] text-white font-bold text-2xl rounded-md shadow-sm"
+            className="w-full sm:w-[520px] ml-5 py-2 px-4 bg-[#A883C5] text-white font-bold text-2xl rounded-md shadow-sm"
           >
             Post Offer
           </button>
