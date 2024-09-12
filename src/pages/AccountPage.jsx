@@ -2,6 +2,7 @@ import NotesView from "@/components/common/NotesView";
 import Footer from "@/components/layout/footer";
 import Navbar from "@/components/layout/navbar";
 import { useNavigate } from "react-router-dom";
+import NotesPage from "../components/common/NotesView";
 
 export default function AccountPage({}) {
   const navigate = useNavigate();
@@ -78,7 +79,7 @@ export default function AccountPage({}) {
         {/* Offers made: */}
         <div className="text-white text-4xl mt-20 mx-10 md:mx-40 md:w-96">
           <h1>Offers Made</h1>
-          {/* Notes Components to be added*/}
+          {/* <NotesPage/>s */}
         </div>
 
         {/* Notes rented: */}
