@@ -66,7 +66,7 @@ export default function NotesPage() {
       {/* Displaying Filtered Results */}
       <div className="flex justify-center ">{/* Notes Display Section */}
         <div className="grid justify-center gap-x-10 lg:grid-cols-3 grid-cols-1 gap-y-[0.01rem] md:gap-y-11 lg:gap-y-10 sm:grid-cols-2 sm:pb-20 sm:gap-x-14 md:gap-x-32 lg:gap-x-10">
-          {filteredData.map((item) => (
+          {data.map((item) => (
             <a
               key={item.id}
               href={item.link}
