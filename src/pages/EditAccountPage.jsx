@@ -1,23 +1,43 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function EditAccountPage() {
   const navigate = useNavigate();
 
   // Initialize state for user details
-  const [name, setName] = useState('Your Name');
-  const [roomNo, setRoomNo] = useState('Your Room No');
-  const [department, setDepartment] = useState('Your Department');
-  const [specialization, setSpecialization] = useState('Your Specialization');
-  const [block, setBlock] = useState('');
-  const [additionalRoomNo, setAdditionalRoomNo] = useState('');
-  const [additionalDeptSpec, setAdditionalDeptSpec] = useState('');
-  const [profilePic, setProfilePic] = useState('/src/assets/images/userProfilePhoto.png');
+  const [name, setName] = useState("");
+  const [roomNo, setRoomNo] = useState("");
+  const [department, setDepartment] = useState("");
+  const [specialization, setSpecialization] = useState("");
+  const [block, setBlock] = useState("");
+  const [additionalRoomNo, setAdditionalRoomNo] = useState("");
+  const [additionalDeptSpec, setAdditionalDeptSpec] = useState("");
+  const defaultProfilePic = "/src/assets/images/userProfilePhoto.png";
+  const [profilePic, setProfilePic] = useState(defaultProfilePic);
+  const [isProfilePicCustom, setIsProfilePicCustom] = useState(false); // State for button visibility
+
+  // Load existing data from localStorage
+  useEffect(() => {
+    const savedDetails = localStorage.getItem("userDetails");
+    if (savedDetails) {
+      const parsedDetails = JSON.parse(savedDetails);
+      setName(parsedDetails.name);
+      setRoomNo(parsedDetails.roomNo);
+      setDepartment(parsedDetails.department);
+      setSpecialization(parsedDetails.specialization);
+      setBlock(parsedDetails.block);
+      setAdditionalRoomNo(parsedDetails.additionalRoomNo);
+      setAdditionalDeptSpec(parsedDetails.additionalDeptSpec);
+      const profilePicUrl = parsedDetails.profilePic || defaultProfilePic;
+      setProfilePic(profilePicUrl);
+      setIsProfilePicCustom(profilePicUrl !== defaultProfilePic); // Update button visibility state
+    }
+  }, []);
 
   // Handle save action
   const handleSave = () => {
     localStorage.setItem(
-      'userDetails',
+      "userDetails",
       JSON.stringify({
         name,
         roomNo,
@@ -29,19 +49,19 @@ export default function EditAccountPage() {
         profilePic,
       })
     );
-    navigate('/account'); // Navigate back to AccountPage
+    navigate("/account"); // Navigate back to AccountPage
   };
 
   // Handle log out action
   const handleLogOut = () => {
-    navigate('/login'); // Navigate to LoginPage
+    navigate("/login"); // Navigate to LoginPage
   };
 
   // Handle profile picture upload when user clicks on the profile image
   const handleProfilePicClick = () => {
-    const inputElement = document.createElement('input');
-    inputElement.type = 'file';
-    inputElement.accept = 'image/*';
+    const inputElement = document.createElement("input");
+    inputElement.type = "file";
+    inputElement.accept = "image/*";
     inputElement.onchange = handleProfilePicChange;
     inputElement.click();
   };
@@ -53,26 +73,40 @@ export default function EditAccountPage() {
       const reader = new FileReader();
       reader.onloadend = () => {
         setProfilePic(reader.result); // Set the new profile picture URL
+        setIsProfilePicCustom(true); // Show the remove button
       };
       reader.readAsDataURL(file);
     }
   };
 
+  // Handle removing the profile picture
+  const handleRemoveProfilePic = () => {
+    setProfilePic(defaultProfilePic); // Reset to default placeholder image
+    setIsProfilePicCustom(false); // Hide the remove button
+  };
+
   return (
     <>
-      {/* Navbar Component to be added */}
-
+      {/* Profile Photo and User Details */}
       <div className="bg-backgound-color w-full md:w-dvh">
-        {/* Profile Photo and User Details */}
         <div className="text-white md:flex">
-          {/* profile photo  */}
-          <div className="max-w-3xl w-full md:w-1/2 flex justify-center">
+          {/* Profile Photo */}
+          <div className="max-w-3xl w-full md:w-1/2 flex flex-col justify-center items-center">
             <img
               src={profilePic}
               alt="profilephoto"
               className="w-2/3 h-auto object-contain cursor-pointer"
               onClick={handleProfilePicClick}
             />
+            {isProfilePicCustom && (
+              <button
+                onClick={handleRemoveProfilePic}
+                className="text-white bg-red-500 text-xl cursor-pointer rounded-xl mt-5 font-semibold"
+                style={{ width: "200px", height: "50px" }}
+              >
+                Remove Photo
+              </button>
+            )}
           </div>
 
           {/* User Details */}
@@ -116,58 +150,53 @@ export default function EditAccountPage() {
           </div>
         </div>
 
-        {/* Additional User Details */}
-        <div className="text-white mx-10 md:mx-40">
-          <div className="py-5 flex items-center">
-            <label htmlFor="block" className="text-xl w-40">Block:</label>
+        {/* Additional Details */}
+        <div className="text-white mx-10 md:mx-40 md:w-96">
+          <div className="py-5 flex md:block">
+            <div className="pb-3 text-xl">Block: </div>
             <input
-              id="block"
               type="text"
               value={block}
               onChange={(e) => setBlock(e.target.value)}
-              className="border-b-2 text-xl bg-black text-white border-none flex-1"
+              className="md:border-b-2 ml-5 md:ml-0 text-xl bg-black text-white border-b-2 border-white w-full"
             />
           </div>
-          <div className="py-5 flex items-center">
-            <label htmlFor="additionalRoomNo" className="text-xl w-40">Room No:</label>
+          <div className="py-5 flex md:block">
+            <div className="pb-3 text-xl">Room No: </div>
             <input
-              id="additionalRoomNo"
               type="text"
               value={additionalRoomNo}
               onChange={(e) => setAdditionalRoomNo(e.target.value)}
-              className="border-b-2 text-xl bg-black text-white border-none flex-1"
+              className="md:border-b-2 ml-5 md:ml-0 text-xl bg-black text-white border-b-2 border-white w-full"
             />
           </div>
-          <div className="py-5 items-center">
-            <label htmlFor="additionalDeptSpec" className="text-xl w-40">Department and Specialization:</label>
+          <div className="py-5 flex md:block">
+            <div className="pb-3 text-xl">Department and Specialization: </div>
             <input
-              id="additionalDeptSpec"
               type="text"
               value={additionalDeptSpec}
               onChange={(e) => setAdditionalDeptSpec(e.target.value)}
-              className="border-b-2 text-xl bg-black text-white border-none flex-1"
+              className="md:border-b-2 ml-5 md:ml-0 text-xl bg-black text-white border-b-2 border-white w-full"
             />
           </div>
         </div>
 
-        {/* Save and Log Out Buttons */}
-        <div className="flex justify-center my-80">
-          <div className="flex flex-col items-center">
-            <button
-              className="text-white bg-[#A883C5] text-xl md:text-3xl text-center cursor-pointer rounded-xl mb-5 font-semibold py-3"
-              onClick={handleSave}
-              style={{ width: '745px', height: '167px' }}
-            >
-              Save
-            </button>
-            <button
-              className="text-white bg-[#A883C5] text-xl md:text-3xl text-center cursor-pointer rounded-xl font-semibold py-3"
-              onClick={handleLogOut}
-              style={{ width: '745px', height: '167px' }}
-            >
-              Log Out
-            </button>
-          </div>
+        {/* Buttons */}
+        <div className="flex flex-col justify-center items-center my-10">
+          <button
+            onClick={handleSave}
+            className="text-white bg-[#A883C5] text-xl cursor-pointer rounded-xl mx-5 font-semibold"
+            style={{ width: "500px", height: "100px" }}
+          >
+            Save
+          </button>
+          <button
+            onClick={handleLogOut}
+            className="text-white bg-[#A883C5] text-xl cursor-pointer rounded-xl mx-5 mt-5 font-semibold"
+            style={{ width: "500px", height: "100px" }}
+          >
+            Log Out
+          </button>
         </div>
       </div>
     </>
