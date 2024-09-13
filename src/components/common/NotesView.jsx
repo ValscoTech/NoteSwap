@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import shelf from "../../assets/images/shelf.png";
 import img3 from "../../assets/images/image3.png";
+import ImageViewer from "react-simple-image-viewer";
 import img4 from "../../assets/images/image4.png";
-import { GoArrowDownRight } from "react-icons/go";
+
 
 {/*Temporarily storing values locally */}
 const data = [  
@@ -58,51 +58,100 @@ const data = [
 ];
 
 export default function NotesPage() {
+  const [isViewerOpen, setIsViewerOpen] = useState(false);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [images, setImages] = useState([]);
 
+  const openImageViewer = (index, item) => {
+    setImages([item.image1, item.image2]);
+    setCurrentImageIndex(index);
+    setIsViewerOpen(true);
+  };
+
+  const closeImageViewer = () => {
+    setIsViewerOpen(false);
+  };
 
   return (
     <div className="font-clash overflow-hidden">
 
       {/* Displaying Filtered Results */}
-      <div className="flex justify-center ">{/* Notes Display Section */}
-        <div className="grid justify-center gap-x-10 lg:grid-cols-3 grid-cols-1 gap-y-[0.01rem] md:gap-y-11 lg:gap-y-10 sm:grid-cols-2 sm:pb-20 sm:gap-x-14 md:gap-x-32 lg:gap-x-10">
-          {data.map((item) => (
-            <a
-              key={item.id}
-              href={item.link}
-              className="bg-white text-black p-4 rounded-2xl w-[17.5rem] lg:scale-100 scale-75 md:scale-[1.1] sm:scale-[0.8] ">
-              {/* Component Part */}
-              <div className="flex justify-normal gap-x-4 items-start">
-                {/* Department + Year, Respective School */}
-                <div className="pt-1">{item.department}</div>
-                <div className="bg-[#a883c5] px-5 h-5 rounded-sm font-[500] text-sm flex flex-col justify-center">
-                  <div>{item.school}</div>
-                </div>
+      <div className="flex justify-center">
+            {/* Notes Display Section */}
+            <div className="w-[60rem]">
+              <div className="  grid justify-items-center sm:grid-cols-3 grid-cols-2 md:gap-y-14 lg:grid-cols-3 md:gap-x-[1rem] lg:gap-x-3 sm:gap-x-1 mobile:gap-y-10 mobile:gap-x-72 gap-x-[18rem] gap-y-[3rem] ">
+                {data.map((item, index) => (
+                  <a
+                    key={item.id}
+                    className="bg-white text-black p-3 rounded-2xl w-[18rem] h-[18rem] md:scale-100">
+                    {/* Component Part */}
+                    <div className="flex justify-normal gap-x-4 items-center">
+                      {/* Department + Year, Respective School */}
+                      <div className="pt-1 pl-2 font-[400] text-lg">
+                        {item.department}
+                      </div>
+                      <div className="bg-[#a883c5] px-5 py-0 h-4 rounded-[0.225rem] font-[500] text-sm flex flex-col justify-center">
+                        <div className="font-[525]">{item.school}</div>
+                      </div>
+                    </div>
+                    <div className="flex justify-center gap-x-2 pb-4 pl-0">
+                      {/* Course and Modules Covered */}
+                      <div className="text-[1.15rem] font-[425] w-[8.7rem]">
+                        {item.title}
+                      </div>
+                      <div className="flex justify-normal border-[1.25px] border-black rounded-[0.7rem] w-fit items-center p-2 gap-x-1">
+                        <div className="text-sm leading-4">
+                          Modules
+                          <br /> Covered
+                        </div>
+                        <div className="text-4xl">{item.modulesCovered}</div>
+                      </div>
+                    </div>
+                    <div className="flex justify-normal">
+                      {/* Images Part */}
+                      <div>
+                        <img
+                          className="w-32 cursor-pointer"
+                          src={item.image1}
+                          onClick={() => openImageViewer(0, item)}
+                        />
+                      </div>
+                      <div>
+                        <img
+                          className="w-32 cursor-pointer"
+                          src={item.image2}
+                          onClick={() => openImageViewer(1, item)}
+                        />
+                      </div>
+                    </div>
+                  </a>
+                ))}
               </div>
-              <div className="flex justify-between pb-4">
-                {/* Course and Modules Covered */}
-                <div className="text-lg w-[8.5rem]">{item.title}</div>
-                <div className="flex justify-normal border-2 border-black rounded-[0.7rem] w-fit items-center p-2 gap-x-2">
-                  <div className="text-sm leading-4">
-                    Modules
-                    <br /> Covered
-                  </div>
-                  <div className="text-4xl">{item.modulesCovered}</div>
-                </div>
-              </div>
-              <div className="flex justify-normal">
-                {/* Images Part */}
-                <div>
-                  <img className="w-32" src={item.image1} />
-                </div>
-                <div>
-                  <img className="w-32" src={item.image2} />
-                </div>
-              </div>
-            </a>
-          ))}
+            </div>
+          </div>
+          {isViewerOpen && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-80"
+          style={{
+            width: "100vw", // Cover the entire screen width
+            height: "100vh", // Cover the entire screen height
+          }}>
+          <ImageViewer
+            src={images}
+            className="min-w-full"
+            currentIndex={currentImageIndex}
+            disableScroll={true}
+            closeOnClickOutside={true}
+            onClose={closeImageViewer}
+            backgroundStyle={{
+              backgroundColor: "rgba(0, 0, 0, 0.9)", // Dark background
+              zIndex: 9999,
+              width: "100%", // Full width for the background
+              height: "100", // Full height for the background
+            }}
+          />
         </div>
-      </div>
+      )}
       {/*The footer part */}
     </div>
   );
