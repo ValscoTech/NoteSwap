@@ -7,6 +7,7 @@ import '../styles/calendar.css';
 import img1 from "../components/rent/2f855903-01c1-4bf6-b337-124bdebd2d8f.jpg";
 import img2 from "../components/rent/2f855903-01c1-4bf6-b337-124bdebd2d8f1.jpg";
 import img3 from "../components/rent/2f855903-01c1-4bf6-b337-124bdebd2d8f2.jpg";
+import NotesPage from '@/components/common/NotesView';
 
 export default function RentNotesPage() {
   const [date, setDate] = useState(new Date());
@@ -27,7 +28,7 @@ export default function RentNotesPage() {
 
           <div className="space-y-4">
             <p className="text-xl">Preview:</p>
-            <div className="w-full p-2 bg-gray-300 rounded-lg flex gap-4 p-4">
+            <div className="w-full  bg-gray-300 rounded-lg flex gap-4 p-4">
               <img
                 src={img3} // Update with your image path or state
                 alt="Preview"
@@ -50,13 +51,13 @@ export default function RentNotesPage() {
             <p className="text-xl">Kindly Update the Date of Exam : <span>{date.toDateString()}</span></p>
           </div>
         
-          <div className="h-[80vh] mb-16">
+          <div className="h-[100vh] max-w-64 mb-16">
             <Calendar
               onChange={dateChangeHandler}
               value={date}
               prev2Label={null}
               next2Label={null}
-              className="custom-calendar px-36  mb-4 pb-4  text-black " 
+              className="custom-calendar   mb-4 pb-4   text-black " 
             />
           </div>
           <button
@@ -65,7 +66,8 @@ export default function RentNotesPage() {
             >
               Offer Notes
           </button>
-          <div className="grid grid-cols-3 gap-4 mt-8 gap-y-12">
+          <NotesPage/>
+          {/* <div className="grid grid-cols-3 gap-4 mt-8 gap-y-12">
             <div className="w-full h-full p-1 border rounded-lg overflow-hidden relative">
               <img src={img1} className={`w-[510px] h-[510px] object-cover rounded-lg`}/>
             </div>
@@ -74,7 +76,7 @@ export default function RentNotesPage() {
             </div>
             <div className="w-full h-full p-1 border rounded-lg overflow-hidden relative">
               <img src={img3} className={`w-[510px] h-[510px] object-cover rounded-lg`}/>
-            </div>           
+            </div>            */}
           </div>
         </div>
       </div>
