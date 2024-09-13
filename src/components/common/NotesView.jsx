@@ -57,7 +57,7 @@ const data = [
 
 ];
 
-export default function NotesPage() {
+export default function NotesView() {
   const [isViewerOpen, setIsViewerOpen] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [images, setImages] = useState([]);
