@@ -16,7 +16,7 @@ export default function RentNotesPage() {
     <div className="bg-black text-white font-clash min-h-screen flex items-center justify-center p-4 md:p-8 lg:p-12">
       <div className="w-full mx-auto space-y-8">
         <h1 className="text-5xl font-semibold">Rent Notes</h1>
-        <div className="mx-20 space-y-10">
+        <div className="mx-20 space-y-10 flex flex-col gap-4">
           <div className="space-y-10">
             <p className="text-2xl">Theory Of Computation</p>
             <p className="text-xl">CSE 2005</p>
@@ -34,22 +34,22 @@ export default function RentNotesPage() {
             </div>
           </div>
 
-          <div className="space-y-2">
+          <div className="space-y-2 mb-4">
             <p className="text-xl">Kindly Update the Date of Exam : <span>{date.toDateString()}</span></p>
           </div>
         
-          <div className="">
+          <div className="h-[80vh] mb-16">
             <Calendar
               onChange={dateChangeHandler}
               value={date}
               prev2Label={null}
               next2Label={null}
-              className="custom-calendar px-48 " 
+              className="custom-calendar px-36  mb-4 pb-4  text-black " 
             />
           </div>
           <button
             type="submit"
-            className="w-1/2 py-2 px-4 bg-[#A883C5] text-white font-bold text-2xl rounded-md shadow-sm"
+            className="w-1/2 py-2 mt-12 px-4 bg-[#A883C5] text-white font-bold text-2xl rounded-md shadow-sm"
             >
               Offer Notes
           </button>
