@@ -102,7 +102,7 @@ export default function HomePage() {
   return (
     <div className="font-clash overflow-hidden bg-black w-full">
       {/* Home Section */}
-      <div className="flex mobile:flex-row flex-col justify-center gap-x-[2rem] mobile:gap-x-0  pt-20 pb-20 md:scale-90 lg:scale-[1.15] w-full md:mt-0 sm:mt-[-4rem] ">
+      <div className="flex mobile:flex-row flex-col justify-center gap-x-[2rem] mobile:gap-x-0  pt-20 pb-20 md:scale-90 lg:scale-[1.25] w-full md:mt-0 sm:mt-[-4rem] ">
         <div className="text-white text-xl md:text-[2.6rem] font-normal leading-normal font-clash flex flex-col justify-between">
           <div className="flex justify-center sm:text-lg  md:text-3xl md:leading-[3rem] mobile:pl-10 sm:pl-0 mobile:pt-10 pl-0 pr-[0.1rem]">
             <div className="sm:leading-[3rem] md:leading-normal mobile:ml-7 sm:pt-10 md:pt-0 ">
