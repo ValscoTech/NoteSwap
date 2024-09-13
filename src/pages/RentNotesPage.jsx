@@ -1,6 +1,8 @@
 import { React, useState } from 'react';
 import Calendar from 'react-calendar';
 
+
+
 import '../styles/calendar.css';
 import img1 from "../components/rent/2f855903-01c1-4bf6-b337-124bdebd2d8f.jpg";
 import img2 from "../components/rent/2f855903-01c1-4bf6-b337-124bdebd2d8f1.jpg";
@@ -25,11 +27,21 @@ export default function RentNotesPage() {
 
           <div className="space-y-4">
             <p className="text-xl">Preview:</p>
-            <div className="w-full p-2 bg-gray-300 rounded-lg">
+            <div className="w-full p-2 bg-gray-300 rounded-lg flex gap-4 p-4">
               <img
-                src="/path/to/your/image.png" // Update with your image path or state
+                src={img3} // Update with your image path or state
                 alt="Preview"
-                className="w-full h-auto object-contain rounded-lg"
+                className="w-[50%] h-auto object-contain rounded-lg"
+              />
+              <img
+                src={img3} // Update with your image path or state
+                alt="Preview"
+                className="w-[50%] h-auto object-contain rounded-lg"
+              />
+              <img
+                src={img3} // Update with your image path or state
+                alt="Preview"
+                className="w-[50%] h-auto object-contain rounded-lg"
               />
             </div>
           </div>
