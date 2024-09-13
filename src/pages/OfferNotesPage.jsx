@@ -148,7 +148,7 @@ export default function OfferNotesPage() {
           
           <button
             type="submit"
-            className="w-full sm:w-[520px] ml-5 py-2 px-4 bg-[#A883C5] text-white font-bold text-2xl rounded-md shadow-sm"
+            className="w-full sm:w-[515px] ml-5 py-2 px-4 bg-[#A883C5] text-white font-bold text-2xl rounded-md shadow-sm"
           >
             Post Offer
           </button>
