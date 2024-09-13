@@ -1,16 +1,25 @@
 import { React, useState } from 'react';
 import Calendar from 'react-calendar';
+
+
+
+import '../styles/calendar.css';
 import img1 from "../components/rent/2f855903-01c1-4bf6-b337-124bdebd2d8f.jpg";
 import img2 from "../components/rent/2f855903-01c1-4bf6-b337-124bdebd2d8f1.jpg";
 import img3 from "../components/rent/2f855903-01c1-4bf6-b337-124bdebd2d8f2.jpg";
+import { NotesPage } from '.';
 
 export default function RentNotesPage() {
-  const [value, onChange] = useState(new Date());
+  const [date, setDate] = useState(new Date());
+
+  function dateChangeHandler(newDate) {
+    setDate(newDate);
+  }
   return (
     <div className="bg-black text-white font-clash min-h-screen flex items-center justify-center p-4 md:p-8 lg:p-12">
       <div className="w-full mx-auto space-y-8">
         <h1 className="text-5xl font-semibold">Rent Notes</h1>
-        <div className="mx-20 space-y-10">
+        <div className="mx-20 space-y-10 flex flex-col gap-4">
           <div className="space-y-10">
             <p className="text-2xl">Theory Of Computation</p>
             <p className="text-xl">CSE 2005</p>
@@ -19,28 +28,45 @@ export default function RentNotesPage() {
 
           <div className="space-y-4">
             <p className="text-xl">Preview:</p>
-            <div className="w-full p-2 bg-gray-300 rounded-lg">
+            <div className="w-full  bg-gray-300 rounded-lg flex gap-4 p-4">
               <img
-                src="/path/to/your/image.png" // Update with your image path or state
+                src={img3} // Update with your image path or state
                 alt="Preview"
-                className="w-full h-auto object-contain rounded-lg"
+                className="w-[50%] h-auto object-contain rounded-lg"
+              />
+              <img
+                src={img3} // Update with your image path or state
+                alt="Preview"
+                className="w-[50%] h-auto object-contain rounded-lg"
+              />
+              <img
+                src={img3} // Update with your image path or state
+                alt="Preview"
+                className="w-[50%] h-auto object-contain rounded-lg"
               />
             </div>
           </div>
 
-          <div className="space-y-2">
-            <p className="text-xl">Kindly Update the Date of Exam</p>
+          <div className="space-y-2 mb-4">
+            <p className="text-xl">Kindly Update the Date of Exam : <span>{date.toDateString()}</span></p>
           </div>
         
-          <div>
-            <Calendar onChange={onChange} value={value} />
+          <div className="h-[100vh] max-w-64 mb-16">
+            <Calendar
+              onChange={dateChangeHandler}
+              value={date}
+              prev2Label={null}
+              next2Label={null}
+              className="custom-calendar   mb-4 pb-4   text-black " 
+            />
           </div>
           <button
             type="submit"
-            className="w-1/2 py-2 px-4 bg-[#A883C5] text-white font-bold text-2xl rounded-md shadow-sm"
+            className="w-1/2 py-2 mt-12 px-4 bg-[#A883C5] text-white font-bold text-2xl rounded-md shadow-sm"
             >
-              Offer Notes
+              Rent Notes
           </button>
+          <NotesPage/>
           <div className="grid grid-cols-3 gap-4 mt-8 gap-y-12">
             <div className="w-full h-full p-1 border rounded-lg overflow-hidden relative">
               <img src={img1} className={`w-[510px] h-[510px] object-cover rounded-lg`}/>

@@ -3,6 +3,8 @@ import uploadIcon from '../components/offer/upload-icon.png';
 
 export default function OfferNotesPage() {
   const [files, setFiles] = useState([]);
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleFileChange = (event) => {
     const fileList = Array.from(event.target.files);
@@ -14,8 +16,18 @@ export default function OfferNotesPage() {
     setFiles((prevFiles) => [...prevFiles, ...mappedFiles]);
   };
 
+  const openModal = (file) => {
+    setSelectedImage(file.preview);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setSelectedImage(null);
+  };
+
   const filePreview = files.map((file, index) => (
-    <div key={index} className="w-full h-full p-1 border rounded-lg overflow-hidden relative">
+    <div key={index} className="w-full h-full p-1 border rounded-lg overflow-hidden relative cursor-pointer" onClick={() => openModal(file)}>
       <img
         src={file.preview}
         alt={`preview ${index}`}
@@ -59,6 +71,7 @@ export default function OfferNotesPage() {
               className="w-full p-2 rounded-md border-b-2 border-white bg-transparent focus:outline-none"
             />
           </div>
+          
           <div>
             <select
               name="module"
@@ -75,6 +88,7 @@ export default function OfferNotesPage() {
               <option value="module8">Module 8</option>
             </select>
           </div>
+          
           <div>
             <select
               name="school"
@@ -99,6 +113,7 @@ export default function OfferNotesPage() {
               <option value="school16">VAIAL</option>
             </select>
           </div>
+          
           <div className="w-full mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 p-6">
             <div className="bg-white rounded-lg shadow-md p-6 flex flex-col justify-between">
               <div>
@@ -125,14 +140,15 @@ export default function OfferNotesPage() {
             <div className="bg-[#A883C5] rounded-lg shadow-md p-6 flex flex-col justify-between">
               <div>
                 <h2 className="text-center text-xl font-bold text-black mb-4">Set Your Price</h2>
-                <input type="text" className="mt-10 w-full p-2 rounded-md border-b-2 border-black bg-transparent focus:outline-none" />
+                <input type="number" className="mt-10 w-full p-2 rounded-md border-b-2 border-black bg-transparent focus:outline-none" />
               </div>
               <button className="mt-4 w-full py-2 bg-[#DEEBFF] text-black font-normal rounded-md">Save Price</button>
             </div>
           </div>
-           <button
+          
+          <button
             type="submit"
-            className="w-full sm:w-[520px] ml-5 py-2 px-4 bg-[#A883C5] text-white font-bold text-2xl rounded-md shadow-sm"
+            className="w-full sm:w-[515px] ml-5 py-2 px-4 bg-[#A883C5] text-white font-bold text-2xl rounded-md shadow-sm"
           >
             Post Offer
           </button>
@@ -142,6 +158,20 @@ export default function OfferNotesPage() {
           </div>
         </form>
       </div>
+
+      {isModalOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50">
+          <div className="relative">
+            <img src={selectedImage} alt="Selected Preview" className="max-w-full max-h-screen object-contain" />
+            <button
+              onClick={closeModal}
+              className="absolute top-4 right-4 text-white text-3xl font-bold"
+            >
+              &times;
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
