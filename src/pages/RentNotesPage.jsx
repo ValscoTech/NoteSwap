@@ -7,7 +7,7 @@ import '../styles/calendar.css';
 import img1 from "../components/rent/2f855903-01c1-4bf6-b337-124bdebd2d8f.jpg";
 import img2 from "../components/rent/2f855903-01c1-4bf6-b337-124bdebd2d8f1.jpg";
 import img3 from "../components/rent/2f855903-01c1-4bf6-b337-124bdebd2d8f2.jpg";
-import NotesPage from '@/components/common/NotesView';
+import { NotesPage } from '.';
 
 export default function RentNotesPage() {
   const [date, setDate] = useState(new Date());
@@ -64,10 +64,10 @@ export default function RentNotesPage() {
             type="submit"
             className="w-1/2 py-2 mt-12 px-4 bg-[#A883C5] text-white font-bold text-2xl rounded-md shadow-sm"
             >
-              Offer Notes
+              Rent Notes
           </button>
           <NotesPage/>
-          {/* <div className="grid grid-cols-3 gap-4 mt-8 gap-y-12">
+          <div className="grid grid-cols-3 gap-4 mt-8 gap-y-12">
             <div className="w-full h-full p-1 border rounded-lg overflow-hidden relative">
               <img src={img1} className={`w-[510px] h-[510px] object-cover rounded-lg`}/>
             </div>
@@ -76,7 +76,7 @@ export default function RentNotesPage() {
             </div>
             <div className="w-full h-full p-1 border rounded-lg overflow-hidden relative">
               <img src={img3} className={`w-[510px] h-[510px] object-cover rounded-lg`}/>
-            </div>            */}
+            </div>           
           </div>
         </div>
       </div>
