@@ -1,11 +1,17 @@
 import { React, useState } from 'react';
 import Calendar from 'react-calendar';
+import 'react-calendar/dist/react_calendar.css';
+import '../styles/calendar.css';
 import img1 from "../components/rent/2f855903-01c1-4bf6-b337-124bdebd2d8f.jpg";
 import img2 from "../components/rent/2f855903-01c1-4bf6-b337-124bdebd2d8f1.jpg";
 import img3 from "../components/rent/2f855903-01c1-4bf6-b337-124bdebd2d8f2.jpg";
 
 export default function RentNotesPage() {
-  const [value, onChange] = useState(new Date());
+  const [date, setDate] = useState(new Date());
+
+  function dateChangeHandler(newDate) {
+    setDate(newDate);
+  }
   return (
     <div className="bg-black text-white font-clash min-h-screen flex items-center justify-center p-4 md:p-8 lg:p-12">
       <div className="w-full mx-auto space-y-8">
@@ -29,11 +35,17 @@ export default function RentNotesPage() {
           </div>
 
           <div className="space-y-2">
-            <p className="text-xl">Kindly Update the Date of Exam</p>
+            <p className="text-xl">Kindly Update the Date of Exam : <span>{date.toDateString()}</span></p>
           </div>
         
-          <div>
-            <Calendar onChange={onChange} value={value} />
+          <div className="">
+            <Calendar
+              onChange={dateChangeHandler}
+              value={date}
+              prev2Label={null}
+              next2Label={null}
+              className="custom-calendar px-48 " 
+            />
           </div>
           <button
             type="submit"
