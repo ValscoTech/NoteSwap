@@ -139,7 +139,7 @@ export default function AccountPage() {
             theme == "dark" ? "text-white" : "text-black"
           }`}
         >
-          <h1 className="mb-10 ml-8 md:ml-0">Offers Made</h1>
+          <h1 className="text-4xl mb-10 ml-8 md:ml-0">Offers Made</h1>
         </div>
         <NotesView />
 
@@ -149,7 +149,7 @@ export default function AccountPage() {
             theme == "dark" ? "text-white" : "text-black"
           }`}
         >
-          <h1 className="mb-10 ml-8 md:ml-0">Notes Rented</h1>
+          <h1 className="text-4xl mb-10 ml-8 md:ml-0">Notes Rented</h1>
         </div>
         <NotesView />
       </div>
