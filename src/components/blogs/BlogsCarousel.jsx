@@ -51,24 +51,6 @@ const BlogsCarousel = () => {
             <div className='my-3'>
                 <h1 className='font-semibold text-2xl sm:text-2xl lg:text-3xl'>Explore our latest blog posts to delve deeper into the world of technology and discover insights about our cutting-edge products.</h1>
             </div>
-            {/*<div className=''>
-                <div className="flex justify-center px-4 sm:px-6 lg:px-8">
-                    <div className="max-w-2xl w-full my-12 sm:my-16 lg:my-20">
-                        {blogsdata.map(blog => (
-                            <div key={blog.id} className={`text-black bg-white border border-white rounded-[50px] p-6 sm:p-8 lg:p-8 ${isGrabbing ? 'cursor-grabbing' : 'cursor-grab'}`} onMouseDown={handleMouseDown} onMouseUp={handleMouseUp}>
-                                <h1 className="font-bold text-lg sm:text-xl lg:text-2xl truncate mb-4 sm:mb-5">{blog.title}</h1>
-                                <p className="text-base sm:text-lg lg:text-xl sm:mx-auto lg:mx-5 mb-6 sm:mb-8 lg:mb-10 line-clamp-3">
-                                    {blog.description}
-                                </p>
-                                <p className="text-center font-bold text-xs sm:text-sm lg:text-base mb-6 sm:mb-8 lg:mb-8">{blog.auther}</p>
-                                <div className="flex justify-center">
-                                    <button className="bg-blue-500 hover:bg-blue-700 text-white py-2 px-6 sm:px-8 lg:px-10 rounded-lg"> <a target='_blank' href={blog.link}>Read Blog</a></button>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </div>*/}
 
             <div className="relative w-full">
                 <div className="flex justify-center px-4 sm:px-6 lg:px-8">

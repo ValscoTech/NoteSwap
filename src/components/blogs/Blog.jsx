@@ -7,7 +7,7 @@ import blog5 from '@/assets/images/blog5.webp'
 
 const Blog = () => {
     return (
-        <div className='mx-4 md:mx-10 lg:mx-14'>
+        <div className='mx-4 md:mx-10 lg:mx-12'>
             <div className=''>
                 <h1 className='font-bold text-3xl sm:text-4xl lg:text-5xl mb-6 sm:mb-8 lg:mb-12  mt-4 sm:mt-6 lg:mt-8'>
                     Blogs and Articles
@@ -24,7 +24,7 @@ const Blog = () => {
                 />
             </div>
             <div className="font-sans min-h-screen">
-                <div className="container mx-auto px-1 py-6">
+                <div className="mx-auto px-1 py-6">
                     <div className=" grid grid-cols-1 md:grid-cols-2 gap-28">
                         <div className="space-y-5 lg:mr-[-15rem] w-auto">
                             <p className='text-sm sm:text-base lg:text-lg leading-relaxed'>

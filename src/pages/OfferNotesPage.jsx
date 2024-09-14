@@ -1,18 +1,46 @@
 import React, { useState } from 'react';
 import uploadIcon from '../components/offer/upload-icon.png';
+import NotesView from '../components/common/NotesView';
 
 export default function OfferNotesPage() {
   const [files, setFiles] = useState([]);
-  const [selectedImage, setSelectedImage] = useState(null);
+  const [formData, setFormData] = useState({
+    title: '',
+    courseCode: '',
+    courseName: '',
+    module: '',
+    school: '',
+    price: '',
+  });
+  const [notesData, setNotesData] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedImage, setSelectedImage] = useState(null);
+
+  const schoolNameMap = {
+    school1: 'SCOPE',
+    school2: 'SELECT',
+    school3: 'SMEC',
+    school4: 'SCORE',
+    school5: 'SCHEME',
+    school6: 'SENSE',
+    school7: 'SCE',
+    school8: 'SAS',
+    school9: 'VIT BS',
+    school10: 'V-SPARC',
+    school11: 'V-SIGN',
+    school12: 'HOT',
+    school13: 'SHINE',
+    school14: 'SSL',
+    school15: 'SBST',
+    school16: 'VAIAL'
+  };
 
   const handleFileChange = (event) => {
     const fileList = Array.from(event.target.files);
-    const mappedFiles = fileList.map((file) => {
-      return Object.assign(file, {
-        preview: URL.createObjectURL(file),
-      });
-    });
+    const mappedFiles = fileList.map((file) => ({
+      preview: URL.createObjectURL(file),
+      name: file.name,
+    }));
     setFiles((prevFiles) => [...prevFiles, ...mappedFiles]);
   };
 
@@ -26,72 +54,115 @@ export default function OfferNotesPage() {
     setSelectedImage(null);
   };
 
-  const filePreview = files.map((file, index) => (
-    <div key={index} className="w-full h-full p-1 border rounded-lg overflow-hidden relative cursor-pointer" onClick={() => openModal(file)}>
-      <img
-        src={file.preview}
-        alt={`preview ${index}`}
-        className="w-[410px] h-[210px] object-cover rounded-lg"
-      />
-      <p className="absolute bottom-0 left-0 w-full text-center text-white bg-black bg-opacity-50 p-1">
-        {file.name}
-      </p>
-    </div>
-  ));
+  const handleFormChange = (event) => {
+    const { name, value } = event.target;
+    setFormData((prevData) => ({ ...prevData, [name]: value }));
+  };
+
+  const handlePostOffer = (event) => {
+    event.preventDefault();
+
+    if (files.length === 0 || !formData.title || !formData.price) {
+      alert("Please complete all fields and upload at least one file.");
+      return;
+    }
+
+    const filePreviews = files.map(file => file.preview);
+
+    const newNote = {
+      id: notesData.length + 1,
+      title: formData.courseName,
+      type: 'lecture notes',
+      price: parseFloat(formData.price),
+      images: filePreviews,
+      modulesCovered: formData.module,
+      department: formData.courseCode,
+      school: schoolNameMap[formData.school],
+      link: `/notes/${formData.title.replace(/\s+/g, '-').toLowerCase()}`,
+    };
+
+    setNotesData((prevData) => [...prevData, newNote]);
+    setFiles([]);
+    setFormData({
+      title: '',
+      courseCode: '',
+      courseName: '',
+      module: '',
+      school: '',
+      price: '',
+    });
+  };
 
   return (
     <div className="bg-black text-white font-clash min-h-screen flex items-center justify-center p-4 md:p-8 lg:p-12">
       <div className="w-full mx-auto space-y-8">
         <h1 className="text-5xl font-semibold">Offer Notes</h1>
-        <form className="mx-20 space-y-10">
-          
+        <form className="mx-20 space-y-10" onSubmit={handlePostOffer}>
+          {/* Title Input */}
           <div className="space-y-2">
             <label className="block text-2xl font-light">Title</label>
             <input
               type="text"
               name="title"
+              value={formData.title}
+              onChange={handleFormChange}
+              autoComplete="off"
               className="w-full p-2 rounded-md border-b-2 border-white bg-transparent focus:outline-none"
             />
           </div>
 
+          {/* Course Code Input */}
           <div className="space-y-2">
             <label className="block text-2xl font-light">Course Code</label>
             <input
               type="text"
               name="courseCode"
+              value={formData.courseCode}
+              onChange={handleFormChange}
+              autoComplete="off"
               className="w-full p-2 rounded-md border-b-2 border-white bg-transparent focus:outline-none"
             />
           </div>
 
+          {/* Course Name Input */}
           <div className="space-y-2">
             <label className="block text-2xl font-light">Course Name</label>
             <input
               type="text"
               name="courseName"
+              value={formData.courseName}
+              onChange={handleFormChange}
+              autoComplete="off"
               className="w-full p-2 rounded-md border-b-2 border-white bg-transparent focus:outline-none"
             />
           </div>
-          
+
+          {/* Module Selection */}
           <div>
             <select
               name="module"
+              value={formData.module}
+              onChange={handleFormChange}
               className='text-[#909090] block w-[100%] p-3 text-2xl font-light'
             >
               <option value="">Select Module</option>
-              <option value="module1">Module 1</option>
-              <option value="module2">Module 2</option>
-              <option value="module3">Module 3</option>
-              <option value="module4">Module 4</option>
-              <option value="module5">Module 5</option>
-              <option value="module6">Module 6</option>
-              <option value="module7">Module 7</option>
-              <option value="module8">Module 8</option>
+              <option value="1">Module 1</option>
+              <option value="2">Module 2</option>
+              <option value="3">Module 3</option>
+              <option value="4">Module 4</option>
+              <option value="5">Module 5</option>
+              <option value="6">Module 6</option>
+              <option value="7">Module 7</option>
+              <option value="8">Module 8</option>
             </select>
           </div>
-          
+
+          {/* School Selection */}
           <div>
             <select
               name="school"
+              value={formData.school}
+              onChange={handleFormChange}
               className="text-[#909090] block w-[100%] p-3 text-2xl font-light"
             >
               <option value="">Select School</option>
@@ -113,52 +184,64 @@ export default function OfferNotesPage() {
               <option value="school16">VAIAL</option>
             </select>
           </div>
-          
+
+          {/* File Upload Section */}
           <div className="w-full mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 p-6">
             <div className="bg-white rounded-lg shadow-md p-6 flex flex-col justify-between">
               <div>
                 <h2 className="text-2xl font-bold text-gray-900 mb-4">Upload your files</h2>
-                <div className="bg-black rounded-lg flex items-center justify-center p-4">
+                <div className="bg-black rounded-lg flex flex-col p-4">
                   <div className="text-center">
-                    <img src={uploadIcon} alt="Upload Icon" className="mx-auto h-12 w-12 text-gray-400" />
+                    <img src={uploadIcon} alt="Upload Icon" className="mx-auto h-12 w-12 text-gray-400 mb-2" />
                     <input type="file" onChange={handleFileChange} className="hidden" id="fileUpload" multiple />
                     <label htmlFor="fileUpload" className="text-white font-medium cursor-pointer">
                       Drag and drop your files here
                     </label>
                   </div>
+                  <div className="mt-4">
+                    {files.length > 0 && (
+                      <ul className="text-white list-disc pl-5">
+                        {files.map((file, index) => (
+                          <li key={index} className="text-white">{file.name}</li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
                 </div>
-              </div>
-              <div className="mt-4 space-y-2">
-                {files.map((file, index) => (
-                  <p key={index} className="text-gray-900 font-clash font-semibold">
-                    {file.name}
-                  </p>
-                ))}
               </div>
             </div>
 
+            {/* Price Section */}
             <div className="bg-[#A883C5] rounded-lg shadow-md p-6 flex flex-col justify-between">
               <div>
                 <h2 className="text-center text-xl font-bold text-black mb-4">Set Your Price</h2>
-                <input type="number" className="mt-10 w-full p-2 rounded-md border-b-2 border-black bg-transparent focus:outline-none" />
+                <input
+                  type="number"
+                  name="price"
+                  value={formData.price}
+                  onChange={handleFormChange}
+                  className="mt-10 w-full p-2 rounded-md border-b-2 border-black bg-transparent focus:outline-none"
+                />
               </div>
-              <button className="mt-4 w-full py-2 bg-[#DEEBFF] text-black font-normal rounded-md">Save Price</button>
+              <button type="submit" className="mt-4 w-full py-2 bg-[#DEEBFF] text-black font-normal rounded-md">
+                Save Price
+              </button>
             </div>
           </div>
-          
+
           <button
             type="submit"
             className="w-full sm:w-[515px] ml-5 py-2 px-4 bg-[#A883C5] text-white font-bold text-2xl rounded-md shadow-sm"
           >
             Post Offer
           </button>
-
-          <div className="grid grid-cols-3 gap-4 mt-8 gap-y-12">
-            {filePreview}
-          </div>
         </form>
+
+        {/* Display Notes Preview */}
+        <NotesView notesData={notesData} />
       </div>
 
+      {/* Modal for Image Preview */}
       {isModalOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50">
           <div className="relative">
