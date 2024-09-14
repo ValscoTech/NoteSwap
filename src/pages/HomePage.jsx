@@ -7,6 +7,7 @@ import img1 from "../assets/images/1.png";
 import ph from "../assets/images/phone.png";
 import { useNavigate } from "react-router-dom";
 import { GoArrowDownRight } from "react-icons/go";
+import NotesView from "@/components/common/NotesView";
 
 {
   /*Storing JSon file temporarily untill integration with backend*/
@@ -17,8 +18,7 @@ const data = [
     title: "Computation of Mathematics",
     type: "class notes",
     price: 10.0,
-    image1: img3,
-    image2: img4,
+    images: [img3, img4],
     modulesCovered: 8,
     department: "CSE2005",
     school: "SCOPE",
@@ -29,9 +29,8 @@ const data = [
     title: "Computation of Mathematics",
     type: "class notes",
     price: 15.0,
-    image1: img3,
-    image2: img4,
-    modulesCovered: 8,
+    images: [img3, img4],
+    modulesCovered: 7,
     department: "CSE2005",
     school: "SCOPE",
     link: "/path-to-note-1", // Link to the note detail page
@@ -41,9 +40,8 @@ const data = [
     title: "Computation of Mathematics",
     type: "lecture notes",
     price: 20.0,
-    image1: img3,
-    image2: img4,
-    modulesCovered: 8,
+    images: [img3, img4],
+    modulesCovered: 6,
     department: "CSE2005",
     school: "SCOPE",
     link: "/path-to-note-1",
@@ -87,16 +85,6 @@ export default function HomePage() {
     });
 
     setFilteredData(filtered);
-  };
-
-  const openImageViewer = (index, item) => {
-    setImages([item.image1, item.image2]);
-    setCurrentImageIndex(index);
-    setIsViewerOpen(true);
-  };
-
-  const closeImageViewer = () => {
-    setIsViewerOpen(false);
   };
 
   return (
@@ -196,85 +184,10 @@ export default function HomePage() {
               <img className="w-[10.5rem] " src={ph} alt="iPhone" />
             </div>
           </div>
-
-          <div className="flex justify-center">
-            {/* Notes Display Section */}
-            <div className="w-[60rem]">
-              <div className="  grid justify-items-center sm:grid-cols-3 grid-cols-2 md:gap-y-14 lg:grid-cols-3 md:gap-x-[1rem] lg:gap-x-3 sm:gap-x-1 mobile:gap-y-10 mobile:gap-x-72 gap-x-[18rem] gap-y-[3rem] ">
-                {filteredData.map((item, index) => (
-                  <a
-                    key={item.id}
-                    className="bg-white text-black p-3 rounded-2xl w-[18rem] h-[18rem] md:scale-100">
-                    {/* Component Part */}
-                    <div className="flex justify-normal gap-x-4 items-center">
-                      {/* Department + Year, Respective School */}
-                      <div className="pt-1 pl-2 font-[400] text-lg">
-                        {item.department}
-                      </div>
-                      <div className="bg-[#a883c5] px-5 py-0 h-4 rounded-[0.225rem] font-[500] text-sm flex flex-col justify-center">
-                        <div className="font-[525]">{item.school}</div>
-                      </div>
-                    </div>
-                    <div className="flex justify-center gap-x-2 pb-4 pl-0">
-                      {/* Course and Modules Covered */}
-                      <div className="text-[1.15rem] font-[425] w-[8.7rem]">
-                        {item.title}
-                      </div>
-                      <div className="flex justify-normal border-[1.25px] border-black rounded-[0.7rem] w-fit items-center p-2 gap-x-1">
-                        <div className="text-sm leading-4">
-                          Modules
-                          <br /> Covered
-                        </div>
-                        <div className="text-4xl">{item.modulesCovered}</div>
-                      </div>
-                    </div>
-                    <div className="flex justify-normal">
-                      {/* Images Part */}
-                      <div>
-                        <img
-                          className="w-32 cursor-pointer"
-                          src={item.image1}
-                          onClick={() => openImageViewer(0, item)}
-                        />
-                      </div>
-                      <div>
-                        <img
-                          className="w-32 cursor-pointer"
-                          src={item.image2}
-                          onClick={() => openImageViewer(1, item)}
-                        />
-                      </div>
-                    </div>
-                  </a>
-                ))}
-              </div>
-            </div>
-          </div>
+          <NotesView notesData={filteredData}/>
         </div>
       </div>
-      {isViewerOpen && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-80"
-          style={{
-            width: "100vw", // Cover the entire screen width
-            height: "100vh", // Cover the entire screen height
-          }}>
-          <ImageViewer
-            src={images}
-            className="min-w-full"
-            currentIndex={currentImageIndex}
-            disableScroll={true}
-            closeOnClickOutside={true}
-            onClose={closeImageViewer}
-            backgroundStyle={{
-              backgroundColor: "rgba(0, 0, 0, 0.9)", // Dark background
-              zIndex: 9999,
-              width: "100%", // Full width for the background
-              height: "100", // Full height for the background
-            }}
-          />
-        </div>
-      )}
+      
 
       <div className=" flex justify-center lg:scale-100 md:scale-[0.76] sm:scale-[0.61] pt-10 mobile:scale-[0.45] lg:mt-0 md:mt-[-5rem] lg:mb-0 md:mb-[-4rem] sm:mt-[-12rem] sm:mb-[-6rem] mobile:mt-[-23rem] scale-[0.315] mt-[-35rem] mb-[-5rem]">
         {/* Search Box Section */}
