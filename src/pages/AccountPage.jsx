@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState, useContext } from "react";
 import "../styles/AccountPage.css";
 import NotesView from "../components/common/NotesView";
+import { ThemeContext } from './ThemeContext';
 
 export default function AccountPage() {
   const navigate = useNavigate();
@@ -15,6 +16,7 @@ export default function AccountPage() {
     additionalDeptSpec: "",
     profilePic: "/src/assets/images/userProfilePhoto.png",
   });
+  const { theme, toggleTheme } = useContext(ThemeContext);
 
   // Retrieve the data from localStorage when AccountPage loads
   useEffect(() => {
@@ -23,18 +25,9 @@ export default function AccountPage() {
       setUserDetails(JSON.parse(savedDetails));
     }
   }, []);
-  const [theme, setTheme] = useState("dark");
 
   const handleChange = () => {
-    navigate("/edit-account"); // Navigate to edit account page
-  };
-
-  const changeTheme = () => {
-    setTheme((curr) => {
-      const newTheme = curr === "light" ? "dark" : "light";
-      localStorage.setItem("theme", newTheme); // Update theme in localStorage
-      return newTheme;
-    });
+    navigate("/edit-account"); // Navigate to edit account page with theme
   };
 
   return (
@@ -51,7 +44,7 @@ export default function AccountPage() {
           </button>
 
           {/* Change theme Button */}
-          <div onClick={changeTheme}>
+          <div onClick={toggleTheme}>
             {theme == "light" ? (
               <img
                 src="/src/assets/images/lightModeButton.png"

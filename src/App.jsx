@@ -3,11 +3,13 @@ import { HomePage, AccountPage, NotesPage, OfferNotesPage, RentNotesPage, BlogsP
 import Navbar from '@/components/layout/navbar';
 import Footer from '@/components/layout/footer';
 import { SignedIn, SignedOut, SignInButton, UserButton, SignIn, SignUp } from "@clerk/clerk-react";
+import { ThemeProvider } from '../src/pages/ThemeContext';
 
 function App() {
   return (
     <>
-      <div className='font-clash bg-black text-white min-h-screen'>
+      <ThemeProvider>
+        <div className='font-clash bg-black text-white min-h-screen'>
         {/* <SignedOut>
           <main className='h-screen flex items-center justify-center'>
             <BrowserRouter>
@@ -36,7 +38,8 @@ function App() {
           </BrowserRouter>
           <Footer />
         {/* </SignedIn> */}
-      </div>
+        </div>
+      </ThemeProvider>
     </>
   );
 }
