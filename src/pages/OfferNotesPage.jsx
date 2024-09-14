@@ -140,7 +140,7 @@ export default function OfferNotesPage() {
             <div className="bg-[#A883C5] rounded-lg shadow-md p-6 flex flex-col justify-between">
               <div>
                 <h2 className="text-center text-xl font-bold text-black mb-4">Set Your Price</h2>
-                <input type="text" className="mt-10 w-full p-2 rounded-md border-b-2 border-black bg-transparent focus:outline-none" />
+                <input type="number" className="mt-10 w-full p-2 rounded-md border-b-2 border-black bg-transparent focus:outline-none" />
               </div>
               <button className="mt-4 w-full py-2 bg-[#DEEBFF] text-black font-normal rounded-md">Save Price</button>
             </div>
@@ -148,7 +148,7 @@ export default function OfferNotesPage() {
           
           <button
             type="submit"
-            className="w-full sm:w-[520px] ml-5 py-2 px-4 bg-[#A883C5] text-white font-bold text-2xl rounded-md shadow-sm"
+            className="w-full sm:w-[515px] ml-5 py-2 px-4 bg-[#A883C5] text-white font-bold text-2xl rounded-md shadow-sm"
           >
             Post Offer
           </button>

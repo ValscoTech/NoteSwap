@@ -1,11 +1,36 @@
 import { useNavigate } from "react-router-dom";
+<<<<<<< HEAD
+import { useEffect, useState } from "react";
+=======
 import NotesPage from "../components/common/NotesView";
 import "../styles/AccountPage.css";
 import { useState } from "react";
+>>>>>>> 912405fe2871f8d5c3b1e827bbe9e77813e84483
 
-export default function AccountPage({}) {
+export default function AccountPage() {
   const navigate = useNavigate();
+<<<<<<< HEAD
+  const [userDetails, setUserDetails] = useState({
+    name: "Your Name",
+    roomNo: "Your Room No",
+    department: "Your Department",
+    specialization: "Your Specialization",
+    block: "",
+    additionalRoomNo: "",
+    additionalDeptSpec: "",
+    profilePic: "/src/assets/images/userProfilePhoto.png",
+  });
+
+  // Retrieve the data from localStorage when AccountPage loads
+  useEffect(() => {
+    const savedDetails = localStorage.getItem("userDetails");
+    if (savedDetails) {
+      setUserDetails(JSON.parse(savedDetails));
+    }
+  }, []);
+=======
   const [theme, setTheme] = useState("dark");
+>>>>>>> 912405fe2871f8d5c3b1e827bbe9e77813e84483
 
   const handleChange = () => {
     navigate("/edit-account"); // Navigate to edit account page
@@ -50,6 +75,13 @@ export default function AccountPage({}) {
         <div className="text-white md:flex">
           {/* profile photo  */}
           <div className="max-w-3xl w-full md:w-1/2 flex justify-center">
+<<<<<<< HEAD
+            <img
+              src={userDetails.profilePic}
+              alt="profilephoto"
+              className="w-2/3 h-auto object-contain"
+            />
+=======
             {theme == "light" ? (
               <img
                 src="/src/assets/images/userProfilePhotoLightMode.png"
@@ -63,6 +95,7 @@ export default function AccountPage({}) {
                 className="w-2/3 h-auto object-contain"
               />
             )}
+>>>>>>> 912405fe2871f8d5c3b1e827bbe9e77813e84483
           </div>
 
           {/* User Details */}
@@ -74,30 +107,39 @@ export default function AccountPage({}) {
             <div className="py-5 flex md:block">
               <div className="pb-3 text-xl">Name: </div>
               <div className="md:border-b-2 ml-5 md:ml-0 text-xl">
-                Your Name
+                {userDetails.name}
               </div>
             </div>
             <div className="py-5 flex md:block">
               <div className="pb-3 text-xl">Room No: </div>
               <div className="md:border-b-2 ml-5 md:ml-0 text-xl">
-                Your Room no
+                {userDetails.roomNo}
               </div>
             </div>
             <div className="py-5 flex md:block">
               <div className="pb-3 text-xl">Department: </div>
               <div className="md:border-b-2 ml-5 md:ml-0 text-xl">
-                Your Department
+                {userDetails.department}
               </div>
             </div>
             <div className="py-5 flex md:block">
               <div className="pb-3 text-xl">Specialization: </div>
               <div className="md:border-b-2 ml-5 md:ml-0 text-xl">
-                Your Specialization
+                {userDetails.specialization}
               </div>
             </div>
           </div>
         </div>
 
+<<<<<<< HEAD
+        {/* More User Details */}
+        <div className="text-white text-2xl mx-10 md:mx-40 md:w-96">
+          <h1 className="py-5">Block: {userDetails.block}</h1>
+          <h1 className="py-5">Room no: {userDetails.additionalRoomNo}</h1>
+          <h1 className="py-5">
+            Department and Specialization: {userDetails.additionalDeptSpec}
+          </h1>
+=======
         {/* More User Details  */}
         <div
           className={`text-2xl mx-10 md:mx-40 ${
@@ -129,6 +171,7 @@ export default function AccountPage({}) {
         >
           <h1 className="mb-10 ml-8 md:ml-0">Notes Rented</h1>
           <NotesPage />
+>>>>>>> 912405fe2871f8d5c3b1e827bbe9e77813e84483
         </div>
       </div>
     </>
