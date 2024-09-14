@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import ImageViewer from "react-simple-image-viewer";
 import img3 from "../../assets/images/image3.png";
 import img4 from "../../assets/images/image4.png";
-
+import FullscreenViewer from "./FullScreenViewer";
 const defaultData = [
   {
     id: 1,
