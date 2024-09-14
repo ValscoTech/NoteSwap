@@ -82,7 +82,7 @@ export default function NotesView({ notesData }) {
                 key={item.id}
                 className="bg-white text-black p-3 rounded-2xl w-[18rem] h-[18rem] md:scale-100"
               >
-                <div className="flex justify-normal gap-x-4 items-center">
+                <div className="flex  gap-x-4 items-center justify-evenly">
                   <div className="pt-1 pl-2 font-[400] text-lg">
                     {item.department}
                   </div>

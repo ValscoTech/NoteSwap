@@ -18,7 +18,7 @@ export default function RentNotesPage() {
   return (
     <div className="bg-black text-white font-clash min-h-screen flex items-center justify-center p-4 md:p-8 lg:p-12">
       <div className="w-full max-w-7xl mx-auto space-y-8">
-        <h1 className="text-3xl md:text-5xl font-semibold text-center">Rent Notes</h1>
+        <h1 className="text-3xl md:text-5xl font-semibold text-left">Rent Notes</h1>
         <div className="mx-auto space-y-10 flex flex-col gap-4">
           <div className="space-y-4 md:space-y-10">
             <p className="text-xl md:text-2xl">Theory Of Computation</p>
@@ -53,7 +53,7 @@ export default function RentNotesPage() {
             </p>
           </div>
 
-          <div className="max-w-full h-auto mb-16">
+          <div className="max-w-[100vw] h-auto mb-16">
             <Calendar
               onChange={dateChangeHandler}
               value={date}
@@ -70,7 +70,7 @@ export default function RentNotesPage() {
             Rent Notes
           </button>
 
-          <NotesView />
+          <NotesView  className="flex flex-wrap justify-evenly place-content-evenly"/>
 
           
         </div>
