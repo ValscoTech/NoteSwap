@@ -1,15 +1,10 @@
 import { useNavigate } from "react-router-dom";
-<<<<<<< HEAD
-import { useEffect, useState } from "react";
-=======
-import NotesPage from "../components/common/NotesView";
+import { useEffect, useState, useContext } from "react";
 import "../styles/AccountPage.css";
-import { useState } from "react";
->>>>>>> 912405fe2871f8d5c3b1e827bbe9e77813e84483
+import NotesView from "../components/common/NotesView";
 
 export default function AccountPage() {
   const navigate = useNavigate();
-<<<<<<< HEAD
   const [userDetails, setUserDetails] = useState({
     name: "Your Name",
     roomNo: "Your Room No",
@@ -28,16 +23,18 @@ export default function AccountPage() {
       setUserDetails(JSON.parse(savedDetails));
     }
   }, []);
-=======
   const [theme, setTheme] = useState("dark");
->>>>>>> 912405fe2871f8d5c3b1e827bbe9e77813e84483
 
   const handleChange = () => {
     navigate("/edit-account"); // Navigate to edit account page
   };
 
   const changeTheme = () => {
-    setTheme((curr) => (curr === "light" ? "dark" : "light"));
+    setTheme((curr) => {
+      const newTheme = curr === "light" ? "dark" : "light";
+      localStorage.setItem("theme", newTheme); // Update theme in localStorage
+      return newTheme;
+    });
   };
 
   return (
@@ -75,27 +72,19 @@ export default function AccountPage() {
         <div className="text-white md:flex">
           {/* profile photo  */}
           <div className="max-w-3xl w-full md:w-1/2 flex justify-center">
-<<<<<<< HEAD
-            <img
-              src={userDetails.profilePic}
-              alt="profilephoto"
-              className="w-2/3 h-auto object-contain"
-            />
-=======
             {theme == "light" ? (
               <img
-                src="/src/assets/images/userProfilePhotoLightMode.png"
+                src={userDetails.profilePic}
                 alt="profilephoto"
                 className="w-2/3 h-auto object-contain"
               />
             ) : (
               <img
-                src="/src/assets/images/userProfilePhoto.png"
+                src={userDetails.profilePic}
                 alt="profilephoto"
                 className="w-2/3 h-auto object-contain"
               />
             )}
->>>>>>> 912405fe2871f8d5c3b1e827bbe9e77813e84483
           </div>
 
           {/* User Details */}
@@ -131,47 +120,37 @@ export default function AccountPage() {
           </div>
         </div>
 
-<<<<<<< HEAD
-        {/* More User Details */}
-        <div className="text-white text-2xl mx-10 md:mx-40 md:w-96">
-          <h1 className="py-5">Block: {userDetails.block}</h1>
-          <h1 className="py-5">Room no: {userDetails.additionalRoomNo}</h1>
-          <h1 className="py-5">
-            Department and Specialization: {userDetails.additionalDeptSpec}
-          </h1>
-=======
         {/* More User Details  */}
         <div
           className={`text-2xl mx-10 md:mx-40 ${
             theme == "dark" ? "text-white" : "text-black"
           }`}
         >
-          <h1 className="py-5">Block : Block</h1>
-          <h1 className="py-5">Room no : 1234</h1>
-          <h1 className="py-5 md:w-max">
-            Department and Specialization : B.Tech Computer Science Engineering
+          <h1 className="py-5">Block: {userDetails.block}</h1>
+          <h1 className="py-5">Room no: {userDetails.additionalRoomNo}</h1>
+          <h1 className="py-5">
+            Department and Specialization: {userDetails.additionalDeptSpec}
           </h1>
         </div>
 
         {/* Offers made: */}
         <div
-          className={`text-4xl mt-20 mx-10 md:mx-40 ${
+          className={`mt-20 mx-10 md:mx-40 ${
             theme == "dark" ? "text-white" : "text-black"
           }`}
         >
-          <h1 className="mb-10 ml-8 md:ml-0">Offers Made</h1>
-          <NotesPage />
+          <h1 className="text-4xl mb-10 ml-8 md:ml-0">Offers Made</h1>
+          <NotesView />
         </div>
 
         {/* Notes rented: */}
         <div
-          className={`text-4xl mt-20 mx-10 md:mx-40 ${
+          className={`mt-20 mx-10 md:mx-40 ${
             theme == "dark" ? "text-white" : "text-black"
           }`}
         >
-          <h1 className="mb-10 ml-8 md:ml-0">Notes Rented</h1>
-          <NotesPage />
->>>>>>> 912405fe2871f8d5c3b1e827bbe9e77813e84483
+          <h1 className="text-4xl mb-10 ml-8 md:ml-0">Notes Rented</h1>
+          <NotesView />
         </div>
       </div>
     </>
