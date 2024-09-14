@@ -2,10 +2,11 @@ import React, { useState } from "react";
 import img3 from "../../assets/images/image3.png";
 import ImageViewer from "react-simple-image-viewer";
 import img4 from "../../assets/images/image4.png";
+import { useEffect } from "react";
 
 
 {/*Temporarily storing values locally */}
-const data = [  
+const defaultData = [  
   {
     id: 1,
     title: "Computation of Science",
@@ -57,10 +58,20 @@ const data = [
 
 ];
 
-export default function NotesView() {
+export default function NotesView({notesData = []}) {
   const [isViewerOpen, setIsViewerOpen] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [images, setImages] = useState([]);
+  const [data, setData] = useState(notesData.length > 0 ? notesData : defaultData);
+
+  useEffect(() => {
+    // Check if notesData is provided or empty, set to defaultData if not
+    if (notesData.length === 0) {
+      setData(defaultData);
+    } else {
+      setData(notesData);
+    }
+  }, [notesData]);
 
   const openImageViewer = (index, item) => {
     setImages([item.image1, item.image2]);
