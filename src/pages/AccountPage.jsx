@@ -96,25 +96,25 @@ export default function AccountPage() {
             <div className="py-5 flex md:block">
               <div className="pb-3 text-xl">Name: </div>
               <div className="md:border-b-2 ml-5 md:ml-0 text-xl">
-                Your Name
+                {userDetails.name}
               </div>
             </div>
             <div className="py-5 flex md:block">
               <div className="pb-3 text-xl">Room No: </div>
               <div className="md:border-b-2 ml-5 md:ml-0 text-xl">
-                Your Room no
+                {userDetails.roomNo}
               </div>
             </div>
             <div className="py-5 flex md:block">
               <div className="pb-3 text-xl">Department: </div>
               <div className="md:border-b-2 ml-5 md:ml-0 text-xl">
-                Your Department
+                {userDetails.department}
               </div>
             </div>
             <div className="py-5 flex md:block">
               <div className="pb-3 text-xl">Specialization: </div>
               <div className="md:border-b-2 ml-5 md:ml-0 text-xl">
-                Your Specialization
+                {userDetails.specialization}
               </div>
             </div>
           </div>
