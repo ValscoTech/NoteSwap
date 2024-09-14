@@ -96,25 +96,25 @@ export default function AccountPage() {
             <div className="py-5 flex md:block">
               <div className="pb-3 text-xl">Name: </div>
               <div className="md:border-b-2 ml-5 md:ml-0 text-xl">
-                {userDetails.name}
+                Your Name
               </div>
             </div>
             <div className="py-5 flex md:block">
               <div className="pb-3 text-xl">Room No: </div>
               <div className="md:border-b-2 ml-5 md:ml-0 text-xl">
-                {userDetails.roomNo}
+                Your Room no
               </div>
             </div>
             <div className="py-5 flex md:block">
               <div className="pb-3 text-xl">Department: </div>
               <div className="md:border-b-2 ml-5 md:ml-0 text-xl">
-                {userDetails.department}
+                Your Department
               </div>
             </div>
             <div className="py-5 flex md:block">
               <div className="pb-3 text-xl">Specialization: </div>
               <div className="md:border-b-2 ml-5 md:ml-0 text-xl">
-                {userDetails.specialization}
+                Your Specialization
               </div>
             </div>
           </div>
@@ -139,9 +139,9 @@ export default function AccountPage() {
             theme == "dark" ? "text-white" : "text-black"
           }`}
         >
-          <h1 className="text-4xl mb-10 ml-8 md:ml-0">Offers Made</h1>
-          <NotesView />
+          <h1 className="mb-10 ml-8 md:ml-0">Offers Made</h1>
         </div>
+        <NotesView />
 
         {/* Notes rented: */}
         <div
@@ -149,9 +149,9 @@ export default function AccountPage() {
             theme == "dark" ? "text-white" : "text-black"
           }`}
         >
-          <h1 className="text-4xl mb-10 ml-8 md:ml-0">Notes Rented</h1>
-          <NotesView />
+          <h1 className="mb-10 ml-8 md:ml-0">Notes Rented</h1>
         </div>
+        <NotesView />
       </div>
     </>
   );
