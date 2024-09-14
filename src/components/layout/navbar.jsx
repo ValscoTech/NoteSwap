@@ -132,16 +132,6 @@ export default function Navbar() {
               </svg>
             </a>
           </li>
-          <li>
-          <button className="border-2 border-white text-white bg-black rounded-full px-4 py-2">
-            <a href="/offer">Offer</a>
-          </button>
-        </li>
-        <li>
-          <button className="border-2 border-black text-black bg-white rounded-full px-4 py-2">
-            <a href="/rent">Rent</a>
-          </button>
-        </li>
         </ul>
       </div>
 
