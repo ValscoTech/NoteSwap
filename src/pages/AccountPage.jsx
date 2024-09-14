@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState, useContext } from "react";
-import "../styles/AccountPage.css";
+import "../styles/ThemeContext.css";
 import NotesView from "../components/common/NotesView";
 import { ThemeContext } from './ThemeContext';
 
@@ -16,6 +16,8 @@ export default function AccountPage() {
     additionalDeptSpec: "",
     profilePic: "/src/assets/images/userProfilePhoto.png",
   });
+
+  // light/dark mode
   const { theme, toggleTheme } = useContext(ThemeContext);
 
   // Retrieve the data from localStorage when AccountPage loads
