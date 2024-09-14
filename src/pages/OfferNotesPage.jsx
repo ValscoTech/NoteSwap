@@ -198,16 +198,17 @@ export default function OfferNotesPage() {
                       Drag and drop your files here
                     </label>
                   </div>
+                  </div>
                   <div className="mt-4">
                     {files.length > 0 && (
                       <ul className="text-white list-disc pl-5">
                         {files.map((file, index) => (
-                          <li key={index} className="text-white">{file.name}</li>
+                          <li key={index} className="text-black font-clash font-bold">{file.name}</li>
                         ))}
                       </ul>
                     )}
                   </div>
-                </div>
+                
               </div>
             </div>
 
