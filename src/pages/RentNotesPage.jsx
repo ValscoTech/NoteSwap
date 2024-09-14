@@ -6,6 +6,7 @@ import img1 from "../components/rent/2f855903-01c1-4bf6-b337-124bdebd2d8f.jpg";
 import img2 from "../components/rent/2f855903-01c1-4bf6-b337-124bdebd2d8f1.jpg";
 import img3 from "../components/rent/2f855903-01c1-4bf6-b337-124bdebd2d8f2.jpg";
 import { NotesPage } from '.';
+import NotesView from '@/components/common/NotesView';
 
 export default function RentNotesPage() {
   const [date, setDate] = useState(new Date());
@@ -69,7 +70,7 @@ export default function RentNotesPage() {
             Rent Notes
           </button>
 
-          <NotesPage />
+          <NotesView />
 
           
         </div>
