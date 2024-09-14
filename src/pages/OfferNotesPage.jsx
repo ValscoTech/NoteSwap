@@ -75,8 +75,6 @@ export default function OfferNotesPage() {
       type: 'lecture notes',
       price: parseFloat(formData.price),
       images: filePreviews,
-      image1: filePreviews[0],
-      image2: filePreviews[1],
       modulesCovered: formData.module,
       department: formData.courseCode,
       school: schoolNameMap[formData.school],
