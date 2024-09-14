@@ -3,15 +3,13 @@ import ImageViewer from "react-simple-image-viewer";
 import img3 from "../../assets/images/image3.png";
 import img4 from "../../assets/images/image4.png";
 
-// Default data
-const defaultData = [  
+const defaultData = [
   {
     id: 1,
     title: "Computation of Science",
     type: "class notes",
     price: 15.0,
-    image1: img3,
-    image2: img4,
+    images: [img3, img4],
     modulesCovered: 9,
     department: "SCI2005",
     school: "SCOPE",
@@ -22,8 +20,7 @@ const defaultData = [
     title: "Computation of Social",
     type: "class notes",
     price: 20.0,
-    image1: img3,
-    image2: img4,
+    images: [img4, img3],
     modulesCovered: 4,
     department: "SOC2005",
     school: "SCOPE",
@@ -34,8 +31,7 @@ const defaultData = [
     title: "Computation of English",
     type: "lecture notes",
     price: 10.0,
-    image1: img3,
-    image2: img4,
+    images: [img3,img4],
     modulesCovered: 7,
     department: "ENG2005",
     school: "SCOPE",
@@ -46,8 +42,7 @@ const defaultData = [
     title: "Computation of Mathematics",
     type: "lecture notes",
     price: 25.0,
-    image1: img3,
-    image2: img4,
+    images: [img4, img3],
     modulesCovered: 6,
     department: "MAT2005",
     school: "SCOPE",
@@ -57,19 +52,18 @@ const defaultData = [
 
 export default function NotesView({ notesData }) {
   const [isViewerOpen, setIsViewerOpen] = useState(false);
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [images, setImages] = useState([]);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [data, setData] = useState(defaultData);
 
   useEffect(() => {
-    // Prepend new notesData to the existing data
     if (notesData && notesData.length > 0) {
       setData((prevData) => [...notesData, ...prevData]);
     }
   }, [notesData]);
 
-  const openImageViewer = (index, item) => {
-    setImages([item.image1, item.image2]);
+  const openImageViewer = (imagesArray, index) => {
+    setImages(imagesArray);
     setCurrentImageIndex(index);
     setIsViewerOpen(true);
   };
@@ -83,7 +77,7 @@ export default function NotesView({ notesData }) {
       <div className="flex justify-center">
         <div className="w-[60rem]">
           <div className="grid justify-items-center sm:grid-cols-3 grid-cols-2 md:gap-y-14 lg:grid-cols-3 md:gap-x-[1rem] lg:gap-x-3 sm:gap-x-1 mobile:gap-y-10 mobile:gap-x-72 gap-x-[18rem] gap-y-[3rem]">
-            {data.map((item, index) => (
+            {data.map((item) => (
               <a
                 key={item.id}
                 className="bg-white text-black p-3 rounded-2xl w-[18rem] h-[18rem] md:scale-100"
@@ -97,7 +91,7 @@ export default function NotesView({ notesData }) {
                   </div>
                 </div>
                 <div className="flex justify-center gap-x-2 pb-4 pl-0">
-                  <div className="text-[1.15rem] line-clamp-2 font-[425] w-[8.7rem]">
+                  <div className="text-[1.15rem] font-[425] w-[8.7rem]">
                     {item.title}
                   </div>
                   <div className="flex justify-normal border-[1.25px] border-black rounded-[0.7rem] w-fit items-center p-2 gap-x-1">
@@ -109,20 +103,15 @@ export default function NotesView({ notesData }) {
                   </div>
                 </div>
                 <div className="flex justify-normal">
-                  <div>
+                  {item.images.slice(0, 2).map((img, imgIndex) => (
                     <img
+                      key={imgIndex}
                       className="w-32 cursor-pointer"
-                      src={item.image1}
-                      onClick={() => openImageViewer(0, item)}
+                      src={img}
+                      onClick={() => openImageViewer(item.images, imgIndex)}
+                      alt={`Image ${imgIndex}`}
                     />
-                  </div>
-                  <div>
-                    <img
-                      className="w-32 cursor-pointer"
-                      src={item.image2}
-                      onClick={() => openImageViewer(1, item)}
-                    />
-                  </div>
+                  ))}
                 </div>
               </a>
             ))}
@@ -130,28 +119,11 @@ export default function NotesView({ notesData }) {
         </div>
       </div>
       {isViewerOpen && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-80"
-          style={{
-            width: "100vw",
-            height: "100vh",
-          }}
-        >
-          <ImageViewer
-            src={images}
-            className="min-w-full"
-            currentIndex={currentImageIndex}
-            disableScroll={true}
-            closeOnClickOutside={true}
-            onClose={closeImageViewer}
-            backgroundStyle={{
-              backgroundColor: "rgba(0, 0, 0, 0.9)",
-              zIndex: 9999,
-              width: "100%",
-              height: "100%",
-            }}
-          />
-        </div>
+        <FullscreenViewer
+          images={images}
+          currentIndex={currentImageIndex}
+          onClose={closeImageViewer}
+        />
       )}
     </div>
   );
