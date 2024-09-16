@@ -216,15 +216,21 @@ export default function OfferNotesPage() {
             <div className="bg-[#A883C5] rounded-lg shadow-md p-6 flex flex-col justify-between">
               <div>
                 <h2 className="text-center text-xl font-bold text-black mb-4">Set Your Price</h2>
-                <input
-                  type="number"
-                  name="price"
-                  value={formData.price}
-                  onChange={handleFormChange}
-                  className="mt-10 w-full p-2 rounded-md border-b-2 border-black bg-transparent focus:outline-none"
-                />
+                <div className="flex items-center justify-between mt-10">
+                  <span className="text-white font-medium">₹{formData.price || 20}</span>
+                  <input
+                    type="range"
+                    name="price"
+                    min="20"
+                    max="120"
+                    step="1"
+                    value={formData.price || 20}
+                    onChange={(e) => handleFormChange({ target: { name: 'price', value: e.target.value } })}
+                    className="w-full mx-4"
+                  />
+                </div>
               </div>
-              <button type="submit" className="mt-4 w-full py-2 bg-[#DEEBFF] text-black font-normal rounded-md">
+              <button type="submit" className="w-full py-2 bg-[#DEEBFF] text-black font-normal rounded-md">
                 Save Price
               </button>
             </div>
