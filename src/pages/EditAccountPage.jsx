@@ -85,6 +85,15 @@ export default function EditAccountPage() {
     setIsProfilePicCustom(false); // Hide the remove button
   };
 
+  // Handle profile picture upload when user clicks the "Change Photo" button
+  const handleChangePhoto = () => {
+    const inputElement = document.createElement("input");
+    inputElement.type = "file";
+    inputElement.accept = "image/*";
+    inputElement.onchange = handleProfilePicChange;
+    inputElement.click();
+  };
+
   return (
     <>
       {/* Profile Photo and User Details */}
@@ -98,6 +107,13 @@ export default function EditAccountPage() {
               className="w-2/3 h-auto object-contain cursor-pointer"
               onClick={handleProfilePicClick}
             />
+            <button
+              onClick={handleChangePhoto}
+              className="text-white bg-blue-500 text-xl cursor-pointer rounded-xl mt-5 font-semibold"
+              style={{ width: "200px", height: "50px" }}
+            >
+              Change Photo
+            </button>
             {isProfilePicCustom && (
               <button
                 onClick={handleRemoveProfilePic}
