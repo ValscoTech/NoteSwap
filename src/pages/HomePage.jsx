@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useContext } from "react";
 import ImageViewer from "react-simple-image-viewer";
 import shelf from "../assets/images/shelf.png";
 import img3 from "../assets/images/image3.png";
@@ -7,6 +7,8 @@ import img1 from "../assets/images/1.png";
 import ph from "../assets/images/phone.png";
 import { useNavigate } from "react-router-dom";
 import { GoArrowDownRight } from "react-icons/go";
+import { ThemeContext } from "./ThemeContext";
+import "../styles/ThemeContext.css"
 
 {
   /*Storing JSon file temporarily untill integration with backend*/
@@ -51,6 +53,7 @@ const data = [
 ];
 
 export default function HomePage() {
+  const {theme}=useContext(ThemeContext);
   const navigate = useNavigate();
   const [minPrice, setMinPrice] = useState("");
   const [maxPrice, setMaxPrice] = useState("");
@@ -99,11 +102,24 @@ export default function HomePage() {
     setIsViewerOpen(false);
   };
 
+  const forwardData = (e) => {
+    e &&e.preventDefault();
+    
+    const searchParams = {
+      minPrice,
+      maxPrice,
+      selectedTypes,
+    };
+
+    // Navigate to the next page with serialized data in the URL
+    navigate(`/notes?query=${encodeURIComponent(JSON.stringify(searchParams))}`);
+  };
+
   return (
-    <div className="font-clash overflow-hidden bg-black w-full">
+    <div className={`font-clash overflow-hidden w-full ${theme==="dark"?"bg-black":"bg-white"} `}>
       {/* Home Section */}
       <div className="flex mobile:flex-row flex-col justify-center gap-x-[2rem] mobile:gap-x-0  pt-20 pb-20 md:scale-90 lg:scale-[1.25] w-full md:mt-0 sm:mt-[-4rem] ">
-        <div className="text-white text-xl md:text-[2.6rem] font-normal leading-normal font-clash flex flex-col justify-between">
+        <div className={`text-xl md:text-[2.6rem] font-normal leading-normal font-clash flex flex-col justify-between ${theme==="dark"?"text-white":"text-black"}`}>
           <div className="flex justify-center sm:text-lg  md:text-3xl md:leading-[3rem] mobile:pl-10 sm:pl-0 mobile:pt-10 pl-0 pr-[0.1rem]">
             <div className="sm:leading-[3rem] md:leading-normal mobile:ml-7 sm:pt-10 md:pt-0 ">
               Want to earn some{" "}
@@ -167,7 +183,7 @@ export default function HomePage() {
         <div className="flex flex-col items-center justify-center w-[60rem] mx-32">
           <div className="flex justify-center items-center pb-20 ">
             {/* Container Section */}
-            <div className="flex justify-center gap-x-16 items-center rounded-2xl bg-white pl-[3rem] pr-[6rem] pt-6 pb-8 max-w-[60rem]  ">
+            <div className={`flex justify-center gap-x-16 items-center rounded-2xl ${theme==="dark"?"border-0":"border-2 border-black"}  pl-[3rem] pr-[6rem] pt-6 pb-8 max-w-[60rem]`}>
               <div className="flex flex-col justify-between items-start text-5xl font-normal text-black leading-[2.7rem]   ">
                 <p className="pb-5">Have you Tried our App?</p>
                 <p>
@@ -204,7 +220,7 @@ export default function HomePage() {
                 {filteredData.map((item, index) => (
                   <a
                     key={item.id}
-                    className="bg-white text-black p-3 rounded-2xl w-[18rem] h-[18rem] md:scale-100">
+                    className={`bg-white text-black p-3 rounded-2xl w-[18rem] h-[18rem] md:scale-100 ${theme==="dark"?"border-0":"border-2 border-black"} `}>
                     {/* Component Part */}
                     <div className="flex justify-normal gap-x-4 items-center">
                       {/* Department + Year, Respective School */}
@@ -280,8 +296,8 @@ export default function HomePage() {
         {/* Search Box Section */}
         <div className=" min-w-[60rem] lg:mt-0 mt-[-10rem]">
           <div className="flex justify-center pb-20 pt-20 ">
-            <form onSubmit={handleSubmit}>
-              <div className=" bg-white text-black md:pl-12 pr-6 pb-12 rounded-2xl sm:pl-10 mobile:pl-16 pl-10  ">
+            <form onSubmit={forwardData}>
+              <div className={`bg-white text-black md:pl-12 pr-6 pb-12 rounded-2xl sm:pl-10 mobile:pl-16 pl-10 ${theme==="dark"?"border-0":"border-2 border-black"} `}>
                 <div className="text-[3.1rem] font-[600] pt-3">
                   Search Notes
                 </div>
