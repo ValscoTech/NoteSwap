@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import ImageViewer from "react-simple-image-viewer";
 import img3 from "../../assets/images/image3.png";
 import img4 from "../../assets/images/image4.png";
-import FullscreenViewer from "./FullScreenViewer";
+
 const defaultData = [
   {
     id: 1,
@@ -82,7 +82,7 @@ export default function NotesView({ notesData }) {
                 key={item.id}
                 className="bg-white text-black p-3 rounded-2xl w-[18rem] h-[18rem] md:scale-100"
               >
-                <div className="flex  gap-x-4 items-center justify-evenly">
+                <div className="flex justify-normal gap-x-4 items-center">
                   <div className="pt-1 pl-2 font-[400] text-lg">
                     {item.department}
                   </div>
@@ -106,7 +106,7 @@ export default function NotesView({ notesData }) {
                   {item.images.slice(0, 2).map((img, imgIndex) => (
                     <img
                       key={imgIndex}
-                      className="w-32 cursor-pointer"
+                      className="w-32 h-36 object-cover cursor-pointer"
                       src={img}
                       onClick={() => openImageViewer(item.images, imgIndex)}
                       alt={`Image ${imgIndex}`}
@@ -119,11 +119,27 @@ export default function NotesView({ notesData }) {
         </div>
       </div>
       {isViewerOpen && (
-        <FullscreenViewer
-          images={images}
-          currentIndex={currentImageIndex}
-          onClose={closeImageViewer}
-        />
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-80"
+          style={{
+            width: "100vw",
+            height: "100vh",
+          }}
+        >
+          <ImageViewer
+            src={images}
+            currentIndex={currentImageIndex}
+            disableScroll={true}
+            closeOnClickOutside={true}
+            onClose={closeImageViewer}
+            backgroundStyle={{
+              backgroundColor: "rgba(0, 0, 0, 0.9)",
+              zIndex: 9999,
+              width: "100%",
+              height: "100%",
+            }}
+          />
+        </div>
       )}
     </div>
   );
