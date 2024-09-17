@@ -4,6 +4,7 @@ import Navbar from '@/components/layout/navbar';
 import Footer from '@/components/layout/footer';
 import { SignedIn, SignedOut, SignInButton, UserButton, SignIn, SignUp } from "@clerk/clerk-react";
 import { ThemeProvider } from '../src/pages/ThemeContext';
+import { NoteProvider } from './components/common/NoteContext';
 
 function App() {
   return (
@@ -21,22 +22,24 @@ function App() {
           </main> */}
         {/* </SignedOut> */}
         {/* <SignedIn> */}
-          <Navbar />
-          <BrowserRouter>
-            {/* <UserButton/> */}
-            <Routes>
-              <Route path="/login" element={<LoginPage />} />
-              <Route path="/home" element={<HomePage />} />
-              <Route path="/account" element={<AccountPage />} />
-              <Route path="/notes" element={<NotesPage />} />
-              <Route path="/offer" element={<OfferNotesPage />} />
-              <Route path="/rent" element={<RentNotesPage />} />
-              <Route path="/blog" element={<BlogsPage />} />
-              <Route path="/edit-account" element={<EditAccountPage />} />
-              <Route path="/signup" element={<SignUpPage />} />
-            </Routes>
-          </BrowserRouter>
-          <Footer />
+          <NoteProvider>
+            <Navbar />
+            <BrowserRouter>
+              {/* <UserButton/> */}
+              <Routes>
+                <Route path="/login" element={<LoginPage />} />
+                <Route path="/home" element={<HomePage />} />
+                <Route path="/account" element={<AccountPage />} />
+                <Route path="/notes" element={<NotesPage />} />
+                <Route path="/offer" element={<OfferNotesPage />} />
+                <Route path="/rent" element={<RentNotesPage />} />
+                <Route path="/blog" element={<BlogsPage />} />
+                <Route path="/edit-account" element={<EditAccountPage />} />
+                <Route path="/signup" element={<SignUpPage />} />
+              </Routes>
+            </BrowserRouter>
+            <Footer />
+          <NoteProvider />
         {/* </SignedIn> */}
         </div>
       </ThemeProvider>
