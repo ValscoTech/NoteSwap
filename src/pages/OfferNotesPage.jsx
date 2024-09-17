@@ -203,7 +203,7 @@ export default function OfferNotesPage() {
                     {files.length > 0 && (
                       <ul className="text-white list-disc pl-5">
                         {files.map((file, index) => (
-                          <li key={index} className="text-black font-clash font-bold">{file.name}</li>
+                          <li key={index} className="text-black font-clash font-bold">{file.name}✅</li>
                         ))}
                       </ul>
                     )}
