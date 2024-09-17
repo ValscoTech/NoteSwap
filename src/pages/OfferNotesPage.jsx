@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import uploadIcon from '../components/offer/upload-icon.png';
 import NotesView from '../components/common/NotesView';
+import { useNotes } from '../components/common/NoteContext';
 
 export default function OfferNotesPage() {
+  const { addNote } = useNotes();
   const [files, setFiles] = useState([]);
   const [formData, setFormData] = useState({
     title: '',
@@ -82,6 +84,7 @@ export default function OfferNotesPage() {
     };
 
     setNotesData((prevData) => [...prevData, newNote]);
+    addNote(newNote);
     setFiles([]);
     setFormData({
       title: '',
