@@ -39,7 +39,7 @@ function App() {
               </Routes>
             </BrowserRouter>
             <Footer />
-          <NoteProvider />
+          </NoteProvider>
         {/* </SignedIn> */}
         </div>
       </ThemeProvider>
