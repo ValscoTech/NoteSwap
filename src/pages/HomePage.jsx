@@ -183,7 +183,7 @@ export default function HomePage() {
         <div className="flex flex-col items-center justify-center w-[60rem] mx-32">
           <div className="flex justify-center items-center pb-20 ">
             {/* Container Section */}
-            <div className={`flex justify-center gap-x-16 items-center rounded-2xl ${theme==="dark"?"border-0":"border-2 border-black"}  pl-[3rem] pr-[6rem] pt-6 pb-8 max-w-[60rem]`}>
+            <div className={`flex justify-center gap-x-16 items-center rounded-2xl ${theme==="dark"?"border-0 bg-white text-black":"border-2 border-black bg-white text-black"}  pl-[3rem] pr-[6rem] pt-6 pb-8 max-w-[60rem]`}>
               <div className="flex flex-col justify-between items-start text-5xl font-normal text-black leading-[2.7rem]   ">
                 <p className="pb-5">Have you Tried our App?</p>
                 <p>
