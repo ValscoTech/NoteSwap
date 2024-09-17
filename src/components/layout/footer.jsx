@@ -3,14 +3,21 @@ import { FaInstagram } from "react-icons/fa6";
 import { FaTwitter } from "react-icons/fa";
 import { IoLogoFacebook } from "react-icons/io";
 import { GoArrowDownRight } from "react-icons/go";
+import { ThemeContext } from "@/pages/ThemeContext";
+import { useContext } from "react";
+import "../../styles/ThemeContext.css";
+
 export default function Footer() {
+
+  const { theme } = useContext(ThemeContext);
+
   return (
     <div>
-      <div className="bg-black pt-10 text-white px-8 pb-[9rem] font-clash">
-        <hr className=" h-[4px]  bg-white  "></hr>
+      <div className={`bg-black pt-10 text px-8 pb-[9rem] font-clash ${theme === "dark" ? "bg-black text-white" : "bg-white text-black"}`}>
+        <hr className={` h-[4px] ${theme === "dark" ? "bg-white" : "bg-black"}  `}></hr>
         <div className="flex pt-9 pb-14 justify-between items-start ">
           <span className=" text-2xl font-bold pt-0.5">NoteSwap</span>
-          <span className="text-gray-400 cursor-pointer">
+          <span className={`cursor-pointer  ${theme==="dark"? "text-gray-400":"text-black"}`}>
             <span
               onClick={() => {
                 window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
@@ -60,14 +67,14 @@ export default function Footer() {
             </div>
           </div>
         </div>
-        <hr className=" h-[0.01rem] bg-white mx-auto"></hr>
+        <hr className={` h-[0.1rem]  mx-auto ${theme === "dark" ? "bg-white" : "bg-black"}  `}></hr>
         <div className="flex justify-between mt-6 mb-10 ">
           <span className="text-gray-400">Copyrights</span>
           <span className="font-bold">India</span>
         </div>
         <center>
           <buton
-            className="bg-[#2A4ECA] rounded-[30px] max-w-[24rem] min-h-[2rem] px-6 py-1 flex items-center"
+            className="bg-[#2A4ECA] rounded-[30px] max-w-[24rem] text-white min-h-[2rem] px-6 py-1 flex items-center"
             onClick={() => {
               window.open("https://www.valscotech.com/");
             }}>
