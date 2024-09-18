@@ -28,7 +28,7 @@ const FullscreenViewer = ({ images, currentIndex, onClose, link, params }) => {
       />
       <button
         className="absolute bottom-5 left-1/2 transform -translate-x-1/2 px-5 py-2 bg-[#a883c5] border-none rounded-md cursor-pointer z-10 text-white "
-        onClick={() =>{navigate(`/rent?query=${encodeURIComponent(JSON.stringify(params))}`);window.location.reload()}}>
+        onClick={() =>{navigate(`/rent?query=${encodeURIComponent(JSON.stringify(params))}`)}}>
         Rent this Note
       </button>
     </div>,
