@@ -1,20 +1,15 @@
-
-import { useNavigate } from "react-router-dom";
-import React, { useContext, useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import { GoArrowDownRight } from "react-icons/go";
+import ImageViewer from "react-simple-image-viewer";
 import shelf from "../assets/images/shelf.png";
 import img3 from "../assets/images/image3.png";
 import img4 from "../assets/images/image4.png";
-import { GoArrowDownRight } from "react-icons/go";
-import ImageViewer from "react-simple-image-viewer";
-import { useLocation } from "react-router-dom";
-import { useEffect } from "react";
-import { useCallback } from "react";
 import { ThemeContext } from "./ThemeContext";
-import "../styles/ThemeContext.css"
+import "../styles/ThemeContext.css";
 
-
-{/*Temporarily storing values locally */}
-const data = [  
+// Temporarily storing values locally
+const data = [
   {
     id: 1,
     title: "Computation of Science",
@@ -63,7 +58,6 @@ const data = [
     school: "SCOPE",
     link: "/notes/computation-of-mathematics",
   },
-
 ];
 
 function useQuery() {
@@ -71,127 +65,127 @@ function useQuery() {
 }
 
 export default function NotesPage() {
-const {theme}=useContext(ThemeContext);
-const [minPrice, setMinPrice] = useState("");
-const [maxPrice, setMaxPrice] = useState("");
-const [selectedTypes, setSelectedTypes] = useState([]);
-const [filteredData, setFilteredData] = useState(data);
-const [isViewerOpen, setIsViewerOpen] = useState(false);
-const [currentImageIndex, setCurrentImageIndex] = useState(0);
-const [images, setImages] = useState([]);
-const navigate = useNavigate();
-const query = useQuery();
-const [hasManualSearch, setHasManualSearch] = useState(false);
+  const { theme } = useContext(ThemeContext);
+  const [minPrice, setMinPrice] = useState("");
+  const [maxPrice, setMaxPrice] = useState("");
+  const [selectedTypes, setSelectedTypes] = useState([]);
+  const [filteredData, setFilteredData] = useState(data);
+  const [isViewerOpen, setIsViewerOpen] = useState(false);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [images, setImages] = useState([]);
+  const navigate = useNavigate();
+  const query = useQuery();
+  const [hasManualSearch, setHasManualSearch] = useState(false);
+  const [isInitialLoad, setIsInitialLoad] = useState(true);
 
-const [isInitialLoad, setIsInitialLoad] = useState(true);
+  useEffect(() => {
+    if (isInitialLoad) {
+      handleSubmit();
+      window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+      setIsInitialLoad(false); // Prevent future automatic submissions
+    }
+  }, [isInitialLoad, minPrice, maxPrice, selectedTypes]);
 
-useEffect(() => {
-  if (isInitialLoad) {
-    handleSubmit();
-    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
-    setIsInitialLoad(false); // Prevent future automatic submissions
-  }
-}, [isInitialLoad, minPrice, maxPrice, selectedTypes]);
+  useEffect(() => {
+    const term = query.get("query");
 
+    if (term && !hasManualSearch) {
+      const parsedTerms = JSON.parse(decodeURIComponent(term));
 
-useEffect(() => {
-  const term = query.get('query');
+      // Set the states only if necessary to avoid resetting values
+      if (parsedTerms.minPrice !== undefined) setMinPrice(parsedTerms.minPrice);
+      if (parsedTerms.maxPrice !== undefined) setMaxPrice(parsedTerms.maxPrice);
+      if (parsedTerms.selectedTypes !== undefined) setSelectedTypes(parsedTerms.selectedTypes);
 
-  if (term && !hasManualSearch) {
-    const parsedTerms = JSON.parse(decodeURIComponent(term));
-    
-    // Set the states only if necessary to avoid resetting values
-    if (parsedTerms.minPrice !== undefined) setMinPrice(parsedTerms.minPrice);
-    if (parsedTerms.maxPrice !== undefined) setMaxPrice(parsedTerms.maxPrice);
-    if (parsedTerms.selectedTypes !== undefined) setSelectedTypes(parsedTerms.selectedTypes);
+      // Set the manual search flag after the initial state update
+      setHasManualSearch(true);
+      setIsInitialLoad(true);
+    }
+  }, [query]);
 
-    // Set the manual search flag after the initial state update
+  const openImageViewer = (index, item) => {
+    setImages([item.image1, item.image2]);
+    setCurrentImageIndex(index);
+    setIsViewerOpen(true);
+  };
+
+  const closeImageViewer = () => {
+    setIsViewerOpen(false);
+  };
+
+  const handleCheckboxChange = (type) => {
+    if (selectedTypes.includes(type)) {
+      setSelectedTypes(selectedTypes.filter((t) => t !== type));
+    } else {
+      setSelectedTypes([...selectedTypes, type]);
+    }
     setHasManualSearch(true);
-    setIsInitialLoad(true);
-  }
-}, [query]);
+  };
 
+  const handleSubmit = (e) => {
+    e && e.preventDefault(); // Prevent page reload on form submit
 
+    // If no filters are applied, display all data
+    if (minPrice === "" && maxPrice === "" && selectedTypes.length === 0) {
+      setFilteredData(data); // Reset to all data
+      handleFunction(); // Update URL with empty search parameters
+      return;
+    }
 
-const openImageViewer = (index, item) => {
-  setImages([item.image1, item.image2]);
-  setCurrentImageIndex(index);
-  setIsViewerOpen(true);
-};
+    const filtered = data.filter((item) => {
+      const meetsPriceCriteria =
+        (minPrice === "" || item.price >= parseFloat(minPrice)) &&
+        (maxPrice === "" || item.price <= parseFloat(maxPrice));
+      const meetsTypeCriteria =
+        selectedTypes.length === 0 || selectedTypes.includes(item.type);
 
-const closeImageViewer = () => {
-  setIsViewerOpen(false);
-};
+      return meetsPriceCriteria && meetsTypeCriteria;
+    });
 
-const handleCheckboxChange = (type) => {
-  if (selectedTypes.includes(type)) {
-    setSelectedTypes(selectedTypes.filter((t) => t !== type));
-  } else {
-    setSelectedTypes([...selectedTypes, type]);
-  }
-  setHasManualSearch(true);
-};
+    // Update the filtered data
+    setFilteredData(filtered);
 
-const handleSubmit = (e) => {
-  e && e.preventDefault(); // Prevent page reload on form submit
+    // Make sure the URL is updated based on current filters
+    handleFunction();
+  };
 
-  // If no filters are applied, display all data
-  if (minPrice === "" && maxPrice === "" && selectedTypes.length === 0) {
-    setFilteredData(data); // Reset to all data
-    handleFunction(); // Update URL with empty search parameters
-    return;
-  }
+  const handleFunction = () => {
+    // Build search params only for non-empty fields
+    const searchParams = {};
+    if (minPrice) searchParams.minPrice = minPrice;
+    if (maxPrice) searchParams.maxPrice = maxPrice;
+    if (selectedTypes.length > 0) searchParams.selectedTypes = selectedTypes;
 
-  const filtered = data.filter((item) => {
-    const meetsPriceCriteria =
-      (minPrice === "" || item.price >= parseFloat(minPrice)) &&
-      (maxPrice === "" || item.price <= parseFloat(maxPrice));
-    const meetsTypeCriteria =
-      selectedTypes.length === 0 || selectedTypes.includes(item.type);
-
-    return meetsPriceCriteria && meetsTypeCriteria;
-  });
-
-  // Update the filtered data
-  setFilteredData(filtered);
-
-  // Make sure the URL is updated based on current filters
-  handleFunction();
-};
-
-const handleFunction = () => {
-  // Build search params only for non-empty fields
-  const searchParams = {};
-  if (minPrice) searchParams.minPrice = minPrice;
-  if (maxPrice) searchParams.maxPrice = maxPrice;
-  if (selectedTypes.length > 0) searchParams.selectedTypes = selectedTypes;
-
-  const encodedParams = encodeURIComponent(JSON.stringify(searchParams));
-  if (Object.keys(searchParams).length > 0) {
-    // Navigate with query parameters
-    navigate(`/notes?query=${encodedParams}`);
-  } else {
-    // Navigate without query if no filters
-    navigate(`/notes`);
-  }
-};
-
-
+    const encodedParams = encodeURIComponent(JSON.stringify(searchParams));
+    if (Object.keys(searchParams).length > 0) {
+      // Navigate with query parameters
+      navigate('/notes?query=${encodedParams}');
+    } else {
+      // Navigate without query if no filters
+      navigate('/notes');
+    }
+  };
 
   return (
-    <div className={`font-clash overflow-hidden ${theme==="dark"?"bg-black text-white":"bg-white text-black"} `} onLoad={()=>{setHasManualSearch(false)}}>
-      {/*The navigation bar */}
-      <div className="scale-[0.5] sm:scale-100 sm:pt-10 lg:mb-[-1rem] ">{/* Search Box Section */}
-        <div className="flex justify-center  lg:mt-0 mt-[-10rem] ">
-          <div className="flex justify-center pb-20 pt-20 ">
-            <form onSubmit={(e)=>{handleSubmit(e)}}>
-              <div className={`max-w-[58.5rem] min-w-[37.875rem] bg-white text-black pl-12 lg:pr-8 pr-1 pb-10 rounded-2xl ${theme==="dark"?"border-0":"border-2 border-black"} `}>
-                <div className="text-[3.1rem] font-[600] pt-3">
-                  Search Notes
-                </div>
+    <div
+      className={'font-clash overflow-hidden ${theme === "dark" ? "bg-black text-white" : "bg-white text-black"}'}
+      onLoad={() => {
+        setHasManualSearch(false);
+      }}
+    >
+      {/* The navigation bar */}
+      <div className="scale-[0.5] sm:scale-100 sm:pt-10 lg:mb-[-1rem]">
+        {/* Search Box Section */}
+        <div className="flex justify-center lg:mt-0 mt-[-10rem]">
+          <div className="flex justify-center pb-20 pt-20">
+            <form onSubmit={(e) => handleSubmit(e)}>
+              <div
+                className={'max-w-[58.5rem] min-w-[37.875rem] bg-white text-black pl-12 lg:pr-8 pr-1 pb-10 rounded-2xl ${theme === "dark" ? "border-0" : "border-2 border-black"}'}
+              >
+                <div className="text-[3.1rem] font-[600] pt-3">Search Notes</div>
                 <div className="flex justify-center gap-x-12">
                   <div className="pt-12">
-                    <div className="text-2xl pb-3 font-[300]">Price Range</div>
+                    <div className="text-2xl pb- 3 font-[300]">Price Range</div>
                     <div className="grid grid-rows-2 grid-cols-2 gap-x-16 pb-4">
                       <div className="pb-1 text-xl">Min</div>
                       <div className="pb-1 text-xl">Max</div>
@@ -205,7 +199,7 @@ const handleFunction = () => {
                       </div>
                       <div>
                         <input
-                          className="bg-[#d9d9d9] h-11 rounded-lg w-32 lg:w-auto    "
+                          className="bg-[#d9d9d9] h-11 rounded-lg w-32 lg:w-auto"
                           type="text"
                           value={maxPrice}
                           onChange={(e) => setMaxPrice(e.target.value)}
@@ -220,7 +214,8 @@ const handleFunction = () => {
                             ? "border border-black"
                             : ""
                         }`}
-                        onClick={() => handleCheckboxChange("class notes")}>
+                        onClick={() => handleCheckboxChange("class notes")}
+                      >
                         <div className="text-sm pb-2">Class Notes</div>
                         {selectedTypes.includes("class notes") && (
                           <div className="absolute top-4 right-12 text-black text-4xl">
@@ -234,7 +229,8 @@ const handleFunction = () => {
                             ? "border border-black"
                             : ""
                         }`}
-                        onClick={() => handleCheckboxChange("lecture notes")}>
+                        onClick={() => handleCheckboxChange("lecture notes")}
+                      >
                         <div className="text-sm pb-2">Lecture Notes</div>
                         {selectedTypes.includes("lecture notes") && (
                           <div className="absolute top-4 right-12 text-4xl text-black">
@@ -245,7 +241,8 @@ const handleFunction = () => {
                     </div>
                     <button
                       type="submit"
-                      className="bg-[#a883c5] mt-5 w-fit px-5 py-1 rounded-full cursor-pointer flex items-center">
+                      className="bg-[#a883c5] mt-5 w-fit px-5 py-1 rounded-full cursor-pointer flex items-center"
+                    >
                       <GoArrowDownRight size={25} className="inline" />
                       <span className="text-[1.25rem] font-semibold">
                         Search Notes
@@ -268,60 +265,65 @@ const handleFunction = () => {
       </div>
 
       {/* Displaying Filtered Results */}
-      <div className="flex justify-center" >
-            {/* Notes Display Section */}
-            <div className="w-[60rem]">
-              <div className="  grid justify-items-center sm:grid-cols-3 grid-cols-2 md:gap-y-14 lg:grid-cols-3 md:gap-x-[1rem] lg:gap-x-3 sm:gap-x-1 mobile:gap-y-10 mobile:gap-x-72 gap-x-[18rem] gap-y-[3rem] ">
-                {filteredData.map((item, index) => (
-                  <a
-                    key={item.id}
-                    className={`bg-white text-black p-3 rounded-2xl w-[18rem] h-[18rem] md:scale-100 ${theme==="dark"?"border-0":"border-2 border-black"} `}>
-                    {/* Component Part */}
-                    <div className="flex justify-normal gap-x-4 items-center">
-                      {/* Department + Year, Respective School */}
-                      <div className="pt-1 pl-2 font-[400] text-lg">
-                        {item.department}
-                      </div>
-                      <div className="bg-[#a883c5] px-5 py-0 h-4 rounded-[0.225rem] font-[500] text-sm flex flex-col justify-center">
-                        <div className="font-[525]">{item.school}</div>
-                      </div>
+      <div className="flex justify-center">
+        <div className="w-[60rem]">
+          <div className={'grid justify-items-center sm:grid-cols-3 grid-cols-2 md:gap-y-14 lg:grid-cols-3 md:gap-x-[1rem] lg:gap-x-3 sm:gap-x-1 mobile:gap-y-10 mobile:gap-x-72 gap-x-[18rem] gap-y-[3rem]'}
+          >
+            {filteredData.map((item, index) => (
+              <a
+                key={item.id}
+                className={'bg-white text-black p-3 rounded-2xl w-[18rem] h-[18rem] md:scale-100 ${theme === "dark" ? "border-0" : "border-2 border-black"}'}
+              >
+                {/* Component Part */}
+                <div className="flex justify-normal gap-x-4 items-center">
+                  {/* Department + Year, Respective School */}
+                  <div className="pt-1 pl-2 font-[400] text-lg">
+                    {item.department}
+                  </div>
+                  <div
+                    className="bg-[#a883c5] px-5 py-0 h-4 rounded-[0.225rem] font-[500] text-sm flex flex-col justify-center"
+                  >
+                    <div className="font-[525]">{item.school}</div>
+                  </div>
+                </div>
+                <div className="flex justify-center gap-x-2 pb-4 pl-0">
+                  {/* Course and Modules Covered */}
+                  <div className="text-[1.15rem] font-[425] w-[8.7rem]">
+                    {item.title}
+                  </div>
+                  <div
+                    className="flex justify-normal border-[1.25px] border-black rounded-[0.7rem] w-fit items-center p-2 gap-x-1"
+                  >
+                    <div className="text-sm leading-4">
+                      Modules
+                      <br /> Covered
                     </div>
-                    <div className="flex justify-center gap-x-2 pb-4 pl-0">
-                      {/* Course and Modules Covered */}
-                      <div className="text-[1.15rem] font-[425] w-[8.7rem]">
-                        {item.title}
-                      </div>
-                      <div className="flex justify-normal border-[1.25px] border-black rounded-[0.7rem] w-fit items-center p-2 gap-x-1">
-                        <div className="text-sm leading-4">
-                          Modules
-                          <br /> Covered
-                        </div>
-                        <div className="text-4xl">{item.modulesCovered}</div>
-                      </div>
-                    </div>
-                    <div className="flex justify-normal">
-                      {/* Images Part */}
-                      <div>
-                        <img
-                          className="w-32 cursor-pointer"
-                          src={item.image1}
-                          onClick={() => openImageViewer(0, item)}
-                        />
-                      </div>
-                      <div>
-                        <img
-                          className="w-32 cursor-pointer"
-                          src={item.image2}
-                          onClick={() => openImageViewer(1, item)}
-                        />
-                      </div>
-                    </div>
-                  </a>
-                ))}
-              </div>
-            </div>
+                    <div className="text-4xl">{item.modulesCovered}</div>
+                  </div>
+                </div>
+                <div className="flex justify-normal">
+                  {/* Images Part */}
+                  <div>
+                    <img
+                      className="w-32 cursor-pointer"
+                      src={item.image1}
+                      onClick={() => openImageViewer(0, item)}
+                    />
+                  </div>
+                  <div>
+                    <img
+                      className="w-32 cursor-pointer"
+                      src={item.image2}
+                      onClick={() => openImageViewer(1, item)}
+                    />
+                  </div>
+                </div>
+              </a>
+            ))}
           </div>
-          {isViewerOpen && (
+        </div>
+      </div>
+      {isViewerOpen && (
         <div
           className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-80"
           style={{
