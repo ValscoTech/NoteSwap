@@ -1,3 +1,4 @@
+
 import { useNavigate } from "react-router-dom";
 import React, { useContext, useState } from "react";
 import shelf from "../assets/images/shelf.png";
@@ -22,8 +23,7 @@ const data = [
     title: "Computation of Science",
     type: "class notes",
     price: 15.0,
-    image1: img3,
-    image2: img4,
+    images:[img3,img4],
     modulesCovered: 9,
     department: "SCI2005",
     school: "SCOPE",
@@ -34,8 +34,7 @@ const data = [
     title: "Computation of Social",
     type: "class notes",
     price: 20.0,
-    image1: img3,
-    image2: img4,
+    images:[img3,img4],
     modulesCovered: 4,
     department: "SOC2005",
     school: "SCOPE",
@@ -46,8 +45,7 @@ const data = [
     title: "Computation of English",
     type: "lecture notes",
     price: 10.0,
-    image1: img3,
-    image2: img4,
+    images:[img3,img4],
     modulesCovered: 7,
     department: "ENG2005",
     school: "SCOPE",
@@ -58,8 +56,7 @@ const data = [
     title: "Computation of Mathematics",
     type: "lecture notes",
     price: 25.0,
-    image1: img3,
-    image2: img4,
+    images:[img3,img4],
     modulesCovered: 6,
     department: "MAT2005",
     school: "SCOPE",
@@ -85,6 +82,7 @@ export default function NotesPage() {
   const [hasManualSearch, setHasManualSearch] = useState(false);
   const [linkIndex,setLinkIndex]=useState("");
   const [isInitialLoad, setIsInitialLoad] = useState(true);
+  const [params,setParams]=useState([]);
 
   useEffect(() => {
     if (isInitialLoad) {
@@ -112,11 +110,14 @@ export default function NotesPage() {
     }
   }, [query]);
 
-  const openImageViewer = (index, item,linkIndex) => {
-    setImages([item.image1, item.image2]);
+  const openImageViewer = (imagesArray, index, linkIndex, item) => {
+    setImages(imagesArray);
     setCurrentImageIndex(index);
     setIsViewerOpen(true);
     setLinkIndex(linkIndex);
+    setParams(item);
+    
+    
   };
 
   const closeImageViewer = () => {
@@ -310,20 +311,15 @@ export default function NotesPage() {
                 </div>
                 <div className="flex justify-normal">
                   {/* Images Part */}
-                  <div>
+                  {item.images.slice(0, 2).map((img, imgIndex) => (
                     <img
-                      className="w-32 cursor-pointer"
-                      src={item.image1}
-                      onClick={() => openImageViewer(0, item,item.id)}
+                      key={imgIndex}
+                      className="w-32 h-36 object-cover cursor-pointer"
+                      src={img}
+                      onClick={() => openImageViewer(item.images, imgIndex,item.id,item)}
+                      alt={`Image ${imgIndex}`}
                     />
-                  </div>
-                  <div>
-                    <img
-                      className="w-32 cursor-pointer"
-                      src={item.image2}
-                      onClick={() => openImageViewer(1, item,item.id)}
-                    />
-                  </div>
+                  ))}
                 </div>
               </a>
             ))}
@@ -335,8 +331,8 @@ export default function NotesPage() {
           images={images}
           currentIndex={currentImageIndex}
           onClose={closeImageViewer}
-          link={data[linkIndex-1].link} // Close the viewer
-          
+          link={data[linkIndex-1].link}
+          params={params}// Close the viewer
         />
       )}
     </div>
