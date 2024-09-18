@@ -1,4 +1,4 @@
-Complete NotesViewPage
+
 import React, { useState, useEffect, useContext } from "react";
 import ImageViewer from "react-simple-image-viewer";
 import img3 from "../../assets/images/image3.png";
