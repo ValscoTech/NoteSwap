@@ -141,7 +141,7 @@ export default function HomePage() {
             <button
               className="flex items-center justify-center px-6 py-[0.6rem] mx-5 text-white text-[1rem] font-semibold bg-[#a883c5] rounded-[1.05rem] border-none cursor-pointer mobile:ml-16 sm:ml-6 mb-10"
               onClick={() => {
-                navigate("/rent");
+                navigate("/notes");
               }}>
               <svg
                 className="w-5 h-5  fill-white mr-2 pb-1"
@@ -167,7 +167,7 @@ export default function HomePage() {
           <button
             className="flex items-center justify-center px-5 py-3 mx-5 text-white text-xl font-semibold bg-[#a883c5] rounded-2xl border-none cursor-pointer"
             onClick={() => {
-              navigate("/rent");
+              navigate("/notes");
             }}>
             <svg
               className="w-7 h-7 fill-white mr-2"
