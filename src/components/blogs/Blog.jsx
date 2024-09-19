@@ -2,12 +2,11 @@ import { memo } from 'react'
 import blog1 from '@/assets/images/blog1.jpg'
 import blog2 from '@/assets/images/blog2.png'
 import blog3 from '@/assets/images/blog3.png'
-// import blog4 from '@/assets/images/blog4.png'
 import blog5 from '@/assets/images/blog5.webp'
 
 const Blog = () => {
     return (
-        <div className='mx-4 md:mx-10 lg:mx-12'>
+        <div className='mx-4 md:mx-10 lg:mx-12 lg:mt-[-32px] md:mt-[-24px] sm:mt-[-24px]'>
             <div className=''>
                 <h1 className='font-bold text-3xl sm:text-4xl lg:text-5xl mb-6 sm:mb-8 lg:mb-12  mt-4 sm:mt-6 lg:mt-8'>
                     Blogs and Articles
