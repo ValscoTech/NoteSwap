@@ -95,7 +95,7 @@ const BlogsCarousel = () => {
                 </div>
 
                 {/* Dots Navigation */}
-                <div className="flex justify-center mt-[-30px]">
+                <div className="flex justify-center mt-[-30px] mb-[-56px]">
                     {blogsdata.map((_, index) => (
                         <div
                             key={index}
