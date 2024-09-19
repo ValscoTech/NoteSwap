@@ -1,4 +1,4 @@
-import { React, useEffect, useState } from "react";
+import { memo, React, useEffect, useState } from "react";
 import Calendar from "react-calendar";
 import { useLocation } from "react-router-dom";
 
@@ -15,7 +15,7 @@ function useQuery() {
   return new URLSearchParams(useLocation().search);
 }
 
-export default function RentNotesPage() {
+function RentNotesPage() {
   const query = useQuery();
   const [date, setDate] = useState(new Date());
   const [name, setName] = useState("");
@@ -97,3 +97,5 @@ export default function RentNotesPage() {
     </div>
   );
 }
+
+export default memo(RentNotesPage);

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, memo } from "react";
 import { useLocation } from "react-router-dom";
 import { GoArrowDownRight } from "react-icons/go";
 import ImageViewer from "react-simple-image-viewer";
@@ -64,7 +64,7 @@ const useQuery = () => {
   return new URLSearchParams(useLocation().search);
 };
 
-export default function NotesPage() {
+function NotesPage() {
   const { theme } = useContext(ThemeContext);
   const [minPrice, setMinPrice] = useState("");
   const [maxPrice, setMaxPrice] = useState("");
@@ -125,9 +125,8 @@ export default function NotesPage() {
 
   return (
     <div
-      className={`font-clash overflow-hidden ${
-        theme === "dark" ? "bg-black text-white" : "bg-white text-black"
-      }`}
+      className={`font-clash overflow-hidden ${theme === "dark" ? "bg-black text-white" : "bg-white text-black"
+        }`}
     >
       {/* Navigation bar */}
       <div className="scale-[0.5] sm:scale-100 sm:pt-10 lg:mb-[-1rem]">
@@ -191,11 +190,10 @@ export default function NotesPage() {
                     <div className="flex justify-normal gap-x-9 pb-4">
                       <div
                         className={`relative bg-[#d9d9d9]
-                       flex flex-col justify-end h-24 px-5 w-fit rounded-lg cursor-pointer ${
-                          selectedTypes.includes("class notes")
+                       flex flex-col justify-end h-24 px-5 w-fit rounded-lg cursor-pointer ${selectedTypes.includes("class notes")
                             ? "border border-black"
                             : ""
-                        }`}
+                          }`}
                         onClick={() => handleCheckboxChange("class notes")}
                       >
                         <div
@@ -210,11 +208,10 @@ export default function NotesPage() {
                         )}
                       </div>
                       <div
-                        className={`relative bg-[#d9d9d9] flex flex-col justify-end h-24 px-3.5 w-fit rounded-lg cursor-pointer ${
-                          selectedTypes.includes("lecture notes")
+                        className={`relative bg-[#d9d9d9] flex flex-col justify-end h-24 px-3.5 w-fit rounded-lg cursor-pointer ${selectedTypes.includes("lecture notes")
                             ? "border border-black"
                             : ""
-                        }`}
+                          }`}
                         onClick={() => handleCheckboxChange("lecture notes")}
                       >
                         <div
@@ -259,9 +256,8 @@ export default function NotesPage() {
           <div className="grid justify-items-center sm:grid-cols-3 grid-cols-2 gap-x-[18rem] gap-y-[3rem]">
             {filteredData.length === 0 ? (
               <p
-                className={`${
-                  theme === "dark" ? "text-white" : "text-black"
-                }`}
+                className={`${theme === "dark" ? "text-white" : "text-black"
+                  }`}
               >
                 No notes found for "{searchQuery}"
               </p>
@@ -335,3 +331,5 @@ export default function NotesPage() {
     </div>
   );
 }
+
+export default memo(NotesPage);
