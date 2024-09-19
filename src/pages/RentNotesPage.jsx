@@ -24,6 +24,28 @@ const data = [
     school: "SCOPE",
     link: "/path-to-note-1", // Link to the note detail page
   },
+  {
+    id: 1,
+    title: "Computation of Mathematics",
+    type: "class notes",
+    price: 10.0,
+    images: [img3, img4],
+    modulesCovered: 8,
+    department: "CSE2005",
+    school: "SCOPE",
+    link: "/path-to-note-1", // Link to the note detail page
+  },
+  {
+    id: 1,
+    title: "Computation of Mathematics",
+    type: "class notes",
+    price: 10.0,
+    images: [img3, img4],
+    modulesCovered: 8,
+    department: "CSE2005",
+    school: "SCOPE",
+    link: "/path-to-note-1", // Link to the note detail page
+  },
 ];
 
 function useQuery() {
@@ -62,7 +84,7 @@ function RentNotesPage() {
   return (
     <div>
       <div
-        className={`w-full font-clash min-h-screen flex items-center justify-center p-4 md:p-8 lg:p-12 ${
+        className={`w-full font-clash min-h-screen flex flex-col justify-center p-4 md:p-8 lg:p-12 ${
           theme === "dark" ? "bg-black text-white" : "bg-white text-black"
         }`}>
         <div className="w-full max-w-7xl mx-auto space-y-8">
@@ -99,7 +121,9 @@ function RentNotesPage() {
 
             <div
               className={`max-w-[100vw] h-auto mb-16 ${
-                theme === "dark" ? "border-0" : "border-2 border-black rounded-lg"
+                theme === "dark"
+                  ? "border-0"
+                  : "border-2 border-black rounded-lg"
               }`}>
               <Calendar
                 onChange={dateChangeHandler}
@@ -115,11 +139,18 @@ function RentNotesPage() {
               className="w-full sm:w-1/2 py-2 mt-12 px-4 bg-[#A883C5] text-white font-bold text-xl md:text-2xl rounded-md shadow-sm">
               Rent Notes
             </button>
-
-            <NotesView className="flex flex-wrap justify-evenly place-content-evenly" />
+            <div className="w-full bg-rose-500">
+              <div className="lg:scale-100 md:scale-90">
+                
+              </div>
+            </div>
           </div>
         </div>
       </div>
+      <div
+        className={`w-full flex justify-center ${
+          theme === "dark" ? "bg-black text-white" : "bg-white text-black"
+        }`}><div className="lg:scale-100 md:scale-75 sm:scale-[0.6] mobile:scale-[0.5] scale-[0.345] md:mt-0 sm:mt-[-5rem] mobile:mt-[-10rem] mt-[-12rem] mb-[-10rem] mobile:mb-0"><NotesView paramsData={data} /></div></div>
     </div>
   );
 }
