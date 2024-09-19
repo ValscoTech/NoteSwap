@@ -20,7 +20,7 @@ const data = [
     title: "Computation of Mathematics",
     type: "class notes",
     price: 10.0,
-    images:[img3,img4],
+    images: [img3, img4],
     modulesCovered: 8,
     department: "CSE2005",
     school: "SCOPE",
@@ -31,7 +31,7 @@ const data = [
     title: "Computation of Mathematics",
     type: "class notes",
     price: 15.0,
-    images:[img3,img4],
+    images: [img3, img4],
     modulesCovered: 8,
     department: "CSE2005",
     school: "SCOPE",
@@ -42,7 +42,7 @@ const data = [
     title: "Computation of Mathematics",
     type: "lecture notes",
     price: 20.0,
-    images:[img3,img4],
+    images: [img3, img4],
     modulesCovered: 8,
     department: "CSE2005",
     school: "SCOPE",
@@ -223,11 +223,9 @@ export default function HomePage() {
               <img className="w-[10.5rem] " src={ph} alt="iPhone" />
             </div>
           </div>
-          <NotesView />
+          <NotesView paramsData={data} />
         </div>
       </div>
-      
-      
 
       <div className=" flex justify-center lg:scale-100 md:scale-[0.76] sm:scale-[0.61] pt-10 mobile:scale-[0.45] lg:mt-0 md:mt-[-5rem] lg:mb-0 md:mb-[-4rem] sm:mt-[-12rem] sm:mb-[-6rem] mobile:mt-[-23rem] scale-[0.315] mt-[-35rem] mb-[-5rem]">
         {/* Search Box Section */}
