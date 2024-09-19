@@ -1,9 +1,23 @@
+/* themeContext.css */
+
 .light {
-  background-color: white;
-  color: black;
+  --background-color: white;
+  --text-color: black;
+  --border-color: gray;
 }
 
 .dark {
-  background-color: black;
-  color: white;
+  --background-color: black;
+  --text-color: white;
+  --border-color: gray;
+}
+
+body, .bg-background-color {
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+input, button {
+  color: var(--text-color);
+  border-color: var(--border-color);
 }
