@@ -6,23 +6,38 @@ import "../styles/calendar.css";
 import img1 from "../components/rent/2f855903-01c1-4bf6-b337-124bdebd2d8f.jpg";
 import img2 from "../components/rent/2f855903-01c1-4bf6-b337-124bdebd2d8f1.jpg";
 import img3 from "../components/rent/2f855903-01c1-4bf6-b337-124bdebd2d8f2.jpg";
+import img4 from "../components/rent/2f855903-01c1-4bf6-b337-124bdebd2d8f2.jpg";
 import NotesView from "@/components/common/NotesView";
 import { useContext } from "react";
 import "../styles/ThemeContext.css";
 import { ThemeContext } from "./ThemeContext";
+
+const data = [
+  {
+    id: 1,
+    title: "Computation of Mathematics",
+    type: "class notes",
+    price: 10.0,
+    images: [img3, img4],
+    modulesCovered: 8,
+    department: "CSE2005",
+    school: "SCOPE",
+    link: "/path-to-note-1", // Link to the note detail page
+  },
+];
 
 function useQuery() {
   return new URLSearchParams(useLocation().search);
 }
 
 function RentNotesPage() {
+  const { theme } = useContext(ThemeContext);
   const query = useQuery();
   const [date, setDate] = useState(new Date());
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
   const [courseCode, setCourseCode] = useState("");
   const [Images, SetImages] = useState([]);
-  const { theme } = useContext(ThemeContext);
 
   function dateChangeHandler(newDate) {
     setDate(newDate);
@@ -36,12 +51,20 @@ function RentNotesPage() {
       setPrice(parsedTerms.price);
       setCourseCode(parsedTerms.department);
       SetImages(parsedTerms.images);
+    } else {
+      setName(data[0].title);
+      setPrice(data[0].price);
+      setCourseCode(data[0].department);
+      SetImages(data[0].images);
     }
-  });
+  }, []);
 
   return (
-    <div className={theme}>
-      <div className="w-full bg-black text-white font-clash min-h-screen flex items-center justify-center p-4 md:p-8 lg:p-12">
+    <div>
+      <div
+        className={`w-full font-clash min-h-screen flex items-center justify-center p-4 md:p-8 lg:p-12 ${
+          theme === "dark" ? "bg-black text-white" : "bg-white text-black"
+        }`}>
         <div className="w-full max-w-7xl mx-auto space-y-8">
           <h1 className="text-3xl md:text-5xl font-semibold text-left">
             Rent Notes
@@ -74,7 +97,10 @@ function RentNotesPage() {
               </p>
             </div>
 
-            <div className="max-w-[100vw] h-auto mb-16">
+            <div
+              className={`max-w-[100vw] h-auto mb-16 ${
+                theme === "dark" ? "border-0" : "border-2 border-black rounded-lg"
+              }`}>
               <Calendar
                 onChange={dateChangeHandler}
                 value={date}
@@ -98,4 +124,4 @@ function RentNotesPage() {
   );
 }
 
-export default memo(RentNotesPage);
+export default RentNotesPage;
