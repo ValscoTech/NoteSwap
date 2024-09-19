@@ -209,8 +209,8 @@ function NotesPage() {
                       </div>
                       <div
                         className={`relative bg-[#d9d9d9] flex flex-col justify-end h-24 px-3.5 w-fit rounded-lg cursor-pointer ${selectedTypes.includes("lecture notes")
-                            ? "border border-black"
-                            : ""
+                          ? "border border-black"
+                          : ""
                           }`}
                         onClick={() => handleCheckboxChange("lecture notes")}
                       >
