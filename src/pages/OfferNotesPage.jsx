@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import uploadIcon from '../components/offer/upload-icon.png';
 import NotesView from '../components/common/NotesView';
 import { useNotes } from '../components/common/NoteContext';
