@@ -242,6 +242,7 @@ export default function OfferNotesPage() {
 
           <button
             type="submit"
+            onClick={()=>{window.location.reload()}}
             className="w-full sm:w-[515px] ml-5 py-2 px-4 bg-[#A883C5] text-white font-bold text-2xl rounded-md shadow-sm"
           >
             Post Offer
@@ -249,7 +250,7 @@ export default function OfferNotesPage() {
         </form>
 
         {/* Display Notes Preview */}
-        <NotesView notesData={notesData} />
+        <NotesView paramsData={notesData} />
       </div>
 
       {/* Modal for Image Preview */}
