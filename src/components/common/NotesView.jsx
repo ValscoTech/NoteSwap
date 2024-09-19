@@ -1,11 +1,10 @@
-
 import React, { useState, useEffect, useContext } from "react";
 import ImageViewer from "react-simple-image-viewer";
 import img3 from "../../assets/images/image3.png";
 import img4 from "../../assets/images/image4.png";
 import FullscreenViewer from "./FullScreenViewer";
 import { ThemeContext } from "@/pages/ThemeContext";
-import "../../styles/ThemeContext.css"
+import "../../styles/ThemeContext.css";
 import { useNotes } from "./NoteContext";
 const defaultData = [
   {
@@ -35,7 +34,7 @@ const defaultData = [
     title: "Computation of English",
     type: "lecture notes",
     price: 10.0,
-    images: [img3,img4],
+    images: [img3, img4],
     modulesCovered: 7,
     department: "ENG2005",
     school: "SCOPE",
@@ -54,23 +53,30 @@ const defaultData = [
   },
 ];
 
-export default function NotesView() {
+export default function NotesView({ paramsData }) {
   const { notesData } = useNotes();
-  const {theme}=useContext(ThemeContext)
+  const { theme } = useContext(ThemeContext);
   const [isViewerOpen, setIsViewerOpen] = useState(false);
   const [images, setImages] = useState([]);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [data, setData] = useState(defaultData);
-  const [linkIndex,setLinkIndex]=useState("");
-  const [params,setParams]=useState([]);
+  const [linkIndex, setLinkIndex] = useState("");
+  const [params, setParams] = useState([]);
 
   useEffect(() => {
-    if (notesData && notesData.length > 0) {
-      setData((prevData) => [...notesData, ...prevData]);
+    // If paramsData is passed and is not empty, set it as the data.
+    if (paramsData && paramsData.length > 0) {
+      setData(paramsData);
     }
-  }, [notesData]);
-
-
+    // Otherwise, prioritize notesData if it exists.
+    else if (notesData && notesData.length > 0) {
+      setData(notesData);
+    }
+    // Fall back to defaultData if nothing else is available.
+    else {
+      setData(defaultData);
+    }
+  }, [notesData, paramsData]);
 
   const openImageViewer = (imagesArray, index, linkIndex, item) => {
     setImages(imagesArray);
@@ -78,8 +84,6 @@ export default function NotesView() {
     setIsViewerOpen(true);
     setLinkIndex(linkIndex);
     setParams(item);
-    
-    
   };
 
   const closeImageViewer = () => {
@@ -94,8 +98,9 @@ export default function NotesView() {
             {data.map((item) => (
               <a
                 key={item.id}
-                className={`bg-white text-black p-3 rounded-2xl w-[18rem] h-[18rem] md:scale-100 ${theme==="dark"?"border-0":"border-2 border-black"}`}
-              >
+                className={`bg-white text-black p-3 rounded-2xl w-[18rem] h-[18rem] md:scale-100 ${
+                  theme === "dark" ? "border-0" : "border-2 border-black"
+                }`}>
                 <div className="flex justify-normal gap-x-4 items-center">
                   <div className="pt-1 pl-2 font-[400] text-lg">
                     {item.department}
@@ -122,7 +127,9 @@ export default function NotesView() {
                       key={imgIndex}
                       className="w-32 h-36 object-cover cursor-pointer"
                       src={img}
-                      onClick={() => openImageViewer(item.images, imgIndex,item.id,item)}
+                      onClick={() =>
+                        openImageViewer(item.images, imgIndex, item.id, item)
+                      }
                       alt={`Image ${imgIndex}`}
                     />
                   ))}
@@ -137,9 +144,8 @@ export default function NotesView() {
           images={images}
           currentIndex={currentImageIndex}
           onClose={closeImageViewer}
-          link={data[linkIndex-1].link}
-          params={params}// Close the viewer
-          
+          link={data[linkIndex - 1].link}
+          params={params} // Close the viewer
         />
       )}
     </div>
