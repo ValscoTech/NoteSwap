@@ -171,13 +171,28 @@ export default function OfferNotesPage() {
               className={`text-[#909090] block w-[100%] p-3 text-2xl font-light ${theme === "dark" ? "bg-black text-white" : "bg-white text-black"}`}
             >
               <option value="">Select School</option>
-              {/* Add options here... */}
+              <option value="school1">SCOPE</option>
+              <option value="school2">SELECT</option>
+              <option value="school3">SMEC</option>
+              <option value="school4">SCORE</option>
+              <option value="school5">SCHEME</option>
+              <option value="school6">SENSE</option>
+              <option value="school7">SCE</option>
+              <option value="school8">SAS</option>
+              <option value="school9">VIT BS</option>
+              <option value="school10">V-SPARC</option>
+              <option value="school11">V-SIGN</option>
+              <option value="school12">HOT</option>
+              <option value="school13">SHINE</option>
+              <option value="school14">SSL</option>
+              <option value="school15">SBST</option>
+              <option value="school16">VAIAL</option>
             </select>
           </div>
 
           {/* File Upload Section */}
           <div className="w-full mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 p-6">
-            <div className={`rounded-lg shadow-md p-6 flex flex-col justify-between ${theme === "dark" ? "bg-gray-800" : "bg-white"}`}>
+            <div className={`rounded-lg shadow-md p-6 flex flex-col justify-between ${theme === "dark" ? "bg-white" : "bg-white"}`}>
               <div>
                 <h2 className="text-2xl font-bold text-gray-900 mb-4">Upload your files</h2>
                 <div className="bg-black rounded-lg flex flex-col p-4">
