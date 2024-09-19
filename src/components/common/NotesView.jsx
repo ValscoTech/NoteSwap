@@ -6,6 +6,7 @@ import img4 from "../../assets/images/image4.png";
 import FullscreenViewer from "./FullScreenViewer";
 import { ThemeContext } from "@/pages/ThemeContext";
 import "../../styles/ThemeContext.css"
+import { useNotes } from "./NoteContext";
 const defaultData = [
   {
     id: 1,
@@ -53,7 +54,8 @@ const defaultData = [
   },
 ];
 
-export default function NotesView({ notesData }) {
+export default function NotesView() {
+  const { notesData } = useNotes();
   const {theme}=useContext(ThemeContext)
   const [isViewerOpen, setIsViewerOpen] = useState(false);
   const [images, setImages] = useState([]);
