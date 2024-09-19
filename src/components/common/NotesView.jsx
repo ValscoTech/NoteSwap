@@ -59,24 +59,46 @@ export default function NotesView({ paramsData }) {
   const [isViewerOpen, setIsViewerOpen] = useState(false);
   const [images, setImages] = useState([]);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [data, setData] = useState(defaultData);
+  const [data, setData] = useState(() => {
+    // Retrieve data from localStorage on component load
+    const storedData = localStorage.getItem("data");
+    return storedData ? JSON.parse(storedData) : defaultData;
+  });
   const [linkIndex, setLinkIndex] = useState("");
   const [params, setParams] = useState([]);
+  const [feedData, setFeedData] = useState(() => {
+    // Retrieve feedData from localStorage on component load
+    const storedFeedData = localStorage.getItem("feedData");
+    return storedFeedData ? JSON.parse(storedFeedData) : [];
+  });
 
   useEffect(() => {
-    // If paramsData is passed and is not empty, set it as the data.
+    // Update feedData based on paramsData, notesData, and defaultData
     if (paramsData && paramsData.length > 0) {
-      setData(paramsData);
+      setFeedData(paramsData);
+    } else if (notesData && notesData.length > 0) {
+      setFeedData([...defaultData, ...notesData]);
+    } else {
+      setFeedData([...defaultData]);
     }
-    // Otherwise, prioritize notesData if it exists.
-    else if (notesData && notesData.length > 0) {
-      setData(notesData);
-    }
-    // Fall back to defaultData if nothing else is available.
-    else {
-      setData(defaultData);
-    }
-  }, [notesData, paramsData]);
+  }, [paramsData, notesData, defaultData]);
+  
+  useEffect(() => {
+    // Update data whenever feedData changes
+    setData(feedData);
+  }, [feedData]);
+  
+  // Persist `data` and `feedData` in localStorage whenever they change
+  useEffect(() => {
+    localStorage.setItem("data", JSON.stringify(data));
+  }, [data]);
+  
+  useEffect(() => {
+    localStorage.setItem("feedData", JSON.stringify(feedData));
+  }, [feedData]);
+
+// Watch for changes in paramsData, notesData, or defaultData
+
 
   const openImageViewer = (imagesArray, index, linkIndex, item) => {
     setImages(imagesArray);
