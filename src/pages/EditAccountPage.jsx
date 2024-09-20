@@ -94,8 +94,8 @@ export default function EditAccountPage() {
   };
 
   return (
-    <div className={`w-full md:w-dvh ${theme}`}>
-      <div className="text-current md:flex">
+    <div className={`w-full md:w-dvh ${theme} min-h-screen`}>
+      <div className={`text-current md:flex ${theme === "dark" ? " text-white" : "bg-white text-black"} p-10`}>
         {/* Profile Photo Section */}
         <div className="max-w-3xl w-full md:w-1/2 flex flex-col justify-center items-center">
           <img
@@ -106,7 +106,7 @@ export default function EditAccountPage() {
           />
           <button
             onClick={handleChangePhoto}
-            className="text-current bg-blue-500 text-xl cursor-pointer rounded-xl mt-5 font-semibold"
+            className="bg-blue-500 text-white text-xl cursor-pointer rounded-xl mt-5 font-semibold"
             style={{ width: "200px", height: "50px" }}
           >
             Change Photo
@@ -114,7 +114,7 @@ export default function EditAccountPage() {
           {isProfilePicCustom && (
             <button
               onClick={handleRemoveProfilePic}
-              className="text-current bg-red-500 text-xl cursor-pointer rounded-xl mt-5 font-semibold"
+              className="bg-red-500 text-white text-xl cursor-pointer rounded-xl mt-5 font-semibold"
               style={{ width: "200px", height: "50px" }}
             >
               Remove Photo
@@ -164,7 +164,7 @@ export default function EditAccountPage() {
       </div>
 
       {/* Additional Details Section */}
-      <div className="text-current mx-10 md:mx-40 md:w-96">
+      <div className={`text-current mx-10 md:mx-40 md:w-96 ${theme === "dark" ? "text-white" : "text-black"}`}>
         <div className="py-5 flex md:block">
           <div className="pb-3 text-xl">Block: </div>
           <input
@@ -198,14 +198,14 @@ export default function EditAccountPage() {
       <div className="flex flex-col justify-center items-center my-10">
         <button
           onClick={handleSave}
-          className="text-current bg-[#A883C5] text-xl cursor-pointer rounded-xl mx-5 font-semibold"
+          className="bg-[#A883C5] text-white text-xl cursor-pointer rounded-xl mx-5 font-semibold"
           style={{ width: "500px", height: "100px" }}
         >
           Save
         </button>
         <button
           onClick={handleLogOut}
-          className="text-current bg-[#A883C5] text-xl cursor-pointer rounded-xl mx-5 mt-5 font-semibold"
+          className="bg-[#A883C5] text-white text-xl cursor-pointer rounded-xl mx-5 mt-5 font-semibold"
           style={{ width: "500px", height: "100px" }}
         >
           Log Out
