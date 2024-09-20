@@ -141,7 +141,7 @@ export default function HomePage() {
             <button
               className="flex items-center justify-center px-6 py-[0.6rem] mx-5 text-white text-[1rem] font-semibold bg-[#a883c5] rounded-[1.05rem] border-none cursor-pointer mobile:ml-16 sm:ml-6 mb-10"
               onClick={() => {
-                navigate("/notes");
+                document.getElementById("a").scrollIntoView({ behavior: 'smooth' });
               }}>
               <svg
                 className="w-5 h-5  fill-white mr-2 pb-1"
@@ -167,7 +167,7 @@ export default function HomePage() {
           <button
             className="flex items-center justify-center px-5 py-3 mx-5 text-white text-xl font-semibold bg-[#a883c5] rounded-2xl border-none cursor-pointer"
             onClick={() => {
-              navigate("/notes");
+              document.getElementById("a").scrollIntoView({ behavior: 'smooth' });
             }}>
             <svg
               className="w-7 h-7 fill-white mr-2"
@@ -227,7 +227,7 @@ export default function HomePage() {
         </div>
       </div>
 
-      <div className=" flex justify-center lg:scale-100 md:scale-[0.76] sm:scale-[0.61] pt-10 mobile:scale-[0.45] lg:mt-0 md:mt-[-5rem] lg:mb-0 md:mb-[-4rem] sm:mt-[-12rem] sm:mb-[-6rem] mobile:mt-[-23rem] scale-[0.315] mt-[-35rem] mb-[-5rem]">
+      <div id="a" className=" flex justify-center lg:scale-100 md:scale-[0.76] sm:scale-[0.61] pt-10 mobile:scale-[0.45] lg:mt-0 md:mt-[-5rem] lg:mb-0 md:mb-[-4rem] sm:mt-[-12rem] sm:mb-[-6rem] mobile:mt-[-23rem] scale-[0.315] mt-[-35rem] mb-[-5rem]">
         {/* Search Box Section */}
         <div className=" min-w-[60rem] lg:mt-0 mt-[-10rem]">
           <div className="flex justify-center pb-20 pt-20 ">
