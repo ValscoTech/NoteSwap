@@ -73,11 +73,12 @@ export default function NotesView({ paramsData }) {
   });
 
   useEffect(() => {
+    setFeedData([]);
     // Update feedData based on paramsData, notesData, and defaultData
     if (paramsData && paramsData.length > 0) {
       setFeedData(paramsData);
     } else if (notesData && notesData.length > 0) {
-      setFeedData([...defaultData, ...notesData]);
+      setFeedData([...notesData, ...defaultData]);
     } else {
       setFeedData([...defaultData]);
     }
