@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import Footer from "@/components/layout/footer";
+import React, { useState, useCallback, useContext } from "react";
+import ImageViewer from "react-simple-image-viewer";
 import shelf from "../assets/images/shelf.png";
 import img3 from "../assets/images/image3.png";
 import img4 from "../assets/images/image4.png";
@@ -7,17 +7,20 @@ import img1 from "../assets/images/1.png";
 import ph from "../assets/images/phone.png";
 import { useNavigate } from "react-router-dom";
 import { GoArrowDownRight } from "react-icons/go";
-import Navbar from "@/components/layout/navbar";
+import { ThemeContext } from "./ThemeContext";
+import "../styles/ThemeContext.css";
+import NotesView from "@/components/common/NotesView";
 
-{/*Storing JSon file temporarily untill integration with backend*/}
+{
+  /*Storing JSon file temporarily untill integration with backend*/
+}
 const data = [
   {
     id: 1,
     title: "Computation of Mathematics",
     type: "class notes",
     price: 10.0,
-    image1: img3,
-    image2: img4,
+    images: [img3, img4],
     modulesCovered: 8,
     department: "CSE2005",
     school: "SCOPE",
@@ -28,8 +31,7 @@ const data = [
     title: "Computation of Mathematics",
     type: "class notes",
     price: 15.0,
-    image1: img3,
-    image2: img4,
+    images: [img3, img4],
     modulesCovered: 8,
     department: "CSE2005",
     school: "SCOPE",
@@ -40,24 +42,24 @@ const data = [
     title: "Computation of Mathematics",
     type: "lecture notes",
     price: 20.0,
-    image1: img3,
-    image2: img4,
+    images: [img3, img4],
     modulesCovered: 8,
     department: "CSE2005",
     school: "SCOPE",
-    link: "/path-to-note-1", 
+    link: "/path-to-note-1",
   },
-
 ];
 
 export default function HomePage() {
-  const navigate=useNavigate();
+  const { theme } = useContext(ThemeContext);
+  const navigate = useNavigate();
   const [minPrice, setMinPrice] = useState("");
   const [maxPrice, setMaxPrice] = useState("");
   const [selectedTypes, setSelectedTypes] = useState([]);
   const [filteredData, setFilteredData] = useState(data);
-
-
+  const [isViewerOpen, setIsViewerOpen] = useState(false);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [images, setImages] = useState([]);
 
   const handleCheckboxChange = (type) => {
     if (selectedTypes.includes(type)) {
@@ -69,7 +71,6 @@ export default function HomePage() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
 
     if (minPrice === "" && maxPrice === "" && selectedTypes.length === 0) {
       setFilteredData(data);
@@ -89,194 +90,231 @@ export default function HomePage() {
     setFilteredData(filtered);
   };
 
+  const openImageViewer = (index, item) => {
+    setImages([item.image1, item.image2]);
+    setCurrentImageIndex(index);
+    setIsViewerOpen(true);
+  };
+
+  const closeImageViewer = () => {
+    setIsViewerOpen(false);
+  };
+
+  const forwardData = (e) => {
+    e && e.preventDefault();
+
+    const searchParams = {
+      minPrice,
+      maxPrice,
+      selectedTypes,
+    };
+
+    // Navigate to the next page with serialized data in the URL
+    navigate(
+      `/notes?query=${encodeURIComponent(JSON.stringify(searchParams))}`
+    );
+  };
+
   return (
-    <div className="font-clash">
-      {/*The navigation Bar */}
-      <div className="bg-black">
-        {/* Home Section */}
-        <div className="flex justify-center gap-x-[1rem] pt-20 pb-20">
-          <div className="text-white text-[2.6rem] font-normal leading-normal font-clash flex flex-col justify-between">
-            <div>
+    <div
+      className={`font-clash overflow-hidden w-full ${
+        theme === "dark" ? "bg-black" : "bg-white"
+      } `}>
+      {/* Home Section */}
+      <div className="flex mobile:flex-row flex-col justify-center gap-x-[2rem] mobile:gap-x-0  pt-20 pb-20 md:scale-90 lg:scale-[1.25] w-full md:mt-0 sm:mt-[-4rem] ">
+        <div
+          className={`text-xl md:text-[2.6rem] font-normal leading-normal font-clash flex flex-col justify-between ${
+            theme === "dark" ? "text-white" : "text-black"
+          }`}>
+          <div className="flex justify-center sm:text-lg  md:text-3xl md:leading-[3rem] mobile:pl-10 sm:pl-0 mobile:pt-10 pl-0 pr-[0.1rem]">
+            <div className="sm:leading-[3rem] md:leading-normal mobile:ml-7 sm:pt-10 md:pt-0 ">
               Want to earn some{" "}
-              <span className="text-main font-bold">Side hustle</span>
+              <span className="text-main font-[550]">Side hustle</span>
               <br /> from all that
-              <span className="text-main font-bold"> Hardwork</span> you do
+              <span className="text-main font-[550]"> Hardwork</span> you do
               <br /> in making{" "}
-              <span className="text-main font-bold">Notes ?</span>
-            </div>
-            <div className="pb-20">
-              {/*Button Section */}
-              <button className="flex items-center justify-center px-5 py-3 mx-5 text-white text-xl font-semibold bg-[#a883c5] rounded-2xl border-none cursor-pointer" onClick={()=>{navigate("/rent")}}>
-                <svg
-                  className="w-7 h-7 fill-white mr-2"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 27 28"
-                  fill="none"
-                >
-                  <path
-                    d="M26.9054 27.1098V6.16286L23.9535 6.16286L23.943 22.0511L2.82959 0.926117L0.73604 3.02082L21.8495 24.1458L5.96991 24.1563V27.1098H26.9054Z"
-                    fill="white"
-                  />
-                </svg>
-                RENT NOTES
-              </button>
+              <span className="text-main font-[550]">Notes ?</span>
             </div>
           </div>
-          <img className="w-[300px] h-auto object-cover" src={img1} />
+          <div className="pb-24 ml-[-1.12rem] mobile:inline hidden w-72 mobile:mt-10 mobile:pl-6  mobile:scale-[0.9] sm:scale-100">
+            {/*Button Section */}
+            <button
+              className="flex items-center justify-center px-6 py-[0.6rem] mx-5 text-white text-[1rem] font-semibold bg-[#a883c5] rounded-[1.05rem] border-none cursor-pointer mobile:ml-16 sm:ml-6 mb-10"
+              onClick={() => {
+                document.getElementById("a").scrollIntoView({ behavior: 'smooth' });
+              }}>
+              <svg
+                className="w-5 h-5  fill-white mr-2 pb-1"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 27 28"
+                fill="none">
+                <path
+                  d="M26.9054 27.1098V6.16286L23.9535 6.16286L23.943 22.0511L2.82959 0.926117L0.73604 3.02082L21.8495 24.1458L5.96991 24.1563V27.1098H26.9054Z"
+                  fill="white"
+                />
+              </svg>
+              RENT NOTES
+            </button>
+          </div>
         </div>
-
-        {/* Container Section */}
-        <div className="flex justify-center items-center w-full pb-20">
-          <div className="flex justify-center gap-x-20 items-center w-fit rounded-xl bg-white px-14 py-8">
-            <div className="flex flex-col justify-between items-start text-5xl font-normal text-black">
-              <p className="pb-4">Have you Tried our App?</p>
-              <p>
-                <span>Notes On The GO</span>
-              </p>
-              <button className="flex items-center justify-center p-4 text-white text-xl font-semibold bg-[#a883c5] rounded-3xl border-none cursor-pointer mt-24">
-                <svg
-                  className="w-7 h-7 fill-white mr-2"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 27 28"
-                  fill="none"
-                >
-                  <path
-                    d="M26.9054 27.1098V6.16286L23.9535 6.16286L23.943 22.0511L2.82959 0.926117L0.73604 3.02082L21.8495 24.1458L5.96991 24.1563V27.1098H26.9054Z"
-                    fill="white"
-                  />
-                </svg>
-                Download RentSwap
-              </button>
-            </div>
-            <img className="w-48 object-cover" src={ph} alt="iPhone" />
-          </div>
+        <div className="flex justify-center">
+          <img
+            className="max-w-[300px] h-auto object-scale-down lg:scale-100 mobile:scale-[0.8] sm:scale-[0.8] md:scale-100 sm:pb-0 scale-[0.7]"
+            src={img1}
+          />
+        </div>
+        <div className="mobile:hidden scale-[0.9] flex justify-center">
+          <button
+            className="flex items-center justify-center px-5 py-3 mx-5 text-white text-xl font-semibold bg-[#a883c5] rounded-2xl border-none cursor-pointer"
+            onClick={() => {
+              document.getElementById("a").scrollIntoView({ behavior: 'smooth' });
+            }}>
+            <svg
+              className="w-7 h-7 fill-white mr-2"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 27 28"
+              fill="none">
+              <path
+                d="M26.9054 27.1098V6.16286L23.9535 6.16286L23.943 22.0511L2.82959 0.926117L0.73604 3.02082L21.8495 24.1458L5.96991 24.1563V27.1098H26.9054Z"
+                fill="white"
+              />
+            </svg>
+            RENT NOTES
+          </button>
         </div>
       </div>
 
-      {/* Notes Display Section */}
-      <div className="flex justify-center gap-x-11">
-        {filteredData.map((item) => (
-          <a
-            key={item.id}
-            href={item.link}
-            className="bg-white text-black p-4 rounded-2xl w-fit"
-          >
-            {/* Component Part */}
-            <div className="flex justify-normal gap-x-4 items-start">
-              {/* Department + Year, Respective School */}
-              <div className="pt-1">{item.department}</div>
-              <div className="bg-[#a883c5] px-5 h-5 rounded-sm font-[500] text-sm flex flex-col justify-center">
-                <div>{item.school}</div>
-              </div>
-            </div>
-            <div className="flex justify-between pb-4">
-              {/* Course and Modules Covered */}
-              <div className="text-lg w-[8.5rem]">{item.title}</div>
-              <div className="flex justify-normal border-2 border-black rounded-[0.7rem] w-fit items-center p-2 gap-x-2">
-                <div className="text-sm leading-4">
-                  Modules
-                  <br /> Covered
-                </div>
-                <div className="text-4xl">{item.modulesCovered}</div>
-              </div>
-            </div>
-            <div className="flex justify-normal">
-              {/* Images Part */}
-              <div>
-                <img className="w-32" src={item.image1} />
-              </div>
-              <div>
-                <img className="w-32" src={item.image2} />
-              </div>
-            </div>
-          </a>
-        ))}
-      </div>
-
-      {/* Search Box Section */}
-      <div>
-      <div className="flex justify-center pb-20 pt-20">
-        <form onSubmit={handleSubmit}>
-          <div className="w-fit bg-white text-black pl-12 pr-8 pb-10 rounded-2xl">
-            <div className="text-[3.1rem] font-[600] pt-3">Search Notes</div>
-            <div className="flex justify-center gap-x-12">
-              <div className="pt-12">
-                <div className="text-2xl pb-3 font-[300]">Price Range</div>
-                <div className="grid grid-rows-2 grid-cols-2 gap-x-16 pb-4">
-                  <div className="pb-1 text-xl">Min</div>
-                  <div className="pb-1 text-xl">Max</div>
-                  <div>
-                    <input
-                      className="bg-[#d9d9d9] h-11 rounded-lg"
-                      type="text"
-                      value={minPrice}
-                      onChange={(e) => setMinPrice(e.target.value)}
-                    />
-                  </div>
-                  <div>
-                    <input
-                      className="bg-[#d9d9d9] h-11 rounded-lg"
-                      type="text"
-                      value={maxPrice}
-                      onChange={(e) => setMaxPrice(e.target.value)}
-                    />
-                  </div>
-                </div>
-                <div className="pb-4 text-xl">Note Type</div>
-                <div className="flex justify-normal gap-x-9 pb-4">
-                  <div
-                    className={`relative bg-[#d9d9d9] flex flex-col justify-end h-24 px-5 w-fit rounded-lg cursor-pointer ${
-                      selectedTypes.includes("class notes")
-                        ? "border border-black"
-                        : ""
-                    }`}
-                    onClick={() => handleCheckboxChange("class notes")}
-                  >
-                    <div className="text-sm pb-2">Class Notes</div>
-                    {selectedTypes.includes("class notes") && (
-                      <div className="absolute top-4 right-12 text-black text-4xl">
-                        &#10003;
-                      </div>
-                    )}
-                  </div>
-                  <div
-                    className={`relative bg-[#d9d9d9] flex flex-col justify-end h-24 px-3.5 w-fit rounded-lg cursor-pointer ${
-                      selectedTypes.includes("lecture notes")
-                        ? "border border-black"
-                        : ""
-                    }`}
-                    onClick={() => handleCheckboxChange("lecture notes")}
-                  >
-                    <div className="text-sm pb-2">Lecture Notes</div>
-                    {selectedTypes.includes("lecture notes") && (
-                      <div className="absolute top-4 right-12 text-4xl text-black">
-                        &#10003;
-                      </div>
-                    )}
-                  </div>
-                </div>
+      {/*App Promo container + NotesView Part */}
+      <div className="flex justify-center md:scale-75 lg:scale-[1] sm:scale-[0.6] mobile:scale-[0.45] lg:mt-0 md:mt-[-12rem] sm:mt-[-16rem] mobile:mt-[-25rem] scale-[0.32] mt-[-26rem]">
+        <div className="flex flex-col items-center justify-center w-[60rem] mx-32">
+          <div className="flex justify-center items-center pb-20 ">
+            {/* Container Section */}
+            <div
+              className={`flex justify-center gap-x-16 items-center rounded-2xl ${
+                theme === "dark"
+                  ? "border-0 bg-white text-black"
+                  : "border-2 border-black bg-white text-black"
+              }  pl-[3rem] pr-[6rem] pt-6 pb-8 max-w-[60rem]`}>
+              <div className="flex flex-col justify-between items-start text-5xl font-normal text-black leading-[2.7rem]   ">
+                <p className="pb-5">Have you Tried our App?</p>
+                <p>
+                  <span>Notes On The GO</span>
+                </p>
                 <button
-                  type="submit"
-                  className="bg-[#a883c5] mt-5 w-fit px-5 py-1 rounded-full cursor-pointer flex items-center"
-                >
-                  <GoArrowDownRight size={25} className="inline" />
-                  <span className="text-[1.25rem] font-semibold">
-                    Search Notes
-                  </span>
+                  className="flex items-center justify-center px-4 py-2 p-[0.75rem] text-black text-xl font-semibold bg-[#a883c5] rounded-3xl border-none cursor-pointer mt-16"
+                  onClick={() => {
+                    window.open(
+                      "https://play.google.com/store/apps/details?id=com.jurident.valsco"
+                    );
+                  }}>
+                  <svg
+                    className="w-5 h-5 pb-1 fill-white mr-2"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 27 28"
+                    fill="none">
+                    <path
+                      d="M26.9054 27.1098V6.16286L23.9535 6.16286L23.943 22.0511L2.82959 0.926117L0.73604 3.02082L21.8495 24.1458L5.96991 24.1563V27.1098H26.9054Z"
+                      fill="black"
+                    />
+                  </svg>
+                  Download RentSwap
                 </button>
               </div>
-              <div className="pt-7">
-                <img
-                  className="w-[22rem] h-[22rem] rounded-[0.75rem]"
-                  src={shelf}
-                  alt="Shelf"
-                />
-              </div>
+              <img className="w-[10.5rem] " src={ph} alt="iPhone" />
             </div>
           </div>
-        </form>
+          <NotesView paramsData={data} />
+        </div>
       </div>
-        {/*Footer Part */}
+
+      <div id="a" className=" flex justify-center lg:scale-100 md:scale-[0.76] sm:scale-[0.61] pt-10 mobile:scale-[0.45] lg:mt-0 md:mt-[-5rem] lg:mb-0 md:mb-[-4rem] sm:mt-[-12rem] sm:mb-[-6rem] mobile:mt-[-23rem] scale-[0.315] mt-[-35rem] mb-[-5rem]">
+        {/* Search Box Section */}
+        <div className=" min-w-[60rem] lg:mt-0 mt-[-10rem]">
+          <div className="flex justify-center pb-20 pt-20 ">
+            <form onSubmit={forwardData}>
+              <div
+                className={`bg-white text-black md:pl-12 pr-6 pb-12 rounded-2xl sm:pl-10 mobile:pl-16 pl-10 ${
+                  theme === "dark" ? "border-0" : "border-2 border-black"
+                } `}>
+                <div className="text-[3.1rem] font-[600] pt-3">
+                  Search Notes
+                </div>
+                <div className="flex justify-center gap-x-12">
+                  <div className="pt-12 ">
+                    <div className="text-2xl pb-3 font-[300]">Price Range</div>
+                    <div className="grid grid-rows-2 grid-cols-2 gap-x-16 pb-4">
+                      <div className="pb-1 text-2xl font-light">Min</div>
+                      <div className="pb-1 text-2xl font-light">Max</div>
+                      <div>
+                        <input
+                          className="bg-[#d9d9d9] h-11 rounded-lg md:w-fit object-scale-down"
+                          type="text"
+                          value={minPrice}
+                          onChange={(e) => setMinPrice(e.target.value)}
+                        />
+                      </div>
+                      <div>
+                        <input
+                          className="bg-[#d9d9d9] h-11 rounded-lg md:w-fit"
+                          type="text"
+                          value={maxPrice}
+                          onChange={(e) => setMaxPrice(e.target.value)}
+                        />
+                      </div>
+                    </div>
+                    <div className="pb-4 text-2xl font-light">Note Type</div>
+                    <div className="flex justify-normal gap-x-9 pb-4">
+                      <div
+                        className={`relative bg-[#d9d9d9] flex flex-col justify-end h-24 px-5 w-fit rounded-lg cursor-pointer ${
+                          selectedTypes.includes("class notes")
+                            ? "border border-black"
+                            : ""
+                        }`}
+                        onClick={() => handleCheckboxChange("class notes")}>
+                        <div className="text-sm pb-2">Class Notes</div>
+                        {selectedTypes.includes("class notes") && (
+                          <div className="absolute top-4 right-12 text-black text-4xl">
+                            &#10003;
+                          </div>
+                        )}
+                      </div>
+                      <div
+                        className={`relative bg-[#d9d9d9] flex flex-col justify-end h-24 px-3.5 w-fit rounded-lg cursor-pointer ${
+                          selectedTypes.includes("lecture notes")
+                            ? "border border-black"
+                            : ""
+                        }`}
+                        onClick={() => handleCheckboxChange("lecture notes")}>
+                        <div className="text-sm pb-2">Lecture Notes</div>
+                        {selectedTypes.includes("lecture notes") && (
+                          <div className="absolute top-4 right-12 text-4xl text-black">
+                            &#10003;
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                    <button
+                      type="submit"
+                      className="bg-[#a883c5] mt-5 w-fit px-5 py-1 rounded-full cursor-pointer flex items-center">
+                      <GoArrowDownRight size={25} className="inline pb-1" />
+                      <span className="text-[1.25rem] font-[550]">
+                        Search Notes
+                      </span>
+                    </button>
+                  </div>
+                  <div className="pt-7 scale-[1]">
+                    <img
+                      className=" rounded-[0.75rem] w-[21rem]"
+                      src={shelf}
+                      alt="Shelf"
+                    />
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+          {/*Footer Part */}
+        </div>
       </div>
     </div>
   );

@@ -1,16 +1,21 @@
-import Navbar from "@/components/layout/navbar";
-import Footer from "@/components/layout/footer";
-import SignUp from "@/components/auth/SignUp"
+import SignUp from "@/components/auth/SignUp";
 import Character from "@/components/auth/Character";
-function SignUpPage(){
-    return(
+import { useContext } from "react";
+import "../styles/ThemeContext.css";
+import { ThemeContext } from './ThemeContext';
+
+function SignUpPage() {
+    const { theme } = useContext(ThemeContext);
+    return (
         <>
-            <div className="flex flex-col flex-wrap gap-y-4">
-                <Navbar/>
-                <SignUp/>
-                <Character/>
-                <Footer/>
+            <div className={theme}>
+                <div className="flex flex-col flex-wrap gap-y-4 px-4 md:px-16 lg:px-32">
+                    <SignUp />
+                    <Character />
+                </div>
             </div>
-        </>)
+        </>
+    );
 }
+
 export default SignUpPage;

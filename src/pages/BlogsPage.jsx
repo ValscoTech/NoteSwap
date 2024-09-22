@@ -1,16 +1,16 @@
 import Blog from '@/components/blogs/Blog'
 import BlogsCarousel from '@/components/blogs/BlogsCarousel'
-import Footer from '@/components/layout/footer'
-import Navbar from '@/components/layout/navbar'
-import { memo } from 'react'
+import { memo, useContext } from 'react'
+import "../styles/ThemeContext.css";
+import { ThemeContext } from './ThemeContext';
+
 
 const BlogsPage = () => {
+  const { theme } = useContext(ThemeContext);
   return (
-    <div>
-      <Navbar />
+    <div className={theme}>
       <Blog />
       <BlogsCarousel />
-      <Footer />
     </div>
   )
 }

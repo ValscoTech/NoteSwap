@@ -2,11 +2,11 @@ import { memo } from 'react'
 import blog1 from '@/assets/images/blog1.jpg'
 import blog2 from '@/assets/images/blog2.png'
 import blog3 from '@/assets/images/blog3.png'
-import blog4 from '@/assets/images/blog4.png'
+import blog5 from '@/assets/images/blog5.webp'
 
 const Blog = () => {
     return (
-        <div className='mx-4 md:mx-10 lg:mx-14'>
+        <div className='mx-4 md:mx-10 lg:mx-12 lg:mt-[-32px] md:mt-[-24px] sm:mt-[-24px]'>
             <div className=''>
                 <h1 className='font-bold text-3xl sm:text-4xl lg:text-5xl mb-6 sm:mb-8 lg:mb-12  mt-4 sm:mt-6 lg:mt-8'>
                     Blogs and Articles
@@ -23,7 +23,7 @@ const Blog = () => {
                 />
             </div>
             <div className="font-sans min-h-screen">
-                <div className="container mx-auto px-1 py-6">
+                <div className="mx-auto px-1 py-6">
                     <div className=" grid grid-cols-1 md:grid-cols-2 gap-28">
                         <div className="space-y-5 lg:mr-[-15rem] w-auto">
                             <p className='text-sm sm:text-base lg:text-lg leading-relaxed'>
@@ -44,9 +44,9 @@ const Blog = () => {
                         <div className="space-y-5 lg:ml-60 max-w-[400px]">
                             <div className="rounded-md">
                                 <h3 className="text-xl font-bold text-[#A883C5] uppercase">Popular Posts</h3>
-                                <a href={'https://www.valscotech.com/BlogPage/4hNtpJZQNN5O8jzCt6HP'} target='_blank' className="border-b border-white my-5 flex flex-row hover:bg-[#626161] transition-all duration-300 ease-in-out transform hover:scale-105">
+                                <a href={'https://play.google.com/store/apps/details?id=com.jurident.valsco'} target='_blank' className="border-b border-white my-5 flex flex-row hover:bg-[#626161] transition-all duration-300 ease-in-out transform hover:scale-105">
                                     <div className='my-3 w-40' >
-                                        <img src={blog4} alt="blog2" className=' h-28 sm:w-28 sm:h-28 lg:w-32 lg:h-32 object-fill' />
+                                        <img src={blog5} alt="blog2" className=' h-28 sm:w-28 sm:h-28 lg:w-32 lg:h-32 object-fill' />
                                     </div>
                                     <div className='my-3 mx-3'>
                                         <h4 className="text-sm font-medium text-[#A883C5] uppercase">Product</h4>
@@ -78,18 +78,14 @@ const Blog = () => {
                                     <p className="self-stretch mt-4 text-xl leading-8 bg-[#A883C5] text-[#060125]">
                                         Energize Your Software Solutions with our comprehensive range of services.
                                     </p>
-                                    <button className={` mt-14 py-3 pr-7 pl-8 max-w-full text-base leading-none bg-[#DEEBFF] rounded border-2 border-solid text-[#091E42] w-[162px] transition-all duration-300 ease-in-out transform hover:scale-105`}> Get Started
-                                    </button>
+                                    <a href='https://www.valscotech.com/' className={` mt-14 py-3 pr-7 pl-8 max-w-full text-base leading-none bg-[#DEEBFF] rounded border-2 border-solid text-[#091E42] w-[162px] transition-all duration-300 ease-in-out transform hover:scale-105`}> Get Started </a>
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
-
     )
 }
 
