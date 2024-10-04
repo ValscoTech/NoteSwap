@@ -1,10 +1,13 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:noteswap/profile/domain/profile_model.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-part 'profile_repository.g.dart';
+// part 'profile_repository.g.dart';
+
+final platform = Platform.isAndroid ? 'ANDROID' : 'IOS';
 
 abstract class ProfileRepository {
   Future<ProfileModel> getProfile(String id);
@@ -12,16 +15,16 @@ abstract class ProfileRepository {
 }
 
 class ProfileRepositoryImpl implements ProfileRepository {
-  final baseUrl = dotenv.env['BASE_URL'];
+  var url = '${dotenv.env['${platform}_BASE_URL']}/profile/';
 
   @override
   Future<ProfileModel> getProfile(String id) async {
-    final url = Uri.parse('$baseUrl/profile/$id');
     final response = await http.get(
-      url,
+      Uri.parse('$url$id'),
     );
     if (response.statusCode == 200) {
-      return ProfileModel.fromJson(jsonDecode(response.body));
+      final data = jsonDecode(response.body);
+      return ProfileModel.fromJson(data);
     } else {
       throw Exception('Failed to load profile');
     }
@@ -29,24 +32,15 @@ class ProfileRepositoryImpl implements ProfileRepository {
 
   @override
   Future<void> updateProfile(ProfileModel profile) async {
-    final url = Uri.parse('$baseUrl/profile/${profile.id}');
     final response = await http.put(
-      url,
+      Uri.parse(url),
+      headers: {
+        'Content-Type': 'application/json',
+      },
       body: jsonEncode(profile.toJson()),
     );
     if (response.statusCode != 200) {
       throw Exception('Failed to update profile');
     }
   }
-}
-
-
-@riverpod
-Future<ProfileModel> getProfile(GetProfileRef ref, String id) async {
-  return ProfileRepositoryImpl().getProfile(id);
-}
-
-@riverpod
-Future<void> updateProfile(UpdateProfileRef ref, ProfileModel profile) async {
-  return ProfileRepositoryImpl().updateProfile(profile);
 }

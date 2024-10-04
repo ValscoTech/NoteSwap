@@ -1,5 +1,5 @@
-import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:noteswap/auth/repository/auth_repository.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'auth_controller.g.dart';
 
@@ -10,23 +10,7 @@ class AuthController extends _$AuthController {
     // no-op
   }
 
-  Future<void> signUpWithEmailAndPassword(
-      String email, String password, String name) async {
-    final authRepository = ref.read(authImplRepositoryProvider);
-    state = const AsyncLoading();
-    state = await AsyncValue.guard(
-      () => authRepository.signInWithEmailAndPassword(
-        email: email,
-        password: password,
-        username: name,
-      ),
-    );
-  }
-
-  Future<void> loginWithEmailAndPassword(
-    String email,
-    String password,
-  ) async {
+  Future<void> loginWithEmailAndPassword(String email, String password) async {
     final authRepository = ref.read(authImplRepositoryProvider);
     state = const AsyncLoading();
     state = await AsyncValue.guard(
@@ -34,6 +18,35 @@ class AuthController extends _$AuthController {
         email: email,
         password: password,
       ),
+    );
+  }
+
+  Future<void> signUpWithEmailAndPassword(
+      String name, String email, String password) async {
+    final authRepository = ref.read(authImplRepositoryProvider);
+    state = const AsyncLoading();
+    state = await AsyncValue.guard(
+      () => authRepository.signUpWithEmailAndPassword(
+        name: name,
+        email: email,
+        password: password,
+      ),
+    );
+  }
+
+  Future<void> signInWithGoogle() async {
+    final authRepository = ref.read(authImplRepositoryProvider);
+    state = const AsyncLoading();
+    state = await AsyncValue.guard(
+      () => authRepository.signInWithGoogle(),
+    );
+  }
+
+  Future<void> signOut() async {
+    final authRepository = ref.read(authImplRepositoryProvider);
+    state = const AsyncLoading();
+    state = await AsyncValue.guard(
+      () => authRepository.signOut(),
     );
   }
 }

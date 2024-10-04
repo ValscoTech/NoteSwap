@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:noteswap/payments/presentation/payment_screen.dart';
 import 'package:noteswap/postoffer/domain/notes_model.dart';
 
 class RentOfferPage extends StatelessWidget {

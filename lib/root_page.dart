@@ -22,13 +22,6 @@ class _RootPageState extends State<RootPage> {
       appBar: currentIndex == 4
           ? null
           : AppBar(
-              leading: IconButton(
-                icon: Icon(
-                  Icons.arrow_back,
-                  color: color.surface,
-                ),
-                onPressed: () {},
-              ),
               title: Text(
                 "NoteSwap",
                 style: TextStyle(
@@ -40,7 +33,9 @@ class _RootPageState extends State<RootPage> {
               ),
               shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.vertical(
-                    top: Radius.circular(12), bottom: Radius.circular(32)),
+                  top: Radius.circular(12),
+                  bottom: Radius.circular(32),
+                ),
               ),
               backgroundColor: color.primary,
               actions: [
@@ -50,10 +45,7 @@ class _RootPageState extends State<RootPage> {
                     color: color.surface,
                   ),
                   onPressed: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                          builder: (context) => const ProfileUpdatePage()),
-                    );
+                    context.go('/settings');
                   },
                 ),
               ],

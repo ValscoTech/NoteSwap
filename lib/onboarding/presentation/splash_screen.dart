@@ -45,7 +45,7 @@ class _SplashScreenState extends State<SplashScreen> {
     if (currentTime < expiresAt) {
       Timer(const Duration(seconds: 3), () {
         if (mounted) {
-          context.go('/home');
+          context.go('/settings');
         }
       });
     } else {

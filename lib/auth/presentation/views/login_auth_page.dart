@@ -42,7 +42,6 @@ class _LoginAuthPageState extends ConsumerState<LoginAuthPage> {
   }
 
   void handleSubmit() {
-    print('Inlogin');
     if (formKey.currentState!.validate()) {
       ref.read(authControllerProvider.notifier).loginWithEmailAndPassword(
             emailController.text,
