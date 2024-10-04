@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:noteswap/profile/domain/profile_model.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
-import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 // part 'profile_repository.g.dart';
 

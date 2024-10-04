@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 import 'package:noteswap/auth/controller/auth_controller.dart';
 import 'package:noteswap/auth/presentation/widgets/custom_button.dart';
 import 'package:noteswap/auth/presentation/widgets/top_container.dart';
@@ -31,7 +30,7 @@ class _LoginAuthPageState extends ConsumerState<LoginAuthPage> {
       formKey.currentState?.reset();
       FocusScope.of(context).unfocus();
     });
-    context.go('/signup');
+    Navigator.of(context).pushReplacementNamed('/signup');
   }
 
   bool isPasswordVisible = false;
@@ -44,8 +43,8 @@ class _LoginAuthPageState extends ConsumerState<LoginAuthPage> {
   void handleSubmit() {
     if (formKey.currentState!.validate()) {
       ref.read(authControllerProvider.notifier).loginWithEmailAndPassword(
-            emailController.text,
-            passwordController.text,
+            emailController.text.trim(),
+            passwordController.text.trim(),
           );
     }
   }
@@ -63,7 +62,7 @@ class _LoginAuthPageState extends ConsumerState<LoginAuthPage> {
             SnackBar(content: Text(state.error.toString())),
           );
         } else if (!state.isLoading && state.hasValue) {
-          GoRouter.of(context).go('/home');
+          Navigator.of(context).pushReplacementNamed('/feed');
         }
       },
     );
@@ -99,11 +98,11 @@ class _LoginAuthPageState extends ConsumerState<LoginAuthPage> {
                               path: 'assets/icons/google-icon.svg',
                               ltext: 'Google',
                               onPressed: () {
-                                // authState.isLoading
-                                //     ? null
-                                //     : ref
-                                //         .read(authControllerProvider.notifier)
-                                //         .signInWithGoogle();
+                                state.isLoading
+                                    ? null
+                                    : ref
+                                        .read(authControllerProvider.notifier)
+                                        .signInWithGoogle();
                               },
                             ),
                             CustomButton(

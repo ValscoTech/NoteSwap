@@ -1,9 +1,6 @@
-// ignore_for_file: deprecated_member_use
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:go_router/go_router.dart';
-import 'package:noteswap/profile/presentation/profile_update_page.dart';
+import 'package:noteswap/settings/settings.dart';
 
 class RootPage extends StatefulWidget {
   final Widget child;
@@ -15,6 +12,30 @@ class RootPage extends StatefulWidget {
 
 class _RootPageState extends State<RootPage> {
   int currentIndex = 0;
+
+  void _onItemTapped(int index) {
+    setState(() {
+      currentIndex = index;
+    });
+    switch (index) {
+      case 0:
+        Navigator.pushReplacementNamed(context, '/feed');
+        break;
+      case 1:
+        Navigator.pushReplacementNamed(context, '/search');
+        break;
+      case 2:
+        Navigator.pushReplacementNamed(context, '/postoffer');
+        break;
+      case 3:
+        Navigator.pushReplacementNamed(context, '/rentoffer');
+        break;
+      case 4:
+        Navigator.pushReplacementNamed(context, '/profile');
+        break;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final color = Theme.of(context).colorScheme;
@@ -45,7 +66,11 @@ class _RootPageState extends State<RootPage> {
                     color: color.surface,
                   ),
                   onPressed: () {
-                    context.go('/settings');
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const SettingsPage()),
+                    );
                   },
                 ),
               ],
@@ -57,28 +82,7 @@ class _RootPageState extends State<RootPage> {
           backgroundColor: color.primary,
           type: BottomNavigationBarType.fixed,
           currentIndex: currentIndex,
-          onTap: (index) {
-            setState(() {
-              currentIndex = index;
-            });
-            switch (index) {
-              case 0:
-                context.go('/home');
-                break;
-              case 1:
-                context.go('/search');
-                break;
-              case 2:
-                context.go('/add');
-                break;
-              case 3:
-                context.go('/notification');
-                break;
-              case 4:
-                context.go('/profile');
-                break;
-            }
-          },
+          onTap: _onItemTapped,
           items: [
             BottomNavigationBarItem(
               icon: SvgPicture.asset(
@@ -88,8 +92,10 @@ class _RootPageState extends State<RootPage> {
               label: "",
             ),
             BottomNavigationBarItem(
-              icon: SvgPicture.asset('assets/icons/search.svg',
-                  color: currentIndex == 1 ? color.secondary : color.onSurface),
+              icon: SvgPicture.asset(
+                'assets/icons/search.svg',
+                color: currentIndex == 1 ? color.secondary : color.onSurface,
+              ),
               label: "",
             ),
             BottomNavigationBarItem(
@@ -102,7 +108,7 @@ class _RootPageState extends State<RootPage> {
                   ),
                 ),
                 onPressed: () {
-                  context.go('/add');
+                  Navigator.pushReplacementNamed(context, '/postoffer');
                 },
                 child: const Icon(Icons.add),
               ),

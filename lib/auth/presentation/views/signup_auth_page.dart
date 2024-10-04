@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 import 'package:noteswap/auth/controller/auth_controller.dart';
 import 'package:noteswap/auth/presentation/widgets/custom_button.dart';
 import 'package:noteswap/auth/presentation/widgets/top_container.dart';
@@ -36,7 +35,7 @@ class _SignUpAuthPageState extends ConsumerState<SignUpAuthPage> {
       formKey.currentState?.reset();
       FocusScope.of(context).unfocus();
     });
-    context.go('/login');
+    Navigator.of(context).pushReplacementNamed('/login');
   }
 
   bool isPasswordVisible = false;
@@ -65,9 +64,9 @@ class _SignUpAuthPageState extends ConsumerState<SignUpAuthPage> {
     }
     if (formKey.currentState!.validate()) {
       ref.read(authControllerProvider.notifier).signUpWithEmailAndPassword(
-            emailController.text,
-            passwordController.text,
-            nameController.text,
+            nameController.text.trim(),
+            emailController.text.trim(),
+            passwordController.text.trim(),
           );
     }
   }
@@ -127,11 +126,11 @@ class _SignUpAuthPageState extends ConsumerState<SignUpAuthPage> {
                               path: 'assets/icons/google-icon.svg',
                               ltext: 'Google',
                               onPressed: () {
-                                // authState.isLoading
-                                //     ? null
-                                //     : ref
-                                //         .read(authControllerProvider.notifier)
-                                //         .signInWithGoogle();
+                                state.isLoading
+                                    ? null
+                                    : ref
+                                        .read(authControllerProvider.notifier)
+                                        .signInWithGoogle();
                               },
                             ),
                             CustomButton(

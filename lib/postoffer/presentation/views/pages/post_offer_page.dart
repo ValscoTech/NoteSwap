@@ -49,211 +49,216 @@ class _PostOfferPageState extends State<PostOfferPage> {
       );
     }
 
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Container(
-          padding: const EdgeInsets.all(18),
-          child: Column(
-            children: [
-              Text(
-                'Offer Your Notes',
-                style: TextStyle(
-                  color: color.primary,
-                  fontSize: 20,
-                  fontWeight: FontWeight.w400,
+    return SafeArea(
+      bottom: false,
+      child: Scaffold(
+        body: SingleChildScrollView(
+          child: Container(
+            padding: const EdgeInsets.all(18),
+            child: Column(
+              children: [
+                Text(
+                  'Offer Your Notes',
+                  style: TextStyle(
+                    color: color.primary,
+                    fontSize: 20,
+                    fontWeight: FontWeight.w400,
+                  ),
                 ),
-              ),
-              Form(
-                key: formKey,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    TextFormField(
-                      controller: titleController,
-                      decoration: buildInputDecoration('Title', context),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter a title';
-                        }
-                        return null;
-                      },
-                    ),
-                    TextFormField(
-                      controller: courseCodeController,
-                      decoration: buildInputDecoration('Course Code', context),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter a course code';
-                        }
-                        return null;
-                      },
-                    ),
-                    TextFormField(
-                      controller: courseNameController,
-                      decoration: buildInputDecoration('Course Name', context),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter a course name';
-                        }
-                        return null;
-                      },
-                    ),
-                    SizedBox(height: layout.height * 0.05),
-                    DropdownCard(
-                      hintText: 'Select School',
-                      selectedValue: selectedSchool,
-                      items: schools,
-                      onChanged: (newValue) {
-                        setState(() {
-                          selectedSchool = newValue;
-                        });
-                      },
-                      validator: (value) {
-                        if (value == null) {
-                          return 'Please select a school';
-                        }
-                        return null;
-                      },
-                    ),
-                    SizedBox(height: layout.height * 0.03),
-                    DropdownCard(
-                      hintText: 'Select Module',
-                      selectedValue: selectedModules.isNotEmpty
-                          ? selectedModules[0]
-                          : null,
-                      items: modules,
-                      onChanged: (newValue) {
-                        setState(() {
-                          selectedModules = [newValue!];
-                        });
-                      },
-                      validator: (value) {
-                        if (value == null) {
-                          return 'Please select a module';
-                        }
-                        return null;
-                      },
-                    ),
-                    SizedBox(height: layout.height * 0.03),
-                    DropdownCard(
-                      hintText: 'Select Slot',
-                      selectedValue:
-                          selectedSlots.isNotEmpty ? selectedSlots[0] : null,
-                      items: slots,
-                      onChanged: (newValue) {
-                        setState(() {
-                          selectedSlots = [newValue!];
-                        });
-                      },
-                      validator: (value) {
-                        if (value == null) {
-                          return 'Please select a slot';
-                        }
-                        return null;
-                      },
-                    ),
-                    SizedBox(height: layout.height * 0.03),
-                    Text(
-                      'Upload Preview of Notes',
-                      style: TextStyle(
-                        color: color.primary,
-                        fontSize: 20,
-                        fontWeight: FontWeight.w400,
+                Form(
+                  key: formKey,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      TextFormField(
+                        controller: titleController,
+                        decoration: buildInputDecoration('Title', context),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter a title';
+                          }
+                          return null;
+                        },
                       ),
-                    ),
-                    SizedBox(height: layout.height * 0.02),
-                    const UploadSection(),
-                    SizedBox(height: layout.height * 0.02),
-                    Text(
-                      'Set Price',
-                      style: TextStyle(
-                        color: color.primary,
-                        fontSize: 20,
-                        fontWeight: FontWeight.w400,
+                      TextFormField(
+                        controller: courseCodeController,
+                        decoration:
+                            buildInputDecoration('Course Code', context),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter a course code';
+                          }
+                          return null;
+                        },
                       ),
-                    ),
-                    SliderTheme(
-                      data: SliderTheme.of(context).copyWith(
-                        trackHeight: 2.0,
-                        thumbShape: const RoundSliderThumbShape(
-                            enabledThumbRadius: 8.0),
-                        overlayShape:
-                            const RoundSliderOverlayShape(overlayRadius: 16.0),
-                        valueIndicatorTextStyle: TextStyle(
-                          color: color.surface,
-                        ),
+                      TextFormField(
+                        controller: courseNameController,
+                        decoration:
+                            buildInputDecoration('Course Name', context),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter a course name';
+                          }
+                          return null;
+                        },
                       ),
-                      child: Column(
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text('0 Rs',
-                                  style: TextStyle(color: color.primary)),
-                              Expanded(
-                                child: Slider(
-                                  value: _sliderValue,
-                                  inactiveColor: color.primary,
-                                  min: 0.0,
-                                  max: 150.0,
-                                  divisions: 150,
-                                  label: _sliderValue.round().toString(),
-                                  onChanged: (double value) {
-                                    setState(() {
-                                      _sliderValue = value;
-                                    });
-                                  },
-                                ),
-                              ),
-                              Text('150 Rs',
-                                  style: TextStyle(color: color.primary)),
-                            ],
-                          ),
-                          SizedBox(height: layout.height * 0.03),
-                        ],
+                      SizedBox(height: layout.height * 0.05),
+                      DropdownCard(
+                        hintText: 'Select School',
+                        selectedValue: selectedSchool,
+                        items: schools,
+                        onChanged: (newValue) {
+                          setState(() {
+                            selectedSchool = newValue;
+                          });
+                        },
+                        validator: (value) {
+                          if (value == null) {
+                            return 'Please select a school';
+                          }
+                          return null;
+                        },
                       ),
-                    ),
-                    SizedBox(height: layout.height * 0.02),
-                    ElevatedButton(
-                      onPressed: () {
-                        if (formKey.currentState!.validate()) {
-                          // Process data
-                          final notes = NotesModel(
-                            id: '1', // Generate or get the ID from somewhere
-                            title: titleController.text,
-                            courseCode: courseCodeController.text,
-                            courseName: courseNameController.text,
-                            modules: selectedModules
-                                .map((e) => int.parse(e))
-                                .toList(),
-                            school: selectedSchool!,
-                            price: int.parse(priceController.text),
-                          );
-                          // Handle the notes object as needed
-                        }
-                      },
-                      style: ElevatedButton.styleFrom(
-                        minimumSize: const Size(263, 60),
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 18, horizontal: 24),
-                        backgroundColor: color.secondary,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15),
-                        ),
+                      SizedBox(height: layout.height * 0.03),
+                      DropdownCard(
+                        hintText: 'Select Module',
+                        selectedValue: selectedModules.isNotEmpty
+                            ? selectedModules[0]
+                            : null,
+                        items: modules,
+                        onChanged: (newValue) {
+                          setState(() {
+                            selectedModules = [newValue!];
+                          });
+                        },
+                        validator: (value) {
+                          if (value == null) {
+                            return 'Please select a module';
+                          }
+                          return null;
+                        },
                       ),
-                      child: Text(
-                        'Post Offer',
+                      SizedBox(height: layout.height * 0.03),
+                      DropdownCard(
+                        hintText: 'Select Slot',
+                        selectedValue:
+                            selectedSlots.isNotEmpty ? selectedSlots[0] : null,
+                        items: slots,
+                        onChanged: (newValue) {
+                          setState(() {
+                            selectedSlots = [newValue!];
+                          });
+                        },
+                        validator: (value) {
+                          if (value == null) {
+                            return 'Please select a slot';
+                          }
+                          return null;
+                        },
+                      ),
+                      SizedBox(height: layout.height * 0.03),
+                      Text(
+                        'Upload Preview of Notes',
                         style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
-                          color: color.surface,
+                          color: color.primary,
+                          fontSize: 20,
+                          fontWeight: FontWeight.w400,
                         ),
                       ),
-                    ),
-                  ],
+                      SizedBox(height: layout.height * 0.02),
+                      const UploadSection(),
+                      SizedBox(height: layout.height * 0.02),
+                      Text(
+                        'Set Price',
+                        style: TextStyle(
+                          color: color.primary,
+                          fontSize: 20,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                      SliderTheme(
+                        data: SliderTheme.of(context).copyWith(
+                          trackHeight: 2.0,
+                          thumbShape: const RoundSliderThumbShape(
+                              enabledThumbRadius: 8.0),
+                          overlayShape: const RoundSliderOverlayShape(
+                              overlayRadius: 16.0),
+                          valueIndicatorTextStyle: TextStyle(
+                            color: color.surface,
+                          ),
+                        ),
+                        child: Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text('0 Rs',
+                                    style: TextStyle(color: color.primary)),
+                                Expanded(
+                                  child: Slider(
+                                    value: _sliderValue,
+                                    inactiveColor: color.primary,
+                                    min: 0.0,
+                                    max: 150.0,
+                                    divisions: 150,
+                                    label: _sliderValue.round().toString(),
+                                    onChanged: (double value) {
+                                      setState(() {
+                                        _sliderValue = value;
+                                      });
+                                    },
+                                  ),
+                                ),
+                                Text('150 Rs',
+                                    style: TextStyle(color: color.primary)),
+                              ],
+                            ),
+                            SizedBox(height: layout.height * 0.03),
+                          ],
+                        ),
+                      ),
+                      SizedBox(height: layout.height * 0.02),
+                      ElevatedButton(
+                        onPressed: () {
+                          if (formKey.currentState!.validate()) {
+                            // Process data
+                            final notes = NotesModel(
+                              id: '1', // Generate or get the ID from somewhere
+                              title: titleController.text,
+                              courseCode: courseCodeController.text,
+                              courseName: courseNameController.text,
+                              modules: selectedModules
+                                  .map((e) => int.parse(e))
+                                  .toList(),
+                              school: selectedSchool!,
+                              price: int.parse(priceController.text),
+                            );
+                            // Handle the notes object as needed
+                          }
+                        },
+                        style: ElevatedButton.styleFrom(
+                          minimumSize: const Size(263, 60),
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 18, horizontal: 24),
+                          backgroundColor: color.secondary,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                        ),
+                        child: Text(
+                          'Post Offer',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                            color: color.surface,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

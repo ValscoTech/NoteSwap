@@ -1,60 +1,35 @@
-import 'dart:math';
-
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'dart:async';
-import 'package:go_router/go_router.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:noteswap/auth/repository/auth_repository.dart';
 
-class SplashScreen extends StatefulWidget {
+class SplashScreen extends ConsumerStatefulWidget {
   const SplashScreen({super.key});
 
   @override
-  State<SplashScreen> createState() => _SplashScreenState();
+  ConsumerState<SplashScreen> createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen> {
+class _SplashScreenState extends ConsumerState<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    _checkSession();
-  }
-
-  Future<void> _checkSession() async {
-    final prefs = await SharedPreferences.getInstance();
-    final accessToken = prefs.getString('access_token');
-    final expiresAt = prefs.getInt('expires_at');
-    if (kDebugMode) {
-      print(accessToken);
-      print(expiresAt);
-    }
-
-    if (accessToken == null || expiresAt == null) {
-      Timer(const Duration(seconds: 3), () {
-        if (mounted) {
-          context.go('/board');
-        }
-      });
-      return;
-    }
-
-    final currentTime = DateTime.now().millisecondsSinceEpoch ~/ 1000000;
-    if (kDebugMode) {
-      print(("currentTime $currentTime"));
-    }
-    if (currentTime < expiresAt) {
-      Timer(const Duration(seconds: 3), () {
-        if (mounted) {
-          context.go('/settings');
-        }
-      });
-    } else {
-      Timer(const Duration(seconds: 3), () {
-        if (mounted) {
-          context.go('/board');
-        }
-      });
-    }
+    Future.delayed(Duration.zero, () {
+      final user = ref.read(userStatusChangesProvider);
+      user.when(
+        data: (user) {
+          if (mounted) {
+            print(user);
+            if (user == null) {
+              Navigator.pushReplacementNamed(context, '/board');
+            } else {
+              Navigator.pushReplacementNamed(context, '/feed');
+            }
+          }
+        },
+        loading: () {},
+        error: (err, stack) {},
+      );
+    });
   }
 
   @override

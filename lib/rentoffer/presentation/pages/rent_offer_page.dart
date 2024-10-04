@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:noteswap/postoffer/domain/notes_model.dart';
 
 class RentOfferPage extends StatelessWidget {
@@ -124,7 +123,7 @@ class RentOfferPage extends StatelessWidget {
                   ),
                 ),
                 onPressed: () {
-                  context.go("/payment");
+                  Navigator.of(context).pushNamed('/payment');
                 },
                 child: Text(
                   'Rent Notes',

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 
 class OnboardingSlidesScreen extends StatefulWidget {
   const OnboardingSlidesScreen({super.key});
@@ -36,7 +35,7 @@ class _OnboardingSlidesScreenState extends State<OnboardingSlidesScreen>
       if (_currentPage < 2) {
         _currentPage++;
       } else {
-        context.go('/signup');
+       Navigator.of(context).pushReplacementNamed('/signup');
       }
       _controller.forward(from: 0.0);
     });

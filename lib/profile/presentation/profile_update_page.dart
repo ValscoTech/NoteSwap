@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 
 class ProfileUpdatePage extends StatefulWidget {
@@ -37,7 +36,7 @@ class _ProfileUpdatePageState extends State<ProfileUpdatePage> {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Profile Saved')),
       );
-      GoRouter.of(context).go('/profile');
+      Navigator.of(context).pop();
     }
   }
 
