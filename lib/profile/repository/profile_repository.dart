@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:noteswap/profile/domain/profile_model.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -6,8 +9,7 @@ part 'profile_repository.g.dart';
 
 abstract class ProfileRepository {
   Future<ProfileModel> getProfile(String id);
-  Future<void> updateProfile(ProfileModel profile);
-  Future<void> createProfile(ProfileModel profile);
+  Future<void> updateProfile(ProfileModel profile, {File? image});
 }
 
 class ProfileRepositoryImpl implements ProfileRepository {
@@ -24,13 +26,20 @@ class ProfileRepositoryImpl implements ProfileRepository {
   }
 
   @override
-  Future<void> updateProfile(ProfileModel profile) async {
+  Future<void> updateProfile(ProfileModel profile, {File? image}) async {
+    String? photoUrl;
+    if (image != null) {
+      photoUrl = await _uploadImageToStorage(image, profile.id);
+      profile = profile.copyWith(photoUrl: photoUrl);
+    }
     await _firestore.collection('users').doc(profile.id).set(profile.toJson());
   }
 
-  @override
-  Future<void> createProfile(ProfileModel profile) async {
-    await _firestore.collection('users').doc(profile.id).set(profile.toJson());
+  Future<String> _uploadImageToStorage(File image, String userId) async {
+    final storageRef = FirebaseStorage.instance.ref().child('user_profile_images/$userId');
+    final uploadTask = storageRef.putFile(image);
+    final snapshot = await uploadTask;
+    return await snapshot.ref.getDownloadURL();
   }
 }
 

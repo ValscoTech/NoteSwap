@@ -1,12 +1,11 @@
 import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:noteswap/profile/domain/profile_model.dart';
-import 'package:noteswap/profile/repository/profile_repository.dart';
+import 'package:noteswap/profile/controller/profile_controller.dart';
 
 class ProfileUpdatePage extends ConsumerStatefulWidget {
   const ProfileUpdatePage({super.key});
@@ -39,53 +38,40 @@ class _ProfileUpdatePageState extends ConsumerState<ProfileUpdatePage> {
 
   Future<void> _saveProfile() async {
     if (_formKey.currentState!.validate()) {
-      try {
-        String? photoUrl;
-        if (_image != null) {
-          photoUrl = await _uploadImageToStorage(_image!);
-        }
+      final user = FirebaseAuth.instance.currentUser;
+      if (user != null) {
+        await ref.read(profileControllerProvider.notifier).updateProfile(
+              id: user.uid,
+              name: _nameController.text,
+              block: _blockController.text,
+              roomNumber: _roomNumberController.text,
+              department: _departmentController.text,
+              specialization: _specializationController.text,
+              bio: _bioController.text,
+              phone: _phoneController.text,
+              image: _image,
+            );
 
-        final user = FirebaseAuth.instance.currentUser;
-        if (user != null) {
-          final profile = ProfileModel(
-            id: user.uid,
-            name: _nameController.text,
-            photoUrl: photoUrl,
-            bio: _bioController.text ?? '',
-            block: _blockController.text,
-            roomNumber: _roomNumberController.text,
-            department: _departmentController.text,
-            specialization: _specializationController.text,
-            phone: _phoneController.text,
+        final state = ref.read(profileControllerProvider);
+        if (state.hasError) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Error saving profile: ${state.error}')),
           );
-
-          await ProfileRepositoryImpl().updateProfile(profile);
-
+        } else {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(content: Text('Profile Saved')),
           );
           Navigator.of(context).pop();
         }
-      } catch (e) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Error saving profile: $e')),
-        );
       }
     }
-  }
-
-  Future<String> _uploadImageToStorage(File image) async {
-    final storageRef = FirebaseStorage.instance
-        .ref()
-        .child('user_profile_images/${FirebaseAuth.instance.currentUser!.uid}');
-    final uploadTask = storageRef.putFile(image);
-    final snapshot = await uploadTask;
-    return await snapshot.ref.getDownloadURL();
   }
 
   @override
   Widget build(BuildContext context) {
     final color = Theme.of(context).colorScheme;
+    final isLoading = ref.watch(profileControllerProvider).isLoading;
+
     InputDecoration buildInputDecoration(
         String labelText, BuildContext context) {
       return InputDecoration(
@@ -199,7 +185,6 @@ class _ProfileUpdatePageState extends ConsumerState<ProfileUpdatePage> {
                   return null;
                 },
               ),
-              const SizedBox(height: 20),
               TextFormField(
                 controller: _phoneController,
                 decoration: buildInputDecoration('Phone:', context),
@@ -212,7 +197,7 @@ class _ProfileUpdatePageState extends ConsumerState<ProfileUpdatePage> {
               ),
               const SizedBox(height: 20),
               ElevatedButton(
-                onPressed: _saveProfile,
+                onPressed: isLoading ? null : _saveProfile,
                 style: ElevatedButton.styleFrom(
                   minimumSize: const Size(263, 60),
                   padding:
@@ -222,13 +207,16 @@ class _ProfileUpdatePageState extends ConsumerState<ProfileUpdatePage> {
                     borderRadius: BorderRadius.circular(15),
                   ),
                 ),
-                child: Text(
-                  'Save',
-                  style: TextStyle(
-                      color: color.surface,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600),
-                ),
+                child: isLoading
+                    ? const CupertinoActivityIndicator()
+                    : Text(
+                        'Save',
+                        style: TextStyle(
+                          color: color.surface,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
               ),
             ],
           ),
