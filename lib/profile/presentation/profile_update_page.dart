@@ -1,16 +1,21 @@
 import 'dart:io';
 
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:noteswap/profile/domain/profile_model.dart';
+import 'package:noteswap/profile/repository/profile_repository.dart';
 
-class ProfileUpdatePage extends StatefulWidget {
+class ProfileUpdatePage extends ConsumerStatefulWidget {
   const ProfileUpdatePage({super.key});
 
   @override
-  State<ProfileUpdatePage> createState() => _ProfileUpdatePageState();
+  ConsumerState<ProfileUpdatePage> createState() => _ProfileUpdatePageState();
 }
 
-class _ProfileUpdatePageState extends State<ProfileUpdatePage> {
+class _ProfileUpdatePageState extends ConsumerState<ProfileUpdatePage> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _blockController = TextEditingController();
@@ -19,6 +24,7 @@ class _ProfileUpdatePageState extends State<ProfileUpdatePage> {
   final TextEditingController _specializationController =
       TextEditingController();
   final TextEditingController _bioController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
   File? _image;
 
   Future<void> _pickImage() async {
@@ -31,13 +37,50 @@ class _ProfileUpdatePageState extends State<ProfileUpdatePage> {
     }
   }
 
-  void _saveProfile() {
+  Future<void> _saveProfile() async {
     if (_formKey.currentState!.validate()) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Profile Saved')),
-      );
-      Navigator.of(context).pop();
+      try {
+        String? photoUrl;
+        if (_image != null) {
+          photoUrl = await _uploadImageToStorage(_image!);
+        }
+
+        final user = FirebaseAuth.instance.currentUser;
+        if (user != null) {
+          final profile = ProfileModel(
+            id: user.uid,
+            name: _nameController.text,
+            photoUrl: photoUrl,
+            bio: _bioController.text ?? '',
+            block: _blockController.text,
+            roomNumber: _roomNumberController.text,
+            department: _departmentController.text,
+            specialization: _specializationController.text,
+            phone: _phoneController.text,
+          );
+
+          await ProfileRepositoryImpl().updateProfile(profile);
+
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Profile Saved')),
+          );
+          Navigator.of(context).pop();
+        }
+      } catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Error saving profile: $e')),
+        );
+      }
     }
+  }
+
+  Future<String> _uploadImageToStorage(File image) async {
+    final storageRef = FirebaseStorage.instance
+        .ref()
+        .child('user_profile_images/${FirebaseAuth.instance.currentUser!.uid}');
+    final uploadTask = storageRef.putFile(image);
+    final snapshot = await uploadTask;
+    return await snapshot.ref.getDownloadURL();
   }
 
   @override
@@ -128,7 +171,7 @@ class _ProfileUpdatePageState extends State<ProfileUpdatePage> {
               ),
               TextFormField(
                 controller: _departmentController,
-                decoration: buildInputDecoration('Block:', context),
+                decoration: buildInputDecoration('Department:', context),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Please enter your department';
@@ -152,6 +195,17 @@ class _ProfileUpdatePageState extends State<ProfileUpdatePage> {
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Please enter your bio';
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(height: 20),
+              TextFormField(
+                controller: _phoneController,
+                decoration: buildInputDecoration('Phone:', context),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter your phone number';
                   }
                   return null;
                 },

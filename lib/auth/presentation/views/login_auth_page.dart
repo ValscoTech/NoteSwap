@@ -1,9 +1,11 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:noteswap/auth/controller/auth_controller.dart';
 import 'package:noteswap/auth/presentation/widgets/custom_button.dart';
 import 'package:noteswap/auth/presentation/widgets/top_container.dart';
+import 'package:noteswap/helper/initial_user_pfp.dart';
 import 'package:validators/validators.dart';
 
 class LoginAuthPage extends ConsumerStatefulWidget {
@@ -56,13 +58,16 @@ class _LoginAuthPageState extends ConsumerState<LoginAuthPage> {
     final AsyncValue<void> state = ref.watch(authControllerProvider);
     ref.listen<AsyncValue>(
       authControllerProvider,
-      (_, state) {
+      (_, state) async {
         if (!state.isLoading && state.hasError) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text(state.error.toString())),
           );
         } else if (!state.isLoading && state.hasValue) {
-          Navigator.of(context).pushReplacementNamed('/feed');
+          final user = FirebaseAuth.instance.currentUser;
+          if (user != null) {
+            await checkUserProfileAndNavigate(context, user);
+          }
         }
       },
     );

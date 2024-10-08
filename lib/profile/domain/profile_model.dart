@@ -14,7 +14,7 @@ class ProfileModel {
   final String specialization;
   final int? sold;
   final int? purchased;
-  final String? phone;
+  final String phone;
   final String? username;
 
   ProfileModel({
@@ -28,10 +28,11 @@ class ProfileModel {
     required this.specialization,
     this.sold,
     this.purchased,
-    this.phone, 
+    required this.phone,
     this.username,
   });
 
-  factory ProfileModel.fromJson(Map<String, dynamic> json) => _$ProfileModelFromJson(json);
+  factory ProfileModel.fromJson(Map<String, dynamic> json) =>
+      _$ProfileModelFromJson(json);
   Map<String, dynamic> toJson() => _$ProfileModelToJson(this);
 }

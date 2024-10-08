@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+// import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 part 'auth_repository.g.dart';
 
@@ -22,6 +23,7 @@ abstract class AuthRepository {
     required String email,
     required String password,
   });
+  // Future<User> signInWithApple();
   Future<void> signInWithGoogle();
   Future<void> signOut();
 }
@@ -82,6 +84,15 @@ class AuthImplRepository extends AuthRepository {
     await FirebaseAuth.instance.signOut();
     await GoogleSignIn().signOut();
   }
+
+  // @override
+  // Future<User> signInWithApple() async {
+  //   final credential = await SignInWithApple.getAppleIDCredential(scopes: [
+  //     AppleIDAuthorizationScopes.email,
+  //     AppleIDAuthorizationScopes.fullName
+  //   ]);
+    
+  // }
 }
 
 @riverpod

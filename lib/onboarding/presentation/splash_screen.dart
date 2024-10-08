@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:noteswap/auth/repository/auth_repository.dart';
+import 'package:noteswap/helper/initial_user_pfp.dart';
 
 class SplashScreen extends ConsumerStatefulWidget {
   const SplashScreen({super.key});
@@ -16,13 +17,12 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
     Future.delayed(Duration.zero, () {
       final user = ref.read(userStatusChangesProvider);
       user.when(
-        data: (user) {
+        data: (user) async {
           if (mounted) {
-            print(user);
             if (user == null) {
-              Navigator.pushReplacementNamed(context, '/board');
+              _navigateToBoard();
             } else {
-              Navigator.pushReplacementNamed(context, '/feed');
+              await checkUserProfileAndNavigate(context, user);
             }
           }
         },
@@ -30,6 +30,10 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
         error: (err, stack) {},
       );
     });
+  }
+
+  void _navigateToBoard() {
+    Navigator.pushReplacementNamed(context, '/board');
   }
 
   @override
