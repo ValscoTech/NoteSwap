@@ -1,37 +1,53 @@
-import 'dart:convert';
+import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:uuid/uuid.dart';
 import 'package:noteswap/postoffer/domain/notes_model.dart';
-import 'package:http/http.dart' as http;
 
 part 'postoffer_repository.g.dart';
 
 abstract class PostOfferRepository {
-  Future<void> postOffer(NotesModel notesModel);
+  Future<void> postNotes(NotesModel notesModel, File notesPreview);
 }
 
 class PostOfferRepositoryImpl implements PostOfferRepository {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseStorage _storage = FirebaseStorage.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
   @override
-  Future<void> postOffer(NotesModel notesModel) async {
-    final String baseUrl = dotenv.env['BASE_URL']!;
-    final String url = '$baseUrl/notes'; //temp
-    final response = await http.post(
-      Uri.parse(url),
-      body: jsonEncode(notesModel.toJson()),
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ${dotenv.env['TOKEN']}',
-      },
+  Future<void> postNotes(NotesModel notesModel, File notesPreview) async {
+    final user = _auth.currentUser;
+    if (user == null) {
+      throw Exception('User not logged in');
+    }
+
+    final ownerId = user.uid;
+    final noteId = const Uuid().v4();
+
+    final storageRef = _storage.ref().child('notes_previews/$noteId');
+    final uploadTask = storageRef.putFile(notesPreview);
+    final snapshot = await uploadTask.whenComplete(() => {});
+    final previewUrl = await snapshot.ref.getDownloadURL();
+
+    final updatedNotesModel = notesModel.copyWith(
+      id: noteId,
+      ownerId: ownerId,
+      previewFile: previewUrl,
     );
 
-    if (response.statusCode != 200) {
-      throw Exception('Failed to post offer');
-    }
+    await _firestore
+        .collection('postNotes')
+        .doc(noteId)
+        .set(updatedNotesModel.toJson());
   }
 }
 
 @riverpod
-Future<void> postOffer(PostOfferRef ref, NotesModel notesModel) async {
-  return PostOfferRepositoryImpl().postOffer(notesModel);
+Future<void> postOffer(
+    PostOfferRef ref, NotesModel notesModel, File notesPreview) async {
+  return PostOfferRepositoryImpl().postNotes(notesModel, notesPreview);
 }

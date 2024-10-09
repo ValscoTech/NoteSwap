@@ -873,7 +873,7 @@
     },
     {
       "name": "uuid",
-      "rootUri": "file:///Users/devkeshwani/.pub-cache/hosted/pub.dev/uuid-4.5.0",
+      "rootUri": "file:///Users/devkeshwani/.pub-cache/hosted/pub.dev/uuid-4.5.1",
       "packageUri": "lib/",
       "languageVersion": "3.0"
     },
@@ -968,7 +968,7 @@
       "languageVersion": "3.4"
     }
   ],
-  "generated": "2024-10-09T06:04:46.178508Z",
+  "generated": "2024-10-09T07:16:02.463581Z",
   "generator": "pub",
   "generatorVersion": "3.5.2",
   "flutterRoot": "file:///Users/devkeshwani/Documents/dev-installs/flutter",
