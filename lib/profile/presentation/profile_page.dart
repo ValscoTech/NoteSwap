@@ -45,8 +45,8 @@ class ProfilePage extends ConsumerWidget {
 
 Widget _buildShimmerEffect(Size layout, ColorScheme color) {
   return Shimmer.fromColors(
-    baseColor: Colors.grey[300]!,
-    highlightColor: Colors.grey[100]!,
+    baseColor: Colors.grey[400]!,
+    highlightColor: Colors.grey[200]!,
     child: Column(
       children: [
         Container(
@@ -66,16 +66,41 @@ Widget _buildShimmerEffect(Size layout, ColorScheme color) {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Container(width: 100, height: 20, color: Colors.white),
+                  Container(
+                    width: 100,
+                    height: 20,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
                   const Icon(Icons.settings, color: Colors.white),
                 ],
               ),
               SizedBox(height: layout.height * 0.015),
-              const CircleAvatar(radius: 50, backgroundColor: Colors.white),
+              const CircleAvatar(
+                radius: 50,
+                backgroundColor: Colors.white,
+                child: Icon(Icons.person, size: 50, color: Colors.grey),
+              ),
               SizedBox(height: layout.height * 0.01),
-              Container(width: 100, height: 20, color: Colors.white),
+              Container(
+                width: 100,
+                height: 20,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ),
               SizedBox(height: layout.height * 0.01),
-              Container(width: 150, height: 20, color: Colors.white),
+              Container(
+                width: 150,
+                height: 20,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ),
             ],
           ),
         ),
@@ -85,17 +110,59 @@ Widget _buildShimmerEffect(Size layout, ColorScheme color) {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(width: 200, height: 20, color: Colors.white),
+              Container(
+                width: 200,
+                height: 20,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ),
               SizedBox(height: layout.height * 0.01),
-              Container(width: 200, height: 20, color: Colors.white),
+              Container(
+                width: 200,
+                height: 20,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ),
               SizedBox(height: layout.height * 0.01),
-              Container(width: 200, height: 20, color: Colors.white),
+              Container(
+                width: 200,
+                height: 20,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ),
               SizedBox(height: layout.height * 0.01),
-              Container(width: 200, height: 20, color: Colors.white),
+              Container(
+                width: 200,
+                height: 20,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ),
               SizedBox(height: layout.height * 0.04),
-              Container(width: 100, height: 20, color: Colors.white),
+              Container(
+                width: 100,
+                height: 20,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ),
               SizedBox(height: layout.height * 0.01),
-              Container(width: layout.width, height: 100, color: Colors.white),
+              Container(
+                width: layout.width,
+                height: 100,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ),
             ],
           ),
         ),
@@ -153,18 +220,25 @@ Widget _buildProfileContent(
                 ],
               ),
               SizedBox(height: layout.height * 0.015),
-              CircleAvatar(
-                radius: 50,
-                backgroundImage: NetworkImage(
-                  profile.photoUrl ?? 'https://example.com/profile.jpg',
-                ),
-                onBackgroundImageError: (_, __) {
-                  log('Error loading image');
-                },
-                child: profile.photoUrl == null
-                    ? Icon(Icons.person, size: 50, color: color.onSurface)
-                    : null,
-              ),
+              profile.photoUrl == null
+                  ? CircleAvatar(
+                      radius: 50,
+                      backgroundColor: color.surface,
+                      child: Icon(
+                        Icons.person,
+                        size: 50,
+                        color: color.onSurface,
+                      ),
+                    )
+                  : CircleAvatar(
+                      radius: 50,
+                      backgroundImage: NetworkImage(
+                        profile.photoUrl ?? '',
+                      ),
+                      onBackgroundImageError: (_, __) {
+                        log('Error loading image');
+                      },
+                    ),
               SizedBox(height: layout.height * 0.01),
               Text(
                 profile.name,
