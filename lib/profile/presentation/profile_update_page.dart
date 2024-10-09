@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:noteswap/feed/presentation/feed_screen.dart';
 import 'package:noteswap/profile/controller/profile_controller.dart';
 
 class ProfileUpdatePage extends ConsumerStatefulWidget {
@@ -61,7 +62,9 @@ class _ProfileUpdatePageState extends ConsumerState<ProfileUpdatePage> {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(content: Text('Profile Saved')),
           );
-          Navigator.of(context).pop();
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => const FeedScreen()),
+          );
         }
       }
     }

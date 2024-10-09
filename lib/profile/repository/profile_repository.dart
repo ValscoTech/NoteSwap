@@ -36,7 +36,8 @@ class ProfileRepositoryImpl implements ProfileRepository {
   }
 
   Future<String> _uploadImageToStorage(File image, String userId) async {
-    final storageRef = FirebaseStorage.instance.ref().child('user_profile_images/$userId');
+    final storageRef =
+        FirebaseStorage.instance.ref().child('user_profile_images/$userId');
     final uploadTask = storageRef.putFile(image);
     final snapshot = await uploadTask;
     return await snapshot.ref.getDownloadURL();
@@ -46,4 +47,9 @@ class ProfileRepositoryImpl implements ProfileRepository {
 @riverpod
 ProfileRepository profileRepositoryImpl(ProfileRepositoryImplRef ref) {
   return ProfileRepositoryImpl();
+}
+
+@riverpod
+Future<ProfileModel> getProfile(GetProfileRef ref, String id) async {
+  return ProfileRepositoryImpl().getProfile(id);
 }
